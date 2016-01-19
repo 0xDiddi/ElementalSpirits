@@ -1,4 +1,4 @@
-package theultimatehose.util;
+package theultimatehose.elementalspirits.util;
 
 import java.util.Locale;
 
