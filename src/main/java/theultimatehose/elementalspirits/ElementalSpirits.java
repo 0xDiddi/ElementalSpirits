@@ -7,12 +7,16 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import theultimatehose.elementalspirits.gui.GuiHandler;
 import theultimatehose.elementalspirits.items.ItemAncientScroll;
 import theultimatehose.elementalspirits.proxy.GeneralProxy;
 import theultimatehose.elementalspirits.util.Util;
 
 @Mod(modid = Util.MOD_ID, version = Util.VERSION)
 public class ElementalSpirits {
+
+    @Mod.Instance(Util.MOD_ID)
+    public static ElementalSpirits instance;
 
     ItemAncientScroll itemAncientScroll;
 
@@ -31,6 +35,7 @@ public class ElementalSpirits {
     @EventHandler
     public void init(FMLInitializationEvent event) {
 
+        GuiHandler.init();
         proxy.init(event);
 
     }
