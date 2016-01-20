@@ -2,4 +2,6 @@
 item.elementalspirits.itemScroll.name=Ancient Scroll
 
 #Scroll
-scroll.elementalspirits.chapter.entry.1=Elemental Spirits
+scroll.elementalspirits.contents.name=Elemental Spirits
+
+scroll.elementalspirits.chapter.misc.name=Miscellaneous

@@ -7,6 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import theultimatehose.elementalspirits.ElementalSpirits;
 import theultimatehose.elementalspirits.Names;
+import theultimatehose.elementalspirits.gui.GuiHandler;
 import theultimatehose.elementalspirits.util.Util;
 
 public class ItemAncientScroll extends Item {
@@ -18,6 +19,7 @@ public class ItemAncientScroll extends Item {
 
     @Override
     public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
+        playerIn.openGui(ElementalSpirits.instance, GuiHandler.SCROLL_ID, worldIn, (int) playerIn.posX, (int) playerIn.posY, (int) playerIn.posZ);
         return super.onItemRightClick(itemStackIn, worldIn, playerIn);
     }
 

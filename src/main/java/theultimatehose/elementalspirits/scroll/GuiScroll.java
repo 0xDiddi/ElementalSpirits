@@ -9,9 +9,18 @@ import theultimatehose.elementalspirits.util.Util;
 
 public class GuiScroll extends GuiScreen {
 
+    public enum Types {
+        overview, chapter, entry;
+    }
+
+    Types currentType;
+    Structure.ChapterList currentEntry;
+
     ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/ancient_scroll_gui.png");
 
     public int guiTop, guiLeft, guiWidth = 160, guiHeight = 205;
+
+    TextButton btn;
 
     public GuiScroll() {
         super();
@@ -22,6 +31,8 @@ public class GuiScroll extends GuiScreen {
         super.initGui();
         this.guiTop = (this.height-this.guiHeight)/2;
         this.guiLeft = (this.width-this.guiWidth)/2;
+
+        btn = new TextButton(0, guiLeft + 10, guiTop + 30, "Click me");
     }
 
     @Override
@@ -31,7 +42,9 @@ public class GuiScroll extends GuiScreen {
         this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, guiWidth, guiHeight);
         super.drawScreen(mouseX, mouseY, partialTicks);
 
-        this.fontRendererObj.drawSplitString(EnumChatFormatting.BOLD + StatCollector.translateToLocal("scroll." + Util.MOD_ID_LOWER + ".chapter.entry.1"), guiLeft + 12, guiTop + 12, 150, 0);
+        this.fontRendererObj.drawSplitString(EnumChatFormatting.BOLD + StatCollector.translateToLocal("scroll." + Util.MOD_ID_LOWER + ".contents.name"), guiLeft + 12, guiTop + 12, 150, 0);
+
+        btn.drawButtonForegroundLayer(mouseX, mouseY);
     }
 
     @Override
