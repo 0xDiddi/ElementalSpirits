@@ -3,7 +3,7 @@ package theultimatehose.elementalspirits.scroll;
 public class Structure {
 
     public enum ChapterList {
-        introduction(0, "introduction"),
+        elementals(0, "elemental"),
         misc(1, "misc");
 
         final int ID;
@@ -16,10 +16,18 @@ public class Structure {
     }
 
     public enum EntryList {
-        introduction_1(0, "");
+        introduction_1(0, "introduction", ChapterList.misc, 1);
 
-        EntryList(int id, String subIdentifier) {
+        final int id;
+        final String subIdentifier;
+        final ChapterList parent;
+        final int pages;
 
+        EntryList(int id, String subIdentifier, ChapterList parent, int pages) {
+            this.id = id;
+            this.subIdentifier = subIdentifier;
+            this.parent = parent;
+            this.pages = pages;
         }
     }
 
