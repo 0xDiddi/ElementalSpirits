@@ -1,6 +1,7 @@
 package theultimatehose.elementalspirits.scroll;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
@@ -12,18 +13,19 @@ import java.io.IOException;
 public class GuiScroll extends GuiScreen {
 
     public enum Types {
-        content, chapter, entry;
+        content, chapter, entry
     }
 
     public Types currentType;
     public Structure.ChapterList currentChapter;
     public Structure.EntryList currentEntry;
+    public int currentPage = 1;
 
     ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/ancient_scroll_gui.png");
 
     public int guiTop, guiLeft, guiWidth = 160, guiHeight = 205;
 
-    public TextButton[] buttons;
+    public GuiButton[] buttons;
 
     public GuiScroll() {
         super();
@@ -49,6 +51,7 @@ public class GuiScroll extends GuiScreen {
         int y = guiTop + 24;
         int index = 0;
         buttons = null;
+        PageButton btnBack;
 
         switch (currentType) {
             case content:
@@ -64,7 +67,7 @@ public class GuiScroll extends GuiScreen {
                 break;
             case chapter:
                 this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + ".title"), guiLeft + 15, guiTop + 12, 150, 0);
-                buttons = new TextButton[100];
+                buttons = new GuiButton[100];
                 for (Structure.EntryList entry : Structure.EntryList.values()) {
                     if (entry.parent == currentChapter) {
                         TextButton btn = new TextButton(y, guiLeft + 15, y, parseIdentifier(currentChapter.identifier + "." + entry.subIdentifier + ".name"), this, Types.entry, currentChapter, entry);
@@ -74,15 +77,34 @@ public class GuiScroll extends GuiScreen {
                         y += 10;
                     }
                 }
+
+                btnBack = new PageButton(guiLeft + guiWidth/2 - 10, guiTop + guiHeight - 20, PageButton.Direction.back, this, Types.content, currentChapter, currentEntry, 0);
+                btnBack.drawButtonForegroundLayer(mouseX, mouseY);
+                buttons[index] = btnBack;
+
                 break;
             case entry:
                 this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + "." + currentEntry.subIdentifier + ".title"), guiLeft + 15, guiTop + 12, 150, 0);
+                buttons = new PageButton[3];
+                if (currentEntry.pages > 1) {
+                    if (currentPage < currentEntry.pages) {
+                        PageButton btn = new PageButton(guiLeft + guiWidth - 25, guiTop + guiHeight - 20, PageButton.Direction.right, this, Types.entry, currentChapter, currentEntry, currentPage+1);
+                        btn.drawButtonForegroundLayer(mouseX, mouseY);
+                        buttons[1] = btn;
+                    } if (currentPage > 1) {
+                        PageButton btn = new PageButton(guiLeft + 10, guiTop + guiHeight - 20, PageButton.Direction.left, this, Types.entry, currentChapter, currentEntry, currentPage-1);
+                        btn.drawButtonForegroundLayer(mouseX, mouseY);
+                        buttons[0] = btn;
+                    }
+                }
 
-                //TODO: Do pages and stuff
-                this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + "." + currentEntry.subIdentifier + ".1"), guiLeft + 15, y, 140, 0);
+                btnBack = new PageButton(guiLeft + guiWidth/2 - 10, guiTop + guiHeight - 20, PageButton.Direction.back, this, Types.chapter, currentChapter, currentEntry, 0);
+                btnBack.drawButtonForegroundLayer(mouseX, mouseY);
+                buttons[2] = btnBack;
+
+                this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + "." + currentEntry.subIdentifier + "." + currentPage), guiLeft + 15, y, 140, 0);
                 break;
         }
-
         this.fontRendererObj.setUnicodeFlag(unicode);
     }
 
@@ -90,7 +112,7 @@ public class GuiScroll extends GuiScreen {
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         super.mouseClicked(mouseX, mouseY, mouseButton);
         if (buttons != null) {
-            for (TextButton btn : buttons) {
+            for (GuiButton btn : buttons) {
                 if (btn != null)
                     btn.mousePressed(Minecraft.getMinecraft(), mouseX, mouseY);
             }
@@ -121,7 +143,7 @@ public class GuiScroll extends GuiScreen {
 
         str = str.replaceAll("<rs>", EnumChatFormatting.BLACK+"");
 
-        return str;
+        return str + EnumChatFormatting.WHITE;
     }
 
 }

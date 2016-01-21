@@ -15,19 +15,25 @@ public class Structure {
         }
     }
 
+    public enum EntryType {
+        textOnly
+    }
+
     public enum EntryList {
-        introduction_1(0, "introduction", ChapterList.misc, 1);
+        introduction_1(0, "introduction", ChapterList.misc, 2, EntryType.textOnly);
 
         final int id;
         final String subIdentifier;
         final ChapterList parent;
         final int pages;
+        final EntryType type;
 
-        EntryList(int id, String subIdentifier, ChapterList parent, int pages) {
+        EntryList(int id, String subIdentifier, ChapterList parent, int pages, EntryType type) {
             this.id = id;
             this.subIdentifier = subIdentifier;
             this.parent = parent;
             this.pages = pages;
+            this.type = type;
         }
     }
 

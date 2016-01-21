@@ -5,7 +5,7 @@ item.elementalspirits.itemScroll.name=Ancient Scroll
 scroll.elementalspirits.contents.name=<r><f>Elemental Spirits
 
 scroll.elementalspirits.chapter.elemental.name=Elementals
-scroll.elementalspirits.chapter.elemental.title=<b><f>8Elementals
+scroll.elementalspirits.chapter.elemental.title=<b><f>Elementals
 
 scroll.elementalspirits.chapter.misc.name=Miscellaneous
 scroll.elementalspirits.chapter.misc.title=<b><f>Miscellaneous
@@ -13,3 +13,4 @@ scroll.elementalspirits.chapter.misc.title=<b><f>Miscellaneous
 scroll.elementalspirits.chapter.misc.introduction.name=Introduction
 scroll.elementalspirits.chapter.misc.introduction.title=<g><f>Introduction
 scroll.elementalspirits.chapter.misc.introduction.1=<g>Welcome to the Elemental Spirits Mod!<rs><nl>
+scroll.elementalspirits.chapter.misc.introduction.2=This is the second page!
