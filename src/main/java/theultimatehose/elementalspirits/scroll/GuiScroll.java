@@ -78,7 +78,7 @@ public class GuiScroll extends GuiScreen {
                     }
                 }
 
-                btnBack = new PageButton(guiLeft + guiWidth/2 - 10, guiTop + guiHeight - 20, PageButton.Direction.back, this, Types.content, currentChapter, currentEntry, 0);
+                btnBack = new PageButton(guiLeft + guiWidth/2 - 10, guiTop + guiHeight - 20, PageButton.Direction.back, this, Types.content, currentChapter, currentEntry, 1);
                 btnBack.drawButtonForegroundLayer(mouseX, mouseY);
                 buttons[index] = btnBack;
 
@@ -98,7 +98,7 @@ public class GuiScroll extends GuiScreen {
                     }
                 }
 
-                btnBack = new PageButton(guiLeft + guiWidth/2 - 10, guiTop + guiHeight - 20, PageButton.Direction.back, this, Types.chapter, currentChapter, currentEntry, 0);
+                btnBack = new PageButton(guiLeft + guiWidth/2 - 10, guiTop + guiHeight - 20, PageButton.Direction.back, this, Types.chapter, currentChapter, currentEntry, 1);
                 btnBack.drawButtonForegroundLayer(mouseX, mouseY);
                 buttons[2] = btnBack;
 
