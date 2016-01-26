@@ -21,7 +21,7 @@ public class GuiScroll extends GuiScreen {
     public Structure.EntryList currentEntry;
     public int currentPage = 1;
 
-    ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/ancient_scroll_gui.png");
+    ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/GuiAncientScroll.png");
 
     public int guiTop, guiLeft, guiWidth = 160, guiHeight = 205;
 
@@ -49,16 +49,17 @@ public class GuiScroll extends GuiScreen {
         this.fontRendererObj.setUnicodeFlag(true);
 
         int y = guiTop + 24;
+        int x = guiLeft + 13;
         int index = 0;
         buttons = null;
         PageButton btnBack;
 
         switch (currentType) {
             case content:
-                this.fontRendererObj.drawSplitString(parseIdentifier("scroll." + Util.MOD_ID_LOWER + ".contents.name"), guiLeft + 15, guiTop + 12, 150, 0);
+                this.fontRendererObj.drawSplitString(parseIdentifier("scroll." + Util.MOD_ID_LOWER + ".contents.name"), x, guiTop + 12, 150, 0);
                 buttons = new TextButton[Structure.ChapterList.values().length];
                 for (Structure.ChapterList chap : Structure.ChapterList.values()) {
-                    TextButton btn = new TextButton(y, guiLeft + 15, y, parseIdentifier(chap.identifier + ".name"), this, Types.chapter, chap, null);
+                    TextButton btn = new TextButton(y, x, y, parseIdentifier(chap.identifier + ".name"), this, Types.chapter, chap, null);
                     btn.drawButtonForegroundLayer(mouseX, mouseY);
                     buttons[index] = btn;
                     index++;
@@ -66,11 +67,11 @@ public class GuiScroll extends GuiScreen {
                 }
                 break;
             case chapter:
-                this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + ".title"), guiLeft + 15, guiTop + 12, 150, 0);
+                this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + ".title"), x, guiTop + 12, 150, 0);
                 buttons = new GuiButton[100];
                 for (Structure.EntryList entry : Structure.EntryList.values()) {
                     if (entry.parent == currentChapter) {
-                        TextButton btn = new TextButton(y, guiLeft + 15, y, parseIdentifier(currentChapter.identifier + "." + entry.subIdentifier + ".name"), this, Types.entry, currentChapter, entry);
+                        TextButton btn = new TextButton(y, x, y, parseIdentifier(currentChapter.identifier + "." + entry.subIdentifier + ".name"), this, Types.entry, currentChapter, entry);
                         btn.drawButtonForegroundLayer(mouseX, mouseY);
                         buttons[index] = btn;
                         index++;
@@ -84,7 +85,7 @@ public class GuiScroll extends GuiScreen {
 
                 break;
             case entry:
-                this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + "." + currentEntry.subIdentifier + ".title"), guiLeft + 15, guiTop + 12, 150, 0);
+                this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + "." + currentEntry.subIdentifier + ".title"), x, guiTop + 12, 150, 0);
                 buttons = new PageButton[3];
                 if (currentEntry.pages > 1) {
                     if (currentPage < currentEntry.pages) {
@@ -102,7 +103,7 @@ public class GuiScroll extends GuiScreen {
                 btnBack.drawButtonForegroundLayer(mouseX, mouseY);
                 buttons[2] = btnBack;
 
-                this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + "." + currentEntry.subIdentifier + "." + currentPage), guiLeft + 15, y, 140, 0);
+                this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + "." + currentEntry.subIdentifier + "." + currentPage), x, y, 140, 0);
                 break;
         }
         this.fontRendererObj.setUnicodeFlag(unicode);
@@ -131,7 +132,7 @@ public class GuiScroll extends GuiScreen {
             identifier = "scroll." + Util.MOD_ID_LOWER + ".chapter." + identifier;
         String str = StatCollector.translateToLocal(identifier);
 
-        str = str.replaceAll("<nl>", "\n");
+        str = str.replaceAll("<br>", "\n");
 
         str = str.replaceAll("<f>", EnumChatFormatting.BOLD+"");
         str = str.replaceAll("<i>", EnumChatFormatting.ITALIC+"");

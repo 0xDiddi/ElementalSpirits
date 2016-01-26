@@ -8,7 +8,7 @@ import theultimatehose.elementalspirits.util.Util;
 
 public class PageButton extends GuiButton {
 
-    public ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/ancient_scroll_gui.png");
+    public ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/GuiAncientScroll.png");
 
     int xPos, yPos;
     GuiScroll parent;

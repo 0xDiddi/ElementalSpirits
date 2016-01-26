@@ -1,12 +1,17 @@
 package theultimatehose.elementalspirits;
 
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import theultimatehose.elementalspirits.entity.EntityElementalBase;
+import theultimatehose.elementalspirits.entity.EntityElementalEarth;
 import theultimatehose.elementalspirits.gui.GuiHandler;
 import theultimatehose.elementalspirits.items.ItemAncientScroll;
 import theultimatehose.elementalspirits.proxy.GeneralProxy;
@@ -38,10 +43,12 @@ public class ElementalSpirits {
         GuiHandler.init();
         proxy.init(event);
 
+        EntityRegistry.registerModEntity(EntityElementalBase.class, "BaseElemental", 65536, ElementalSpirits.instance, 65536, 1, true);
+        EntityRegistry.registerModEntity(EntityElementalEarth.class, "EarthElemental", 65537, ElementalSpirits.instance, 65536, 1, true, 0x009900, 0xAAAAAA);
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-
+        EntityRegistry.addSpawn(EntityElementalEarth.class, 10, 1, 5, EnumCreatureType.AMBIENT, BiomeGenBase.plains);
     }
 }

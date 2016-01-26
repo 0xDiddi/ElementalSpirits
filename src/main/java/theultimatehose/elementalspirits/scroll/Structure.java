@@ -4,7 +4,7 @@ public class Structure {
 
     public enum ChapterList {
         elementals(0, "elemental"),
-        misc(1, "misc");
+        gettingStarted(1, "gettingStarted");
 
         final int ID;
         final String identifier;
@@ -20,7 +20,8 @@ public class Structure {
     }
 
     public enum EntryList {
-        introduction_1(0, "introduction", ChapterList.misc, 2, EntryType.textOnly);
+        introduction(0, "introduction", ChapterList.gettingStarted, 2, EntryType.textOnly),
+        taming(1, "taming", ChapterList.gettingStarted, 1, EntryType.textOnly);
 
         final int id;
         final String subIdentifier;

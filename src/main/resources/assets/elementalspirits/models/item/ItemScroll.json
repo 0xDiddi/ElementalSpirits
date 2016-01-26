@@ -1,7 +1,7 @@
 {
   "parent":"builtin/generated",
   "textures": {
-    "layer0":"elementalspirits:items/itemScroll"
+    "layer0":"elementalspirits:items/itemAncientScroll"
   },
   "display": {
     "thirdperson": {
