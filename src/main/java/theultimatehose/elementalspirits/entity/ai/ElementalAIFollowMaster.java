@@ -22,7 +22,7 @@ public class ElementalAIFollowMaster extends EntityAIBase {
     @Override
     public boolean shouldExecute() {
 
-        EntityPlayer plr =elemental.getMaster();
+        EntityPlayer plr = MinecraftServer.getServer().getConfigurationManager().getPlayerByUUID(UUID.fromString(elemental.getMaster()));
 
         if (plr == null) {
             return false;

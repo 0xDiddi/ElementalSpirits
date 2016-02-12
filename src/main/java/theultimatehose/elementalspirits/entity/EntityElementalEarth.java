@@ -12,6 +12,7 @@ public class EntityElementalEarth extends  EntityElementalBase {
 
     public EntityElementalEarth(World worldIn) {
         super(worldIn);
+        this.setSize(0.8f, 1);
         this.tasks.addTask(1, new EntityAIWander(this, 1));
         this.tasks.addTask(2, new ElementalAIFollowMaster(this));
         this.tasks.addTask(5, new EntityAITempt(this, 1, Items.emerald, false));
@@ -24,5 +25,10 @@ public class EntityElementalEarth extends  EntityElementalBase {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(20);
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.20000000298023224D);
+    }
+
+    @Override
+    public float getEyeHeight() {
+        return 1f;
     }
 }

@@ -5,16 +5,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
-import java.util.UUID;
-
 public class EntityElementalBase extends EntityCreature {
 
-    public final int UUID_POS = 20;
-    public final int TAMED_POS = 21;
+    final int UUID_POS = 20;
+    final int TAMED_POS = 21;
     final int FOLLOW_POS = 22;
 
     public EntityElementalBase(World worldIn) {
@@ -49,12 +46,12 @@ public class EntityElementalBase extends EntityCreature {
                     inUse = null;
                 player.setCurrentItemOrArmor(0, inUse);
                 if (getRNG().nextInt(16) == 7) {
-                    setMaster(player);
+                    setMaster(player.getGameProfile().getId().toString());
                     setIsTamed(true);
                     return true;
                 }
             }
-        } else if (player == getMaster()) {
+        } else if (player.getGameProfile().getId().toString() == getMaster()) {
             setFollowMaster(!getFollowMaster());
             player.addChatMessage(new ChatComponentText(getFollowMaster() ? "Now following you." : "No longer following you."));
             return true;
@@ -62,16 +59,12 @@ public class EntityElementalBase extends EntityCreature {
         return super.interact(player);
     }
 
-    public EntityPlayer getMaster() {
-        String str = this.dataWatcher.getWatchableObjectString(UUID_POS);
-        if (str.equals(""))
-            return null;
-        else
-            return MinecraftServer.getServer().getConfigurationManager().getPlayerByUUID(UUID.fromString(str));
+    public String getMaster() {
+        return this.dataWatcher.getWatchableObjectString(UUID_POS);
     }
 
-    public void setMaster(EntityPlayer player) {
-        this.dataWatcher.updateObject(UUID_POS, EntityPlayer.getUUID(player.getGameProfile()).toString());
+    public void setMaster(String player_uuid) {
+        this.dataWatcher.updateObject(UUID_POS, player_uuid);
     }
 
     public boolean getIsTamed() {
@@ -93,7 +86,7 @@ public class EntityElementalBase extends EntityCreature {
     @Override
     public void writeEntityToNBT(NBTTagCompound tagCompound) {
         super.writeEntityToNBT(tagCompound);
-        tagCompound.setString("master", EntityPlayer.getUUID(getMaster().getGameProfile()).toString());
+        tagCompound.setString("master", getMaster());
         tagCompound.setBoolean("tamed", getIsTamed());
         tagCompound.setBoolean("follow", getFollowMaster());
     }
@@ -101,7 +94,7 @@ public class EntityElementalBase extends EntityCreature {
     @Override
     public void readEntityFromNBT(NBTTagCompound tagCompund) {
         super.readEntityFromNBT(tagCompund);
-        setMaster(MinecraftServer.getServer().getConfigurationManager().getPlayerByUUID(UUID.fromString(tagCompund.getString("master"))));
+        setMaster(tagCompund.getString("master"));
         setIsTamed(tagCompund.getBoolean("tamed"));
         setFollowMaster(tagCompund.getBoolean("follow"));
     }
