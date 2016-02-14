@@ -20,8 +20,8 @@ public class Structure {
     }
 
     public enum EntryList {
-        introduction(0, "introduction", ChapterList.gettingStarted, 2, EntryType.textOnly),
-        taming(1, "taming", ChapterList.gettingStarted, 1, EntryType.textOnly);
+        introduction(0, "introduction", ChapterList.gettingStarted, 1, EntryType.textOnly),
+        earthElementals(1, "earth_elementals", ChapterList.elementals, 1, EntryType.textOnly);
 
         final int id;
         final String subIdentifier;

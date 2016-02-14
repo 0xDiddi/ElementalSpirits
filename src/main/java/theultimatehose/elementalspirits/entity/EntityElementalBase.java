@@ -38,23 +38,25 @@ public class EntityElementalBase extends EntityCreature {
 
     @Override
     public boolean interact(EntityPlayer player) {
-        if (!getIsTamed()) {
-            ItemStack inUse = player.getCurrentEquippedItem();
-            if (inUse != null && inUse.getItem() == Items.emerald) {
-                inUse.stackSize--;
-                if (inUse.stackSize <= 0)
-                    inUse = null;
-                player.setCurrentItemOrArmor(0, inUse);
-                if (getRNG().nextInt(16) == 7) {
-                    setMaster(player.getGameProfile().getId().toString());
-                    setIsTamed(true);
-                    return true;
+        if (!worldObj.isRemote) {
+            if (!getIsTamed()) {
+                ItemStack inUse = player.getCurrentEquippedItem();
+                if (inUse != null && inUse.getItem() == Items.emerald) {
+                    inUse.stackSize--;
+                    if (inUse.stackSize <= 0)
+                        inUse = null;
+                    player.setCurrentItemOrArmor(0, inUse);
+                    if (getRNG().nextInt(16) == 7) {
+                        setMaster(player.getGameProfile().getId().toString());
+                        setIsTamed(true);
+                        return true;
+                    }
                 }
+            } else if (player.getGameProfile().getId().toString().equals(getMaster())) {
+                setFollowMaster(!getFollowMaster());
+                player.addChatMessage(new ChatComponentText(getFollowMaster() ? "Now following you." : "No longer following you."));
+                return true;
             }
-        } else if (player.getGameProfile().getId().toString() == getMaster()) {
-            setFollowMaster(!getFollowMaster());
-            player.addChatMessage(new ChatComponentText(getFollowMaster() ? "Now following you." : "No longer following you."));
-            return true;
         }
         return super.interact(player);
     }

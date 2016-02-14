@@ -1,22 +1,30 @@
 package theultimatehose.elementalspirits.entity;
 
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAIControlledByPlayer;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.world.World;
 import theultimatehose.elementalspirits.entity.ai.ElementalAIFollowMaster;
 
 public class EntityElementalEarth extends  EntityElementalBase {
 
+    final int UPDATE_RIDER_POS = 23;
+    EntityPlayer rider;
+
     public EntityElementalEarth(World worldIn) {
         super(worldIn);
         this.setSize(0.8f, 1);
-        this.tasks.addTask(1, new EntityAIWander(this, 1));
-        this.tasks.addTask(2, new ElementalAIFollowMaster(this));
+        this.tasks.addTask(1, new EntityAIControlledByPlayer(this, 0.3f));
+        this.tasks.addTask(2, new EntityAIWander(this, 1));
+        this.tasks.addTask(3, new ElementalAIFollowMaster(this));
         this.tasks.addTask(5, new EntityAITempt(this, 1, Items.emerald, false));
         this.tasks.addTask(10, new EntityAILookIdle(this));
+
+        this.dataWatcher.addObject(UPDATE_RIDER_POS, 0);
 
     }
 
@@ -30,5 +38,21 @@ public class EntityElementalEarth extends  EntityElementalBase {
     @Override
     public float getEyeHeight() {
         return 1f;
+    }
+
+    public void updateRider(EntityPlayer player) {
+        this.dataWatcher.updateObject(UPDATE_RIDER_POS, 1);
+        this.rider = player;
+    }
+
+    @Override
+    public void onEntityUpdate() {
+        super.onEntityUpdate();
+        if (!worldObj.isRemote) {
+            if (this.dataWatcher.getWatchableObjectInt(UPDATE_RIDER_POS) == 1) {
+                rider.mountEntity(this);
+                this.dataWatcher.updateObject(UPDATE_RIDER_POS, 0);
+            }
+        }
     }
 }
