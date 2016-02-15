@@ -60,7 +60,7 @@ public class OverlayHandler {
 
                 if (lastPressed) {
                     if (!player.isRiding()) {
-                        elemental.updateRider(player);
+                        elemental.scheduleRiderUpdate(player);
                     }
                     lastPressed = false;
                 }

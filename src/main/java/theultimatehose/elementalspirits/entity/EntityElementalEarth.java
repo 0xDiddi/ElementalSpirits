@@ -9,16 +9,20 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.world.World;
 import theultimatehose.elementalspirits.entity.ai.ElementalAIFollowMaster;
+import theultimatehose.elementalspirits.network.SyncMethodGet;
+import theultimatehose.elementalspirits.network.SyncMethodSet;
+import theultimatehose.elementalspirits.network.Syncer;
 
 public class EntityElementalEarth extends  EntityElementalBase {
 
     final int UPDATE_RIDER_POS = 23;
-    EntityPlayer rider;
+    int riderID;
+    boolean shouldUpdateRider;
 
     public EntityElementalEarth(World worldIn) {
         super(worldIn);
         this.setSize(0.8f, 1);
-        this.tasks.addTask(1, new EntityAIControlledByPlayer(this, 0.3f));
+        this.tasks.addTask(1, new EntityAIControlledByPlayer(this, 1f));
         this.tasks.addTask(2, new EntityAIWander(this, 1));
         this.tasks.addTask(3, new ElementalAIFollowMaster(this));
         this.tasks.addTask(5, new EntityAITempt(this, 1, Items.emerald, false));
@@ -40,19 +44,33 @@ public class EntityElementalEarth extends  EntityElementalBase {
         return 1f;
     }
 
-    public void updateRider(EntityPlayer player) {
-        this.dataWatcher.updateObject(UPDATE_RIDER_POS, 1);
-        this.rider = player;
-    }
-
     @Override
     public void onEntityUpdate() {
         super.onEntityUpdate();
         if (!worldObj.isRemote) {
-            if (this.dataWatcher.getWatchableObjectInt(UPDATE_RIDER_POS) == 1) {
-                rider.mountEntity(this);
-                this.dataWatcher.updateObject(UPDATE_RIDER_POS, 0);
+            if (shouldUpdateRider) {
+                if (worldObj.getEntityByID(riderID) instanceof EntityPlayer) {
+                    worldObj.getEntityByID(riderID).mountEntity(this);
+                    shouldUpdateRider = false;
+                }
             }
         }
     }
+
+    public void scheduleRiderUpdate(EntityPlayer rider) {
+        this.riderID = rider.getEntityId();
+        Syncer.sync(this);
+    }
+
+    @SyncMethodGet
+    public int[] getData() {
+        return new int[] {riderID};
+    }
+
+    @SyncMethodSet
+    public void setData(int[] data) {
+        this.riderID = data[0];
+        this.shouldUpdateRider = true;
+    }
+
 }

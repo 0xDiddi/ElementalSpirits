@@ -14,6 +14,7 @@ import theultimatehose.elementalspirits.entity.EntityElementalBase;
 import theultimatehose.elementalspirits.entity.EntityElementalEarth;
 import theultimatehose.elementalspirits.gui.GuiHandler;
 import theultimatehose.elementalspirits.items.ItemAncientScroll;
+import theultimatehose.elementalspirits.network.Syncer;
 import theultimatehose.elementalspirits.proxy.GeneralProxy;
 import theultimatehose.elementalspirits.util.Util;
 
@@ -42,6 +43,7 @@ public class ElementalSpirits {
 
         GuiHandler.init();
         proxy.init(event);
+        Syncer.init();
 
         EntityRegistry.registerModEntity(EntityElementalBase.class, "BaseElemental", 65536, ElementalSpirits.instance, 65536, 1, true);
         EntityRegistry.registerModEntity(EntityElementalEarth.class, "EarthElemental", 65537, ElementalSpirits.instance, 65536, 1, true, 0x009900, 0xAAAAAA);

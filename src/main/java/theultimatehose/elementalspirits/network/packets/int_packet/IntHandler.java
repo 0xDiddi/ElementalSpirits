@@ -15,19 +15,21 @@ import java.lang.reflect.Method;
 public class IntHandler implements IMessageHandler<IntMessage, IMessage> {
 
     @Override
-    @SuppressWarnings("PrimitiveArrayArgumentToVariableArgMethod")
+    @SuppressWarnings({"PrimitiveArrayArgumentToVariableArgMethod", "unchecked"})
     public IMessage onMessage(IntMessage message, MessageContext ctx) {
-        World world = DimensionManager.getWorld(message.worldID);
+        World world = DimensionManager.getWorld(message.targetPos[0]);
         try {
             if (message.targetType == Syncer.TargetType.Entity) {
-                Entity entity = world.getEntityByID(message.targetPos[0]);
-                Method m = Syncer.getSetMethodForValue(entity.getClass(), int.class);
+                Class<Entity> target = (Class<Entity>) Class.forName(message.targetClass);
+                Entity entity = target.cast(world.getEntityByID(message.targetPos[1]));
+                Method m = Syncer.getSetMethodForValue(entity.getClass(), Class.forName(message.syncClass));
                 if (m != null) {
                     m.invoke(entity, message.data);
                 }
             } else if (message.targetType == Syncer.TargetType.TileEntity) {
-                TileEntity entity = world.getTileEntity(new BlockPos(message.targetPos[0], message.targetPos[1], message.targetPos[2]));
-                Method m = Syncer.getSetMethodForValue(entity.getClass(), int.class);
+                Class<TileEntity> target = (Class<TileEntity>) Class.forName(message.targetClass);
+                TileEntity entity = target.cast(world.getTileEntity(new BlockPos(message.targetPos[1], message.targetPos[2], message.targetPos[3])));
+                Method m = Syncer.getSetMethodForValue(entity.getClass(), Class.forName(message.syncClass));
                 if (m != null) {
                     m.invoke(entity, message.data);
                 }
