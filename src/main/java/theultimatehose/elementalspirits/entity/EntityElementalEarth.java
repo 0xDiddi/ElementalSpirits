@@ -8,6 +8,7 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
 import theultimatehose.elementalspirits.entity.ai.ElementalAIFollowMaster;
 import theultimatehose.elementalspirits.network.SyncMethodGet;
 import theultimatehose.elementalspirits.network.SyncMethodSet;
@@ -59,7 +60,7 @@ public class EntityElementalEarth extends  EntityElementalBase {
 
     public void scheduleRiderUpdate(EntityPlayer rider) {
         this.riderID = rider.getEntityId();
-        Syncer.sync(this);
+        Syncer.sync(this, Side.SERVER);
     }
 
     @SyncMethodGet

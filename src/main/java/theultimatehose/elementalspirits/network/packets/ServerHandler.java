@@ -1,4 +1,4 @@
-package theultimatehose.elementalspirits.network.packets.int_packet;
+package theultimatehose.elementalspirits.network.packets;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
@@ -9,10 +9,11 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import theultimatehose.elementalspirits.network.Syncer;
+import theultimatehose.elementalspirits.network.packets.messages.IntMessage;
 
 import java.lang.reflect.Method;
 
-public class IntHandler implements IMessageHandler<IntMessage, IMessage> {
+public class ServerHandler implements IMessageHandler<IntMessage, IMessage> {
 
     @Override
     @SuppressWarnings({"PrimitiveArrayArgumentToVariableArgMethod", "unchecked"})

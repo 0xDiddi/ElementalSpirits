@@ -1,4 +1,4 @@
-package theultimatehose.elementalspirits.network.packets.int_packet;
+package theultimatehose.elementalspirits.network.packets.messages;
 
 import io.netty.buffer.ByteBuf;
 import theultimatehose.elementalspirits.network.Syncer;
