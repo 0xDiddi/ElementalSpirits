@@ -10,11 +10,10 @@ import net.minecraft.init.Items;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import theultimatehose.elementalspirits.entity.ai.ElementalAIFollowMaster;
-import theultimatehose.elementalspirits.network.SyncMethodGet;
-import theultimatehose.elementalspirits.network.SyncMethodSet;
 import theultimatehose.elementalspirits.network.Syncer;
+import theultimatehose.elementalspirits.network.data.integer.IIntegerSyncer;
 
-public class EntityElementalEarth extends  EntityElementalBase {
+public class EntityElementalEarth extends EntityElementalBase implements IIntegerSyncer {
 
     final int UPDATE_RIDER_POS = 23;
     int riderID;
@@ -60,18 +59,17 @@ public class EntityElementalEarth extends  EntityElementalBase {
 
     public void scheduleRiderUpdate(EntityPlayer rider) {
         this.riderID = rider.getEntityId();
-        Syncer.sync(this, Side.SERVER);
+        Syncer.syncInt(this, Side.SERVER);
     }
 
-    @SyncMethodGet
-    public int[] getData() {
+    @Override
+    public int[] getIntData() {
         return new int[] {riderID};
     }
 
-    @SyncMethodSet
-    public void setData(int[] data) {
+    @Override
+    public void setIntData(int[] data) {
         this.riderID = data[0];
         this.shouldUpdateRider = true;
     }
-
 }

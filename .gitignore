@@ -12,3 +12,4 @@ build
 # other
 run
 /src/main/resources/assets/elementalspirits/textures/tmp
+/network_old
