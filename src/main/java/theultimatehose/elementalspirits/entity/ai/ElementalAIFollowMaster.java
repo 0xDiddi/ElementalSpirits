@@ -14,6 +14,8 @@ public class ElementalAIFollowMaster extends EntityAIBase {
     public EntityPlayer master;
     public PathNavigate navigator;
 
+    public static boolean hasPrintedError = false;
+
     public ElementalAIFollowMaster(EntityElementalBase entity) {
         this.elemental = entity;
         navigator = entity.getNavigator();
@@ -22,24 +24,17 @@ public class ElementalAIFollowMaster extends EntityAIBase {
     @Override
     public boolean shouldExecute() {
 
-        EntityPlayer plr = null;
-
         try {
-            plr = MinecraftServer.getServer().getConfigurationManager().getPlayerByUUID(UUID.fromString(elemental.getMaster()));
-        } catch (Exception ignored) {}
-
-        if (plr == null) {
+            master = MinecraftServer.getServer().getConfigurationManager().getPlayerByUUID(UUID.fromString(elemental.getMaster()));
+        } catch (IllegalArgumentException ignored) {
+            //When ending up here, there is no UUID, so the master must be null, so returning false
             return false;
-        } else if (plr.isSpectator()) {
-            return false;
-        } else if (this.elemental.getDistanceSqToEntity(plr) < 6) {
-            return false;
-        }else if (!elemental.getFollowMaster()) {
-            return false;
-        } else {
-            this.master = plr;
-            return true;
         }
+
+        if (master == null) return false;
+        else if (master.isSpectator()) return false;
+        else if (this.elemental.getDistanceSqToEntity(master) < 6) return false;
+        else return elemental.getFollowMaster();
 
     }
 
