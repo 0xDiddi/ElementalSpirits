@@ -6,31 +6,22 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import theultimatehose.elementalspirits.Names;
 import theultimatehose.elementalspirits.entity.EntityElementalEarth;
+import theultimatehose.elementalspirits.input.KeyBindManager;
 import theultimatehose.elementalspirits.util.Util;
 
 public class OverlayHandler {
 
     int pretimer;
     float alpha;
-    boolean lastPressed;
 
-    KeyBinding bind1 = new KeyBinding("test", Keyboard.KEY_NUMPAD8, Util.MOD_ID_LOWER + "." + Names.KEYBIND_UI);
-
-    @SubscribeEvent
-    public void onKeyPressed(InputEvent.KeyInputEvent event) {
-        lastPressed = bind1.isPressed();
-    }
 
     @SubscribeEvent
     public void renderOverlay(RenderGameOverlayEvent.Post event) {
@@ -58,11 +49,11 @@ public class OverlayHandler {
                     fr.drawString("Press Num8 to mount.", width / 2, height / 2, 0xFFFFFF);
                 }
 
-                if (lastPressed) {
+                if (KeyBindManager.INSTANCE.bindings.get(Names.KEYBIND_WHEEL_TC).pressed) {
                     if (!player.isRiding()) {
                         elemental.scheduleRiderUpdate(player);
                     }
-                    lastPressed = false;
+                    KeyBindManager.INSTANCE.bindings.get(Names.KEYBIND_WHEEL_TC).reset();
                 }
 
             }

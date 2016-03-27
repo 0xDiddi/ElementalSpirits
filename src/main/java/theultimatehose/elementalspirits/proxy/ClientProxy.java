@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import theultimatehose.elementalspirits.entity.EntityElementalEarth;
 import theultimatehose.elementalspirits.entity.RenderElementalEarth;
+import theultimatehose.elementalspirits.input.KeyBindManager;
 import theultimatehose.elementalspirits.overlay.OverlayHandler;
 
 import java.util.HashMap;
@@ -28,6 +29,7 @@ public class ClientProxy implements GeneralProxy {
         }
 
         FMLCommonHandler.instance().bus().register(new OverlayHandler());
+        FMLCommonHandler.instance().bus().register(KeyBindManager.INSTANCE);
 
     }
 
