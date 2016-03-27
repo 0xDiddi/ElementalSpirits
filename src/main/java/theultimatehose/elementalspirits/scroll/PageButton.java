@@ -12,17 +12,16 @@ public class PageButton extends GuiButton {
 
     int xPos, yPos;
     GuiScroll parent;
-    GuiScroll.Types targetType;
-    Structure.ChapterList targetChapter;
-    Structure.EntryList targetEntry;
-    int targetPage;
+    Structure.Chapter targetChapter;
+    Structure.Entry targetEntry;
+    Structure.Page targetPage;
     Direction direction;
 
     public enum Direction {
-        back, left, right;
+        back, left, right
     }
 
-    public PageButton(int x, int y, Direction direction, GuiScroll parent, GuiScroll.Types targetType, Structure.ChapterList targetChapter, Structure.EntryList targetEntry, int targetPage) {
+    public PageButton(int x, int y, Direction direction, GuiScroll parent, Structure.Chapter targetChapter, Structure.Entry targetEntry, Structure.Page targetPage) {
         super(0, x, y, "");
         xPos = x;
         yPos = y;
@@ -30,7 +29,6 @@ public class PageButton extends GuiButton {
         this.width = 20;
         this.direction = direction;
         this.parent = parent;
-        this.targetType = targetType;
         this.targetChapter = targetChapter;
         this.targetEntry = targetEntry;
         this.targetPage = targetPage;
@@ -60,7 +58,6 @@ public class PageButton extends GuiButton {
         if (mouseX > xPos && mouseY > yPos && mouseX < xPos + getButtonWidth() && mouseY < yPos + this.height) {
             this.parent.currentChapter = targetChapter;
             this.parent.currentEntry = targetEntry;
-            this.parent.currentType = targetType;
             this.parent.currentPage = targetPage;
             return true;
         } else {

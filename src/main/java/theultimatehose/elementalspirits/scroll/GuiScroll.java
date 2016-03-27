@@ -1,8 +1,10 @@
 package theultimatehose.elementalspirits.scroll;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
@@ -12,14 +14,9 @@ import java.io.IOException;
 
 public class GuiScroll extends GuiScreen {
 
-    public enum Types {
-        content, chapter, entry
-    }
-
-    public Types currentType;
-    public Structure.ChapterList currentChapter;
-    public Structure.EntryList currentEntry;
-    public int currentPage = 1;
+    public Structure.Chapter currentChapter;
+    public Structure.Entry currentEntry;
+    public Structure.Page currentPage;
 
     ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/GuiAncientScroll.png");
 
@@ -33,10 +30,13 @@ public class GuiScroll extends GuiScreen {
 
     @Override
     public void initGui() {
+        System.out.println("init");
         super.initGui();
         this.guiTop = (this.height-this.guiHeight)/2;
         this.guiLeft = (this.width-this.guiWidth)/2;
-        currentType = Types.content;
+        this.currentChapter = null;
+        this.currentEntry = null;
+        this.currentPage = null;
     }
 
     @Override
@@ -49,63 +49,72 @@ public class GuiScroll extends GuiScreen {
         this.fontRendererObj.setUnicodeFlag(true);
 
         int y = guiTop + 24;
-        int x = guiLeft + 13;
+        int x = guiLeft + 15;
         int index = 0;
         buttons = null;
         PageButton btnBack;
 
-        switch (currentType) {
-            case content:
-                this.fontRendererObj.drawSplitString(parseIdentifier("scroll." + Util.MOD_ID_LOWER + ".contents.name"), x, guiTop + 12, 150, 0);
-                buttons = new TextButton[Structure.ChapterList.values().length];
-                for (Structure.ChapterList chap : Structure.ChapterList.values()) {
-                    TextButton btn = new TextButton(y, x, y, parseIdentifier(chap.identifier + ".name"), this, Types.chapter, chap, null);
+        //If chapter is null, draw the chapter overview
+        if (this.currentChapter == null) {
+
+            this.fontRendererObj.drawSplitString(parseIdentifier("scroll." + Util.MOD_ID_LOWER + ".contents.name"), x, guiTop + 12, 130, 0);
+            buttons = new TextButton[Structure.Book.chapters.size()];
+            for (Structure.Chapter chap : Structure.Book.chapters) {
+                TextButton btn = new TextButton(y, x, y, parseIdentifier(chap.identifier + ".name"), this, chap, null, null);
+                btn.drawButtonForegroundLayer(mouseX, mouseY);
+                buttons[index] = btn;
+                index++;
+                y += 10;
+            }
+
+        //If entry is null, draw the entry overview
+        } else if (this.currentEntry == null) {
+
+            this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + ".title"), x, guiTop + 12, 130, 0);
+            buttons = new GuiButton[100];
+            for (Structure.Entry entry : currentChapter.entries) {
+                TextButton btn = new TextButton(y, x, y, parseIdentifier(currentChapter.identifier + "." + entry.subIdentifier + ".name"), this, currentChapter, entry, entry.pages.get(0));
+                btn.drawButtonForegroundLayer(mouseX, mouseY);
+                buttons[index] = btn;
+                index++;
+                y += 10;
+            }
+
+            btnBack = new PageButton(guiLeft + guiWidth / 2 - 10, guiTop + guiHeight - 20, PageButton.Direction.back, this, null, null, null);
+            btnBack.drawButtonForegroundLayer(mouseX, mouseY);
+            buttons[index] = btnBack;
+
+        //Else, draw the current page
+        } else {
+
+            this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + "." + currentEntry.subIdentifier + ".title"), x, guiTop + 12, 130, 0);
+            buttons = new PageButton[3];
+            if (currentEntry.pages.size() > 1) {
+                if (currentPage.number < currentEntry.pages.size()) {
+                    PageButton btn = new PageButton(guiLeft + guiWidth - 25, guiTop + guiHeight - 20, PageButton.Direction.right, this, currentChapter, currentEntry, currentEntry.pages.get(currentPage.number));
                     btn.drawButtonForegroundLayer(mouseX, mouseY);
-                    buttons[index] = btn;
-                    index++;
-                    y += 10;
+                    buttons[1] = btn;
                 }
-                break;
-            case chapter:
-                this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + ".title"), x, guiTop + 12, 150, 0);
-                buttons = new GuiButton[100];
-                for (Structure.EntryList entry : Structure.EntryList.values()) {
-                    if (entry.parent == currentChapter) {
-                        TextButton btn = new TextButton(y, x, y, parseIdentifier(currentChapter.identifier + "." + entry.subIdentifier + ".name"), this, Types.entry, currentChapter, entry);
-                        btn.drawButtonForegroundLayer(mouseX, mouseY);
-                        buttons[index] = btn;
-                        index++;
-                        y += 10;
-                    }
+                if (currentPage.number > 1) {
+                    PageButton btn = new PageButton(guiLeft + 10, guiTop + guiHeight - 20, PageButton.Direction.left, this, currentChapter, currentEntry, currentEntry.pages.get(currentPage.number - 2));
+                    btn.drawButtonForegroundLayer(mouseX, mouseY);
+                    buttons[0] = btn;
                 }
+            }
 
-                btnBack = new PageButton(guiLeft + guiWidth/2 - 10, guiTop + guiHeight - 20, PageButton.Direction.back, this, Types.content, currentChapter, currentEntry, 1);
-                btnBack.drawButtonForegroundLayer(mouseX, mouseY);
-                buttons[index] = btnBack;
+            btnBack = new PageButton(guiLeft + guiWidth / 2 - 10, guiTop + guiHeight - 20, PageButton.Direction.back, this, currentChapter, null, null);
+            btnBack.drawButtonForegroundLayer(mouseX, mouseY);
+            buttons[2] = btnBack;
 
-                break;
-            case entry:
-                this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + "." + currentEntry.subIdentifier + ".title"), x, guiTop + 12, 150, 0);
-                buttons = new PageButton[3];
-                if (currentEntry.pages > 1) {
-                    if (currentPage < currentEntry.pages) {
-                        PageButton btn = new PageButton(guiLeft + guiWidth - 25, guiTop + guiHeight - 20, PageButton.Direction.right, this, Types.entry, currentChapter, currentEntry, currentPage+1);
-                        btn.drawButtonForegroundLayer(mouseX, mouseY);
-                        buttons[1] = btn;
-                    } if (currentPage > 1) {
-                        PageButton btn = new PageButton(guiLeft + 10, guiTop + guiHeight - 20, PageButton.Direction.left, this, Types.entry, currentChapter, currentEntry, currentPage-1);
-                        btn.drawButtonForegroundLayer(mouseX, mouseY);
-                        buttons[0] = btn;
-                    }
-                }
-
-                btnBack = new PageButton(guiLeft + guiWidth/2 - 10, guiTop + guiHeight - 20, PageButton.Direction.back, this, Types.chapter, currentChapter, currentEntry, 1);
-                btnBack.drawButtonForegroundLayer(mouseX, mouseY);
-                buttons[2] = btnBack;
-
-                this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + "." + currentEntry.subIdentifier + "." + currentPage), x, y, 140, 0);
-                break;
+            if (currentPage instanceof Structure.PageTextOnly)
+                this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + "." + currentEntry.subIdentifier + "." + currentPage.number), x, y, 135, 0);
+            else if (currentPage instanceof Structure.PageImageAndText) {
+                this.mc.getTextureManager().bindTexture(((Structure.PageImageAndText)currentPage).resLoc);
+                drawScaledCustomSizeModalRect(this.guiLeft + 24, this.guiTop + 24, 0, 0, 280, 320, 113, 130, 280, 320);
+                this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + "." + currentEntry.subIdentifier + "." + currentPage.number), x, guiTop + guiHeight - 49, 130, 0);
+            }
         }
+
         this.fontRendererObj.setUnicodeFlag(unicode);
     }
 

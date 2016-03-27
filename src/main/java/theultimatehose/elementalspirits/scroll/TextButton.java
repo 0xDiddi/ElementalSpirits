@@ -9,20 +9,20 @@ public class TextButton extends GuiButton {
     int xPos, yPos;
     String text;
     GuiScroll parent;
-    GuiScroll.Types targetType;
-    Structure.ChapterList targetChapter;
-    Structure.EntryList targetEntry;
+    Structure.Chapter targetChapter;
+    Structure.Entry targetEntry;
+    Structure.Page targetPage;
 
-    public TextButton(int buttonId, int x, int y, String buttonText, GuiScroll parent, GuiScroll.Types targetType, Structure.ChapterList targetChapter, Structure.EntryList targetEntry) {
+    public TextButton(int buttonId, int x, int y, String buttonText, GuiScroll parent, Structure.Chapter targetChapter, Structure.Entry targetEntry, Structure.Page targetPage) {
         super(buttonId, x, y, buttonText);
         xPos = x;
         yPos = y;
         text = buttonText;
         this.height = 9;
         this.parent = parent;
-        this.targetType = targetType;
         this.targetChapter = targetChapter;
         this.targetEntry = targetEntry;
+        this.targetPage = targetPage;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class TextButton extends GuiButton {
         if (mouseX > xPos && mouseY > yPos && mouseX < xPos + getButtonWidth() && mouseY < yPos + this.height) {
             this.parent.currentChapter = targetChapter;
             this.parent.currentEntry = targetEntry;
-            this.parent.currentType = targetType;
+            this.parent.currentPage = targetPage;
             return true;
         } else {
             return false;
