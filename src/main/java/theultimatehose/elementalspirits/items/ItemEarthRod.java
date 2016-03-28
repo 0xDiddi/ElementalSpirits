@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import theultimatehose.elementalspirits.ElementalSpirits;
 import theultimatehose.elementalspirits.Names;
-import theultimatehose.elementalspirits.entity.EntityElementalEarth;
+import theultimatehose.elementalspirits.entity.elemental_earth.EntityElementalEarth;
 import theultimatehose.elementalspirits.util.Util;
 
 public class ItemEarthRod extends Item {

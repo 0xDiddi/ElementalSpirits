@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import theultimatehose.elementalspirits.entity.EntityElementalBase;
-import theultimatehose.elementalspirits.entity.EntityElementalEarth;
+import theultimatehose.elementalspirits.entity.elemental_earth.EntityElementalEarth;
 import theultimatehose.elementalspirits.gui.GuiHandler;
 import theultimatehose.elementalspirits.input.KeyBindManager;
 import theultimatehose.elementalspirits.items.ItemAncientScroll;

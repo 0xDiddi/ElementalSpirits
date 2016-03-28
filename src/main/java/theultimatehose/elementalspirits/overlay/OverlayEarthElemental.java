@@ -1,32 +1,23 @@
 package theultimatehose.elementalspirits.overlay;
 
-import theultimatehose.elementalspirits.Names;
-import theultimatehose.elementalspirits.entity.EntityElementalBase;
-import theultimatehose.elementalspirits.entity.EntityElementalEarth;
-import theultimatehose.elementalspirits.input.KeyBindManager;
+import theultimatehose.elementalspirits.entity.elemental_earth.EntityElementalEarth;
 
 public class OverlayEarthElemental extends Overlay {
 
     @Override
-    public void render(float overlayAlpha, EntityElementalBase elementalBase) {
-        super.render(overlayAlpha, elementalBase);
+    public void render(float overlayAlpha) {
+        super.render(overlayAlpha);
 
-        EntityElementalEarth elemental;
-
-        if (elementalBase instanceof EntityElementalEarth)
-            elemental = (EntityElementalEarth) elementalBase;
-        else
+        if (!(elemental instanceof EntityElementalEarth)) {
             return;
-
-        if (this.fontRenderer != null && overlayAlpha == 1) {
-            this.fontRenderer.drawString("Press Num8 to mount.", width / 2, height / 2, 0xFFFFFF);
         }
 
-        if (KeyBindManager.INSTANCE.bindings.get(Names.KEYBIND_WHEEL_TC).pressed) {
-            if (!player.isRiding()) {
-                elemental.scheduleRiderUpdate(player);
+        if (this.fontRenderer != null && overlayAlpha == 1) {
+            for (Position pos : Position.values()) {
+                String localized = pos.getLocalizedString("earth");
+                int stringWidth = this.fontRenderer.getStringWidth(localized);
+                this.fontRenderer.drawString(localized, this.startLeft + ((pos.x - stringWidth) / 2), this.startTop + pos.y, 0xFFFFFF);
             }
-            KeyBindManager.INSTANCE.bindings.get(Names.KEYBIND_WHEEL_TC).reset();
         }
 
     }

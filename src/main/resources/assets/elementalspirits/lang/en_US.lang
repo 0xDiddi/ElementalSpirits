@@ -5,6 +5,16 @@ item.elementalspirits.itemEarthRod.name=Rod of Earth Mastery
 #Entities
 entity.ElementalSpirits.EarthElemental.name=Earth Elemental
 
+#Overlay
+overlay.elementalspirits.earth.tl.name=Stats
+overlay.elementalspirits.earth.tc.name=Mount
+overlay.elementalspirits.earth.tr.name=Infuse
+overlay.elementalspirits.earth.cl.name=Apply Strength
+overlay.elementalspirits.earth.cr.name=
+overlay.elementalspirits.earth.bl.name=
+overlay.elementalspirits.earth.bc.name=Release
+overlay.elementalspirits.earth.br.name=
+
 #Scroll
 scroll.elementalspirits.contents.name=<r><f>Elemental Spirits
 

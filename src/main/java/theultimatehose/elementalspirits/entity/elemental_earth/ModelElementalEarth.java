@@ -1,4 +1,4 @@
-package theultimatehose.elementalspirits.entity;
+package theultimatehose.elementalspirits.entity.elemental_earth;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;

@@ -7,8 +7,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import theultimatehose.elementalspirits.entity.EntityElementalEarth;
-import theultimatehose.elementalspirits.entity.RenderElementalEarth;
+import theultimatehose.elementalspirits.entity.elemental_earth.EntityElementalEarth;
+import theultimatehose.elementalspirits.entity.elemental_earth.RenderElementalEarth;
 import theultimatehose.elementalspirits.input.KeyBindManager;
 import theultimatehose.elementalspirits.overlay.OverlayHandler;
 
@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class ClientProxy implements GeneralProxy {
 
-    private static Map<ItemStack, ResourceLocation> itemRenderersForRegistering = new HashMap<ItemStack, ResourceLocation>();
+    private static Map<ItemStack, ResourceLocation> itemRenderersForRegistering = new HashMap<>();
 
     @Override
     public void init(FMLInitializationEvent event) {

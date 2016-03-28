@@ -1,22 +1,11 @@
 package theultimatehose.elementalspirits.overlay;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.lwjgl.opengl.GL11;
-import theultimatehose.elementalspirits.Names;
 import theultimatehose.elementalspirits.entity.EntityElementalBase;
-import theultimatehose.elementalspirits.entity.EntityElementalEarth;
-import theultimatehose.elementalspirits.input.KeyBindManager;
-import theultimatehose.elementalspirits.util.Util;
 
 public class OverlayHandler {
 
@@ -45,12 +34,12 @@ public class OverlayHandler {
                 if (alpha < 0)
                     alpha = 0;
 
-                if (elemental instanceof EntityElementalEarth)
-                    currentOverlay = new OverlayEarthElemental();
+                if (elemental instanceof IOverlayProvider)
+                    currentOverlay = ((IOverlayProvider)elemental).getOverlay();
 
                 if (currentOverlay != null) {
-                    currentOverlay.init(width, height);
-                    currentOverlay.render(alpha, elemental);
+                    currentOverlay.init(width, height, (width - 132) / 2, (height - 132) / 2, elemental);
+                    currentOverlay.render(alpha);
                 }
 
             }

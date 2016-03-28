@@ -1,4 +1,4 @@
-package theultimatehose.elementalspirits.entity;
+package theultimatehose.elementalspirits.entity.elemental_earth;
 
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -15,12 +15,20 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import theultimatehose.elementalspirits.ElementalSpirits;
+import theultimatehose.elementalspirits.entity.EntityElementalBase;
 import theultimatehose.elementalspirits.entity.ai.ElementalAIFollowMaster;
 import theultimatehose.elementalspirits.entity.ai.EntityAIRiddenByPlayer;
+import theultimatehose.elementalspirits.entity.elemental_earth.actions.ActionMount;
 import theultimatehose.elementalspirits.network.Syncer;
 import theultimatehose.elementalspirits.network.data.integer.IIntegerSyncer;
+import theultimatehose.elementalspirits.overlay.IOverlayProvider;
+import theultimatehose.elementalspirits.overlay.Overlay;
+import theultimatehose.elementalspirits.overlay.OverlayEarthElemental;
+import theultimatehose.elementalspirits.overlay.WheelInteraction;
 
-public class EntityElementalEarth extends EntityElementalBase implements IIntegerSyncer {
+import java.util.HashMap;
+
+public class EntityElementalEarth extends EntityElementalBase implements IIntegerSyncer, IOverlayProvider, WheelInteraction.IWheelInteractionProvider {
 
     final int UPDATE_RIDER_POS = 23;
     int riderID;
@@ -142,5 +150,17 @@ public class EntityElementalEarth extends EntityElementalBase implements IIntege
     public void setIntData(int[] data) {
         this.riderID = data[0];
         this.shouldUpdateRider = true;
+    }
+
+    @Override
+    public Overlay getOverlay() {
+        return new OverlayEarthElemental();
+    }
+
+    @Override
+    public HashMap<Overlay.Position, WheelInteraction.Action> getActions() {
+        HashMap<Overlay.Position, WheelInteraction.Action> map = new HashMap<>(8);
+        map.put(Overlay.Position.top_center, new ActionMount(this));
+        return map;
     }
 }
