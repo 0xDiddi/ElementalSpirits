@@ -22,7 +22,6 @@ public class OverlayHandler {
     int pretimer;
     float alpha;
 
-
     @SubscribeEvent
     public void renderOverlay(RenderGameOverlayEvent.Post event) {
         Entity entityHit = Minecraft.getMinecraft().objectMouseOver.entityHit;
@@ -56,12 +55,12 @@ public class OverlayHandler {
                     KeyBindManager.INSTANCE.bindings.get(Names.KEYBIND_WHEEL_TC).reset();
                 }
 
+            } else {
+                if (alpha > 0)
+                    alpha -= (alpha > .2 ? .01 : .001);
+                else
+                    pretimer = 0;
             }
-        } else {
-            if (alpha > 0)
-                alpha -= (alpha > .2 ? .01 : .001);
-            else
-                pretimer = 0;
         }
 
         GlStateManager.pushMatrix();
