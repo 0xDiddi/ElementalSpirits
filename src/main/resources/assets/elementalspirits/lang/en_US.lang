@@ -1,5 +1,6 @@
 #Items
 item.elementalspirits.itemScroll.name=Ancient Scroll
+item.elementalspirits.itemEarthRod.name=Rod of Earth Mastery
 
 #Entities
 entity.ElementalSpirits.EarthElemental.name=Earth Elemental

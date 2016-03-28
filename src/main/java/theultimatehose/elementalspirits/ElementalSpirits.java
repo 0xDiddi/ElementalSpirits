@@ -15,6 +15,7 @@ import theultimatehose.elementalspirits.entity.EntityElementalEarth;
 import theultimatehose.elementalspirits.gui.GuiHandler;
 import theultimatehose.elementalspirits.input.KeyBindManager;
 import theultimatehose.elementalspirits.items.ItemAncientScroll;
+import theultimatehose.elementalspirits.items.ItemEarthRod;
 import theultimatehose.elementalspirits.network.Syncer;
 import theultimatehose.elementalspirits.proxy.GeneralProxy;
 import theultimatehose.elementalspirits.scroll.Structure;
@@ -26,7 +27,8 @@ public class ElementalSpirits {
     @Mod.Instance(Util.MOD_ID)
     public static ElementalSpirits instance;
 
-    ItemAncientScroll itemAncientScroll;
+    public ItemAncientScroll itemAncientScroll;
+    public ItemEarthRod itemEarthRod;
 
     @SidedProxy(clientSide = "theultimatehose.elementalspirits.proxy.ClientProxy", serverSide = "theultimatehose.elementalspirits.proxy.ServerProxy")
     public static GeneralProxy proxy;
@@ -35,8 +37,10 @@ public class ElementalSpirits {
     public void preInit(FMLPreInitializationEvent event) {
 
         itemAncientScroll = (ItemAncientScroll) new ItemAncientScroll().setUnlocalizedName(Util.MOD_ID_LOWER + '.' + Names.ITEM_SCROLL).setRegistryName(Names.ITEM_SCROLL);
+        itemEarthRod = (ItemEarthRod) new ItemEarthRod().setUnlocalizedName(Util.MOD_ID_LOWER + "." + Names.ITEM_EARTH_ROD).setRegistryName(Names.ITEM_EARTH_ROD);
 
         GameRegistry.registerItem(itemAncientScroll, Names.ITEM_SCROLL);
+        GameRegistry.registerItem(itemEarthRod, Names.ITEM_EARTH_ROD);
 
     }
 
@@ -55,6 +59,6 @@ public class ElementalSpirits {
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        EntityRegistry.addSpawn(EntityElementalEarth.class, 10, 1, 5, EnumCreatureType.AMBIENT, BiomeGenBase.plains);
+        EntityRegistry.addSpawn(EntityElementalEarth.class, 1, 0, 1, EnumCreatureType.AMBIENT, BiomeGenBase.plains);
     }
 }

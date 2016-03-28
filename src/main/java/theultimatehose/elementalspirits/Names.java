@@ -3,6 +3,7 @@ package theultimatehose.elementalspirits;
 public class Names {
 
     public static final String ITEM_SCROLL = "itemScroll";
+    public static final String ITEM_EARTH_ROD = "itemEarthRod";
 
     public static final String KEYBIND_WHEEL_TL = "keybind_wheel_tl";
     public static final String KEYBIND_WHEEL_TC = "keybind_wheel_tc";
