@@ -11,6 +11,8 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -18,7 +20,9 @@ import theultimatehose.elementalspirits.ElementalSpirits;
 import theultimatehose.elementalspirits.entity.EntityElementalBase;
 import theultimatehose.elementalspirits.entity.ai.ElementalAIFollowMaster;
 import theultimatehose.elementalspirits.entity.ai.EntityAIRiddenByPlayer;
+import theultimatehose.elementalspirits.entity.elemental_earth.actions.ActionInfuse;
 import theultimatehose.elementalspirits.entity.elemental_earth.actions.ActionMount;
+import theultimatehose.elementalspirits.items.ItemEarthRod;
 import theultimatehose.elementalspirits.network.Syncer;
 import theultimatehose.elementalspirits.network.data.integer.IIntegerSyncer;
 import theultimatehose.elementalspirits.overlay.IOverlayProvider;
@@ -27,12 +31,18 @@ import theultimatehose.elementalspirits.overlay.OverlayEarthElemental;
 import theultimatehose.elementalspirits.overlay.WheelInteraction;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class EntityElementalEarth extends EntityElementalBase implements IIntegerSyncer, IOverlayProvider, WheelInteraction.IWheelInteractionProvider {
 
     final int UPDATE_RIDER_POS = 23;
+
     int riderID;
     boolean shouldUpdateRider;
+
+    BlockPos infusePos;
+    boolean shouldPerformInfuse;
+
     public EntityAIRiddenByPlayer aiRiddenByPlayer;
 
     public EntityElementalEarth(World worldIn) {
@@ -93,7 +103,8 @@ public class EntityElementalEarth extends EntityElementalBase implements IIntege
                     NBTTagCompound compound = player.getCurrentEquippedItem().getTagCompound();
                     if (compound == null)
                         compound = new NBTTagCompound();
-                    compound.setBoolean("isInfused", true);
+                    if (compound.getBoolean(ItemEarthRod.KEY_GREATER))
+                        compound.setBoolean(ItemEarthRod.KEY_INFUSED, true);
                     player.getCurrentEquippedItem().setTagCompound(compound);
                     return true;
                 } else {
@@ -161,6 +172,7 @@ public class EntityElementalEarth extends EntityElementalBase implements IIntege
     public HashMap<Overlay.Position, WheelInteraction.Action> getActions() {
         HashMap<Overlay.Position, WheelInteraction.Action> map = new HashMap<>(8);
         map.put(Overlay.Position.top_center, new ActionMount(this));
+        map.put(Overlay.Position.top_right, new ActionInfuse(this, MinecraftServer.getServer().getConfigurationManager().getPlayerByUUID(UUID.fromString(this.getMaster()))));
         return map;
     }
 }

@@ -26,8 +26,11 @@ public abstract class Overlay {
     public HashMap<Position, WheelInteraction.Action> wheelActions;
     public boolean hasWheelActions;
 
+    private boolean isKeyPressed;
+
     public int width, height;
     public int startLeft, startTop;
+    public int ticksSinceInput;
 
     public void init(int width, int height, int startLeft, int startTop, EntityElementalBase elemental) {
         this.width = width;
@@ -44,8 +47,12 @@ public abstract class Overlay {
     }
 
     public void render(float overlayAlpha) {
+        this.ticksSinceInput++;
         this.drawDefaultBackground(overlayAlpha);
-        this.processWheelKeyInput();
+        if (this.ticksSinceInput == 10) {
+            this.ticksSinceInput = 0;
+            this.processWheelKeyInput();
+        }
     }
 
     public void drawDefaultBackground(float overlayAlpha) {
@@ -77,38 +84,47 @@ public abstract class Overlay {
             return;
 
         if (KeyBindManager.INSTANCE.bindings.get(Names.KEYBIND_WHEEL_TL).pressed) {
-            if (wheelActions.get(Position.top_left) != null)
+            if (wheelActions.get(Position.top_left) != null && !this.isKeyPressed)
                 wheelActions.get(Position.top_left).perform();
+            this.isKeyPressed = true;
             KeyBindManager.INSTANCE.bindings.get(Names.KEYBIND_WHEEL_TL).reset();
         } else if (KeyBindManager.INSTANCE.bindings.get(Names.KEYBIND_WHEEL_TC).pressed) {
-            if (wheelActions.get(Position.top_center) != null)
+            if (wheelActions.get(Position.top_center) != null && !this.isKeyPressed)
                 wheelActions.get(Position.top_center).perform();
+            this.isKeyPressed = true;
             KeyBindManager.INSTANCE.bindings.get(Names.KEYBIND_WHEEL_TC).reset();
         } else if (KeyBindManager.INSTANCE.bindings.get(Names.KEYBIND_WHEEL_TR).pressed) {
-            if (wheelActions.get(Position.top_right) != null)
+            if (wheelActions.get(Position.top_right) != null && !this.isKeyPressed)
                 wheelActions.get(Position.top_right).perform();
+            this.isKeyPressed = true;
             KeyBindManager.INSTANCE.bindings.get(Names.KEYBIND_WHEEL_TR).reset();
         } else if (KeyBindManager.INSTANCE.bindings.get(Names.KEYBIND_WHEEL_CL).pressed) {
-            if (wheelActions.get(Position.center_left) != null)
+            if (wheelActions.get(Position.center_left) != null && !this.isKeyPressed)
                 wheelActions.get(Position.center_left).perform();
+            this.isKeyPressed = true;
             KeyBindManager.INSTANCE.bindings.get(Names.KEYBIND_WHEEL_CL).reset();
         } else if (KeyBindManager.INSTANCE.bindings.get(Names.KEYBIND_WHEEL_CR).pressed) {
-            if (wheelActions.get(Position.center_right) != null)
+            if (wheelActions.get(Position.center_right) != null && !this.isKeyPressed)
                 wheelActions.get(Position.center_right).perform();
+            this.isKeyPressed = true;
             KeyBindManager.INSTANCE.bindings.get(Names.KEYBIND_WHEEL_CR).reset();
         } else if (KeyBindManager.INSTANCE.bindings.get(Names.KEYBIND_WHEEL_BL).pressed) {
-            if (wheelActions.get(Position.bottom_left) != null)
+            if (wheelActions.get(Position.bottom_left) != null && !this.isKeyPressed)
                 wheelActions.get(Position.bottom_left).perform();
+            this.isKeyPressed = true;
             KeyBindManager.INSTANCE.bindings.get(Names.KEYBIND_WHEEL_BL).reset();
         } else if (KeyBindManager.INSTANCE.bindings.get(Names.KEYBIND_WHEEL_BC).pressed) {
-            if (wheelActions.get(Position.bottom_center) != null)
+            if (wheelActions.get(Position.bottom_center) != null && !this.isKeyPressed)
                 wheelActions.get(Position.bottom_center).perform();
+            this.isKeyPressed = true;
             KeyBindManager.INSTANCE.bindings.get(Names.KEYBIND_WHEEL_BC).reset();
         } else if (KeyBindManager.INSTANCE.bindings.get(Names.KEYBIND_WHEEL_BR).pressed) {
-            if (wheelActions.get(Position.bottom_right) != null)
+            if (wheelActions.get(Position.bottom_right) != null && !this.isKeyPressed)
                 wheelActions.get(Position.bottom_right).perform();
+            this.isKeyPressed = true;
             KeyBindManager.INSTANCE.bindings.get(Names.KEYBIND_WHEEL_BR).reset();
-        }
+        } else
+            this.isKeyPressed = false;
     }
 
     public enum Position {

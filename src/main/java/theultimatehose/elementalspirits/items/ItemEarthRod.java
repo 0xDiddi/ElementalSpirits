@@ -1,18 +1,27 @@
 package theultimatehose.elementalspirits.items;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 import theultimatehose.elementalspirits.ElementalSpirits;
 import theultimatehose.elementalspirits.Names;
 import theultimatehose.elementalspirits.entity.elemental_earth.EntityElementalEarth;
+import theultimatehose.elementalspirits.multiblock.EarthRodStructure;
 import theultimatehose.elementalspirits.util.Util;
 
 public class ItemEarthRod extends Item {
+
+    public static final String KEY_INFUSED = "isInfused";
+    public static final String KEY_GREATER = "isGreater";
+
+    public static final String KEY_PERFORM_INFUSE = "shouldInfuse";
+    public static final String KEY_INFUSE_NOTIFY = "shouldNotifyPlayer";
 
     public ItemEarthRod() {
         this.setMaxStackSize(1);
@@ -20,10 +29,24 @@ public class ItemEarthRod extends Item {
     }
 
     @Override
+    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+        NBTTagCompound compound = stack.getTagCompound();
+        if (compound != null) {
+            if (isSelected) {
+                if (compound.getBoolean(KEY_INFUSE_NOTIFY)) {
+                    entityIn.addChatMessage(new ChatComponentTranslation("chat.elementalspirits.infuse_start.msg"));
+                    compound.setBoolean(KEY_INFUSE_NOTIFY, false);
+                    stack.setTagCompound(compound);
+                }
+            }
+        }
+    }
+
+    @Override
     public EnumAction getItemUseAction(ItemStack stack) {
         NBTTagCompound compound = stack.getTagCompound();
         if (compound != null) {
-            if (compound.getBoolean("isInfused"))
+            if (compound.getBoolean(KEY_INFUSED))
                 return EnumAction.BLOCK;
         }
         return EnumAction.NONE;
@@ -34,7 +57,7 @@ public class ItemEarthRod extends Item {
         if (!world.isRemote) {
             NBTTagCompound compound = stack.getTagCompound();
             if (compound != null) {
-                if (compound.getBoolean("isInfused")) {
+                if (compound.getBoolean(KEY_INFUSED)) {
                     if (player.ridingEntity != null && player.ridingEntity instanceof EntityElementalEarth) {
                         EntityElementalEarth elemental = (EntityElementalEarth) player.ridingEntity;
                         elemental.aiRiddenByPlayer.boost();
@@ -46,10 +69,36 @@ public class ItemEarthRod extends Item {
     }
 
     @Override
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (!world.isRemote) {
+            NBTTagCompound compound = stack.getTagCompound();
+            if (compound != null) {
+                if (compound.getBoolean(KEY_PERFORM_INFUSE)) {
+                    if (world.getChunkFromBlockCoords(pos).getBlock(pos) == Blocks.diamond_block) {
+                        EarthRodStructure struct = new EarthRodStructure();
+                        if (struct.checkMatrix(world, pos, true)) {
+                            player.addChatMessage(new ChatComponentTranslation("chat." + Util.MOD_ID_LOWER + ".infuse_success.msg"));
+                            compound.setBoolean(KEY_INFUSED, true);
+                        }
+
+                        return true;
+                    } else {
+                        player.addChatMessage(new ChatComponentTranslation("chat." + Util.MOD_ID_LOWER + ".infuse_failed.msg"));
+                    }
+
+                    compound.setBoolean(KEY_PERFORM_INFUSE, false);
+                    stack.setTagCompound(compound);
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
     public boolean hasEffect(ItemStack stack) {
         NBTTagCompound compound = stack.getTagCompound();
         if (compound != null) {
-            if (compound.getBoolean("isInfused"))
+            if (compound.getBoolean(KEY_INFUSED))
                 return true;
         }
         return false;

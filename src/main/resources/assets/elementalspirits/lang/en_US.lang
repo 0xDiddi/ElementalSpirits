@@ -49,3 +49,8 @@ keys.elementalspirits.keybind_wheel_cr.description=EIW: center right
 keys.elementalspirits.keybind_wheel_bl.description=EIW: bottom left
 keys.elementalspirits.keybind_wheel_bc.description=EIW: bottom center
 keys.elementalspirits.keybind_wheel_br.description=EIW: bottom right
+
+#Chat messages
+chat.elementalspirits.infuse_start.msg=Right click the origin block of the Structure you want to infuse
+chat.elementalspirits.infuse_success.msg=Infusion successful!
+chat.elementalspirits.infuse_failed.msg=Infusion failed. Make sure the entire area is clean (even grass n' stuff)

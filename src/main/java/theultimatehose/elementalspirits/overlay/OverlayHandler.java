@@ -13,6 +13,7 @@ public class OverlayHandler {
     float alpha;
 
     public Overlay currentOverlay;
+    public EntityElementalBase prevElemental;
 
     @SubscribeEvent
     public void renderOverlay(RenderGameOverlayEvent.Post event) {
@@ -34,16 +35,22 @@ public class OverlayHandler {
                 if (alpha < 0)
                     alpha = 0;
 
-                if (elemental instanceof IOverlayProvider)
-                    currentOverlay = ((IOverlayProvider)elemental).getOverlay();
+                if (elemental != this.prevElemental) {
+                    this.prevElemental = elemental;
+                    if (elemental instanceof IOverlayProvider) {
+                        currentOverlay = ((IOverlayProvider) elemental).getOverlay();
+                        if (currentOverlay != null)
+                            currentOverlay.init(width, height, (width - 132) / 2, (height - 132) / 2, elemental);
+                    }
+                }
 
                 if (currentOverlay != null) {
-                    currentOverlay.init(width, height, (width - 132) / 2, (height - 132) / 2, elemental);
                     currentOverlay.render(alpha);
                 }
 
             }
         } else {
+            this.prevElemental = null;
             if (alpha > 0) {
                 alpha -= (alpha > .2 ? .01 : .001);
                 if (currentOverlay != null && alpha > 0)
