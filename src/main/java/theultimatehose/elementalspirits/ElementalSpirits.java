@@ -1,6 +1,7 @@
 package theultimatehose.elementalspirits;
 
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.init.Blocks;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -10,6 +11,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 import theultimatehose.elementalspirits.entity.EntityElementalBase;
 import theultimatehose.elementalspirits.entity.elemental_earth.EntityElementalEarth;
 import theultimatehose.elementalspirits.gui.GuiHandler;
@@ -30,6 +32,7 @@ public class ElementalSpirits {
 
     public ItemAncientScroll itemAncientScroll;
     public ItemEarthRod itemEarthRod;
+    public ShapedOreRecipe itemEarthRodRecipe;
 
     @SidedProxy(clientSide = "theultimatehose.elementalspirits.proxy.ClientProxy", serverSide = "theultimatehose.elementalspirits.proxy.ServerProxy")
     public static GeneralProxy proxy;
@@ -47,6 +50,8 @@ public class ElementalSpirits {
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
+
+        GameRegistry.addRecipe(itemEarthRodRecipe = new ShapedOreRecipe(itemEarthRod, "VVD", "IIE", "RVV", 'V', Blocks.vine, 'D', "gemDiamond", 'I', "ingotIron", 'E', "gemEmerald", 'R', "dustRedstone"));
 
         GuiHandler.init();
         proxy.init(event);

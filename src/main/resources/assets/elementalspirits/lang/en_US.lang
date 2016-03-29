@@ -21,10 +21,20 @@ scroll.elementalspirits.contents.name=<r><f>Elemental Spirits
 scroll.elementalspirits.chapter.elemental.name=Elementals
 scroll.elementalspirits.chapter.elemental.title=<b><f>Elementals
 
-scroll.elementalspirits.chapter.elemental.earth_elementals.name=Earth Elementals
-scroll.elementalspirits.chapter.elemental.earth_elementals.title=<g><f>Earth Elementals
-scroll.elementalspirits.chapter.elemental.earth_elementals.1=Earth Elementals are the strongest of the four Elementals. When they have a connection to the ground, they have almost infinite power which they can also share with their masters.<br>They can be tamed by feeding them (vanilla) minerals. You will need less of the mineral if you use more rare minerals.
-scroll.elementalspirits.chapter.elemental.earth_elementals.2=That's how a (low level) earth elemental looks like.
+scroll.elementalspirits.chapter.earth_elementals.name=Earth Elementals
+scroll.elementalspirits.chapter.earth_elementals.title=<g><f>Earth Elementals
+
+
+scroll.elementalspirits.chapter.earth_elementals.general.name=General Information
+scroll.elementalspirits.chapter.earth_elementals.general.title=<g><f>General Information
+scroll.elementalspirits.chapter.earth_elementals.general.1=Earth Elementals are the strongest of the four Elementals. When they have a connection to the ground, they have almost infinite power which they can also share with their masters.<br>They can be tamed by feeding them (vanilla) minerals. You will need less of the mineral if you use more rare minerals.
+scroll.elementalspirits.chapter.earth_elementals.general.2=That's how a (low level) earth elemental looks like.
+
+scroll.elementalspirits.chapter.earth_elementals.earth_rod.name=The Rod of Earth Mastery
+scroll.elementalspirits.chapter.earth_elementals.earth_rod.title=<g><f>The Rod of Earth Mastery
+scroll.elementalspirits.chapter.earth_elementals.earth_rod.1=The Rod of Earth Mastery is ...
+scroll.elementalspirits.chapter.earth_elementals.earth_rod.2=And that's how it's made...
+
 
 scroll.elementalspirits.chapter.gettingStarted.name=Getting started
 scroll.elementalspirits.chapter.gettingStarted.title=<b><f>Getting started

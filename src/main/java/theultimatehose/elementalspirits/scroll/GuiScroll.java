@@ -5,6 +5,8 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.ITextureObject;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
@@ -19,6 +21,7 @@ public class GuiScroll extends GuiScreen {
     public Structure.Page currentPage;
 
     ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/GuiAncientScroll.png");
+    ResourceLocation resLocCraftingOverlay = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/GuiAncientScrollCraftingOverlay.png");
 
     public int guiTop, guiLeft, guiWidth = 160, guiHeight = 205;
 
@@ -30,7 +33,6 @@ public class GuiScroll extends GuiScreen {
 
     @Override
     public void initGui() {
-        System.out.println("init");
         super.initGui();
         this.guiTop = (this.height-this.guiHeight)/2;
         this.guiLeft = (this.width-this.guiWidth)/2;
@@ -112,6 +114,22 @@ public class GuiScroll extends GuiScreen {
                 this.mc.getTextureManager().bindTexture(((Structure.PageImageAndText)currentPage).resLoc);
                 drawScaledCustomSizeModalRect(this.guiLeft + 24, this.guiTop + 24, 0, 0, 280, 320, 113, 130, 280, 320);
                 this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + "." + currentEntry.subIdentifier + "." + currentPage.number), x, guiTop + guiHeight - 49, 130, 0);
+            } else if (currentPage instanceof Structure.PageRecipeAndText) {
+                this.mc.getTextureManager().bindTexture(this.resLocCraftingOverlay);
+                drawScaledCustomSizeModalRect(this.guiLeft + 32, this.guiTop + 25, 0, 0, 85, 85, 85, 85, 85, 85);
+                this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + "." + currentEntry.subIdentifier + "." + currentPage.number), x, guiTop + guiHeight - 85, 130, 0);
+                Structure.PageRecipeAndText page = (Structure.PageRecipeAndText) currentPage;
+                int item_x = 0, item_y = 0;
+                for (ItemStack stack : page.input) {
+                    if (stack != null)
+                        Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(stack, this.guiLeft + item_x + 42, this.guiTop + item_y + 35);
+
+                    item_x += 25;
+                    if (item_x > 50) {
+                        item_x = 0;
+                        item_y += 25;
+                    }
+                }
             }
         }
 

@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
+import theultimatehose.elementalspirits.ElementalSpirits;
 
 public class EntityElementalBase extends EntityCreature {
 
@@ -22,6 +23,16 @@ public class EntityElementalBase extends EntityCreature {
     }
 
     @Override
+    protected boolean interact(EntityPlayer player) {
+        ItemStack stack = player.getCurrentEquippedItem();
+        if (stack != null && stack.stackSize == 1 && stack.getItem() == Items.paper) {
+            player.destroyCurrentEquippedItem();
+            player.setCurrentItemOrArmor(0, new ItemStack(ElementalSpirits.instance.itemAncientScroll));
+        }
+        return super.interact(player);
+    }
+
+    @Override
     public boolean getCanSpawnHere() {
         return true;
     }
@@ -29,11 +40,6 @@ public class EntityElementalBase extends EntityCreature {
     @Override
     protected boolean canDespawn() {
         return !getIsTamed();
-    }
-
-    @Override
-    public void onEntityUpdate() {
-        super.onEntityUpdate();
     }
 
     public String getMaster() {
