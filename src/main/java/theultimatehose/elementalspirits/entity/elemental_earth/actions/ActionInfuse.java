@@ -26,9 +26,11 @@ public class ActionInfuse implements WheelInteraction.Action {
             if (compound == null)
                 compound = new NBTTagCompound();
 
-            compound.setBoolean(ItemEarthRod.KEY_PERFORM_INFUSE, true);
-            compound.setBoolean(ItemEarthRod.KEY_INFUSE_NOTIFY, true);
-            stack.setTagCompound(compound);
+            if (!compound.getBoolean(ItemEarthRod.KEY_PERFORM_INFUSE)) {
+                compound.setBoolean(ItemEarthRod.KEY_PERFORM_INFUSE, true);
+                compound.setBoolean(ItemEarthRod.KEY_INFUSE_NOTIFY, true);
+                stack.setTagCompound(compound);
+            }
         }
     }
 

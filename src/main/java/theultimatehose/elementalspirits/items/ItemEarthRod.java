@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import theultimatehose.elementalspirits.ElementalSpirits;
 import theultimatehose.elementalspirits.Names;
 import theultimatehose.elementalspirits.entity.elemental_earth.EntityElementalEarth;
+import theultimatehose.elementalspirits.infusion.InfusionRitual;
 import theultimatehose.elementalspirits.multiblock.EarthRodStructure;
 import theultimatehose.elementalspirits.util.Util;
 
@@ -31,12 +32,14 @@ public class ItemEarthRod extends Item {
     @Override
     public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
         NBTTagCompound compound = stack.getTagCompound();
-        if (compound != null) {
-            if (isSelected) {
-                if (compound.getBoolean(KEY_INFUSE_NOTIFY)) {
-                    entityIn.addChatMessage(new ChatComponentTranslation("chat.elementalspirits.infuse_start.msg"));
-                    compound.setBoolean(KEY_INFUSE_NOTIFY, false);
-                    stack.setTagCompound(compound);
+        if (!worldIn.isRemote) {
+            if (compound != null) {
+                if (isSelected) {
+                    if (compound.getBoolean(KEY_INFUSE_NOTIFY)) {
+                        entityIn.addChatMessage(new ChatComponentTranslation("chat.elementalspirits.infuse_start.msg"));
+                        compound.setBoolean(KEY_INFUSE_NOTIFY, false);
+                        stack.setTagCompound(compound);
+                    }
                 }
             }
         }
@@ -70,25 +73,25 @@ public class ItemEarthRod extends Item {
 
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
-        if (!world.isRemote) {
-            NBTTagCompound compound = stack.getTagCompound();
-            if (compound != null) {
-                if (compound.getBoolean(KEY_PERFORM_INFUSE)) {
-                    if (world.getChunkFromBlockCoords(pos).getBlock(pos) == Blocks.diamond_block) {
-                        EarthRodStructure struct = new EarthRodStructure();
-                        if (struct.checkMatrix(world, pos, true)) {
-                            player.addChatMessage(new ChatComponentTranslation("chat." + Util.MOD_ID_LOWER + ".infuse_success.msg"));
-                            compound.setBoolean(KEY_INFUSED, true);
-                        }
-
-                        return true;
-                    } else {
-                        player.addChatMessage(new ChatComponentTranslation("chat." + Util.MOD_ID_LOWER + ".infuse_failed.msg"));
+        NBTTagCompound compound = stack.getTagCompound();
+        if (compound != null) {
+            if (compound.getBoolean(KEY_PERFORM_INFUSE)) {
+                boolean anyExecuted = false;
+                for (InfusionRitual ritual : InfusionRitual.registeredRituals) {
+                    if (ritual.canExecuteRitual(player, stack, world, pos)) {
+                        ritual.executeRitual(player, stack, world, pos);
+                        anyExecuted = true;
+                        break;
                     }
-
-                    compound.setBoolean(KEY_PERFORM_INFUSE, false);
-                    stack.setTagCompound(compound);
                 }
+
+                if (!anyExecuted) {
+                    if (!world.isRemote)
+                        player.addChatMessage(new ChatComponentTranslation("chat." + Util.MOD_ID_LOWER + ".infuse_failed.msg"));
+                }
+
+                compound.setBoolean(KEY_PERFORM_INFUSE, false);
+                stack.setTagCompound(compound);
             }
         }
         return false;

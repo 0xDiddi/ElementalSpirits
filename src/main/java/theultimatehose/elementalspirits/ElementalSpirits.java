@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import theultimatehose.elementalspirits.entity.EntityElementalBase;
 import theultimatehose.elementalspirits.entity.elemental_earth.EntityElementalEarth;
 import theultimatehose.elementalspirits.gui.GuiHandler;
+import theultimatehose.elementalspirits.infusion.InfusionRitual;
 import theultimatehose.elementalspirits.input.KeyBindManager;
 import theultimatehose.elementalspirits.items.ItemAncientScroll;
 import theultimatehose.elementalspirits.items.ItemEarthRod;
@@ -52,6 +53,7 @@ public class ElementalSpirits {
         Syncer.init();
         KeyBindManager.INSTANCE.init();
         Structure.Book.init();
+        InfusionRitual.init();
 
         EntityRegistry.registerModEntity(EntityElementalBase.class, "BaseElemental", 65536, ElementalSpirits.instance, 65536, 1, true);
         EntityRegistry.registerModEntity(EntityElementalEarth.class, "EarthElemental", 65537, ElementalSpirits.instance, 65536, 1, true, 0x009900, 0xAAAAAA);

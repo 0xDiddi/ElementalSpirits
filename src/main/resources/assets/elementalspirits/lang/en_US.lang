@@ -53,4 +53,5 @@ keys.elementalspirits.keybind_wheel_br.description=EIW: bottom right
 #Chat messages
 chat.elementalspirits.infuse_start.msg=Right click the origin block of the Structure you want to infuse
 chat.elementalspirits.infuse_success.msg=Infusion successful!
-chat.elementalspirits.infuse_failed.msg=Infusion failed. Make sure the entire area is clean (even grass n' stuff)
+chat.elementalspirits.infuse_failed.msg=Infusion failed. Make sure all requirements are met.
+chat.elementalspirits.infuse_denied.msg=This Rod is already infused!
