@@ -3,9 +3,7 @@ package theultimatehose.elementalspirits.scroll;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.ResourceLocation;
-import theultimatehose.elementalspirits.scroll.structure.Chapter;
-import theultimatehose.elementalspirits.scroll.structure.Entry;
-import theultimatehose.elementalspirits.scroll.structure.Page;
+import theultimatehose.elementalspirits.scroll.structure.*;
 import theultimatehose.elementalspirits.util.Util;
 
 public class PageButton extends GuiButton {
@@ -14,53 +12,46 @@ public class PageButton extends GuiButton {
 
     int xPos, yPos;
     GuiScroll parent;
-    Chapter targetChapter;
-    Entry targetEntry;
-    Page targetPage;
+    BookMark bookMark;
     Direction direction;
 
     public enum Direction {
         back, left, right
     }
 
-    public PageButton(int x, int y, Direction direction, GuiScroll parent, Chapter targetChapter, Entry targetEntry, Page targetPage) {
+    public PageButton(int x, int y, Direction direction, GuiScroll parent, BookMark bookMark) {
         super(0, x, y, "");
-        xPos = x;
-        yPos = y;
+        this.xPos = x;
+        this.yPos = y;
         this.height = 10;
         this.width = 20;
         this.direction = direction;
         this.parent = parent;
-        this.targetChapter = targetChapter;
-        this.targetEntry = targetEntry;
-        this.targetPage = targetPage;
+        this.bookMark = bookMark;
     }
 
     @Override
     public void drawButtonForegroundLayer(int mouseX, int mouseY) {
-        super.drawButtonForegroundLayer(mouseX, mouseY);
         int textureX = 0, textureY = 0;
 
-        if (direction == Direction.right)
+        if (this.direction == Direction.right)
             textureY = 205;
-        else if (direction == Direction.left)
+        else if (this.direction == Direction.left)
             textureY = 215;
-        else if (direction == Direction.back)
+        else if (this.direction == Direction.back)
             textureY = 225;
 
-        if (mouseX > xPos && mouseY > yPos && mouseX < xPos + getButtonWidth() && mouseY < yPos + this.height) {
+        if (mouseX > this.xPos && mouseY > this.yPos && mouseX < this.xPos + getButtonWidth() && mouseY < this.yPos + this.height) {
             textureX = 20;
         }
-        Minecraft.getMinecraft().getTextureManager().bindTexture(resLoc);
-        drawTexturedModalRect(xPos, yPos, textureX, textureY, width, height);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(this.resLoc);
+        drawTexturedModalRect(this.xPos, this.yPos, textureX, textureY, this.width, this.height);
     }
 
     @Override
     public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
-        if (mouseX > xPos && mouseY > yPos && mouseX < xPos + getButtonWidth() && mouseY < yPos + this.height) {
-            this.parent.currentChapter = targetChapter;
-            this.parent.currentEntry = targetEntry;
-            this.parent.currentPage = targetPage;
+        if (mouseX > this.xPos && mouseY > this.yPos && mouseX < this.xPos + getButtonWidth() && mouseY < this.yPos + this.height) {
+            this.bookMark.jumpTo(this.parent);
             return true;
         } else {
             return false;

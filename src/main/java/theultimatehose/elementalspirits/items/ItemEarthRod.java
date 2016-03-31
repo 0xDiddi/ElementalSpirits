@@ -2,18 +2,19 @@ package theultimatehose.elementalspirits.items;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.*;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import theultimatehose.elementalspirits.ElementalSpirits;
 import theultimatehose.elementalspirits.Names;
 import theultimatehose.elementalspirits.entity.elemental_earth.EntityElementalEarth;
 import theultimatehose.elementalspirits.infusion.InfusionRitual;
-import theultimatehose.elementalspirits.multiblock.EarthRodStructure;
 import theultimatehose.elementalspirits.util.Util;
 
 public class ItemEarthRod extends Item {

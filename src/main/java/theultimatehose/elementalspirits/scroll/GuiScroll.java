@@ -4,19 +4,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
-import theultimatehose.elementalspirits.multiblock.MultiBlockStructure;
-import theultimatehose.elementalspirits.scroll.structure.Book;
-import theultimatehose.elementalspirits.scroll.structure.Chapter;
-import theultimatehose.elementalspirits.scroll.structure.Entry;
-import theultimatehose.elementalspirits.scroll.structure.Page;
+import org.lwjgl.input.Keyboard;
+import theultimatehose.elementalspirits.scroll.structure.*;
 import theultimatehose.elementalspirits.util.Util;
 
 import java.io.IOException;
@@ -34,12 +29,15 @@ public class GuiScroll extends GuiScreen {
     public Page currentPage;
     public EntityPlayer player;
 
-    ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/GuiAncientScroll.png");
+    public ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/GuiAncientScroll.png");
     public ResourceLocation resLocCraftingOverlay = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/GuiAncientScrollCraftingOverlay.png");
 
     public int guiTop, guiLeft, guiWidth = 160, guiHeight = 205;
 
     public ArrayList<GuiButton> buttons;
+    public ArrayList<BookMarkButton> bookMarkButtons;
+
+    public boolean isPlayerShifting;
 
     public GuiScroll(EntityPlayer player) {
         super();
@@ -52,7 +50,8 @@ public class GuiScroll extends GuiScreen {
         this.guiTop = (this.height-this.guiHeight)/2;
         this.guiLeft = (this.width-this.guiWidth)/2;
 
-        boolean chapter_read = false, entry_read= false, page_read= false;
+        BookMark[] marks = new BookMark[7];
+
         if (this.player != null) {
             ItemStack stack = player.getCurrentEquippedItem();
             if (stack != null) {
@@ -64,35 +63,52 @@ public class GuiScroll extends GuiScreen {
                         if (this.currentEntry != null)
                             this.currentPage = this.currentEntry.getPageByNumber(compound.getInteger(NBT_KEY_PAGE));
                     }
+
+                    for (int i = 0; i < 7; i++) {
+                        BookMark mark = new BookMark(i);
+                        mark.readFromNBT(compound);
+                        marks[i] = mark;
+                    }
                 }
             }
+        }
+
+        this.bookMarkButtons = new ArrayList<>();
+
+        for (int i = 0; i < 7; i++) {
+            BookMarkButton btn = new BookMarkButton(i, this.guiLeft + 145, this.guiTop + (i * 27) + 7, this, (marks[i] != null ? (marks[i].targetChapter != null ? marks[i] : null) : null), i);
+            this.bookMarkButtons.add(btn);
         }
     }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.drawDefaultBackground();
+
+        //Draw bookmark buttons first as they are behind everything else
+        for (BookMarkButton btn : this.bookMarkButtons) {
+            btn.drawButtonForegroundLayer(mouseX, mouseY);
+        }
+
         this.mc.getTextureManager().bindTexture(resLoc);
         this.drawTexturedModalRect(guiLeft, guiTop, 0, 0, guiWidth, guiHeight);
         super.drawScreen(mouseX, mouseY, partialTicks);
         boolean unicode = this.fontRendererObj.getUnicodeFlag();
         this.fontRendererObj.setUnicodeFlag(true);
 
-        int y = guiTop + 24;
-        int x = guiLeft + 15;
-        int index = 0;
-        buttons = null;
+        int y = this.guiTop + 24;
+        int x = this.guiLeft + 15;
+        this.buttons = null;
         PageButton btnBack;
+        this.buttons = new ArrayList<>();
 
         //If chapter is null, draw the chapter overview
         if (this.currentChapter == null) {
 
             this.fontRendererObj.drawSplitString(parseIdentifier("contents.name"), x, guiTop + 12, TEXT_WRAP_WIDTH, 0);
-            buttons = new ArrayList<>();
             for (Chapter chap : Book.chapters) {
-                TextButton btn = new TextButton(y, x, y, parseIdentifier(chap.identifier + ".name"), this, chap, null, null);
-                buttons.add(btn);
-                index++;
+                TextButton btn = new TextButton(y, x, y, parseIdentifier(chap.identifier + ".name"), this, new BookMark(chap));
+                this.buttons.add(btn);
                 y += 10;
             }
 
@@ -100,35 +116,34 @@ public class GuiScroll extends GuiScreen {
         } else if (this.currentEntry == null) {
 
             this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + ".title"), x, guiTop + 12, TEXT_WRAP_WIDTH, 0);
-            buttons = new ArrayList<>();
+            this.buttons = new ArrayList<>();
             for (Entry entry : currentChapter.entries) {
-                TextButton btn = new TextButton(y, x, y, parseIdentifier(currentChapter.identifier + "." + entry.subIdentifier + ".name"), this, currentChapter, entry, entry.pages.get(0));
-                buttons.add(btn);
-                index++;
+                TextButton btn = new TextButton(y, x, y, parseIdentifier(currentChapter.identifier + "." + entry.subIdentifier + ".name"), this, new BookMark(currentChapter, entry, entry.pages.get(0)));
+                this.buttons.add(btn);
                 y += 10;
             }
 
-            btnBack = new PageButton(guiLeft + guiWidth / 2 - 10, guiTop + guiHeight - 20, PageButton.Direction.back, this, null, null, null);
-            buttons.add(btnBack);
+            btnBack = new PageButton(guiLeft + guiWidth / 2 - 10, guiTop + guiHeight - 20, PageButton.Direction.back, this, new BookMark());
+            this.buttons.add(btnBack);
 
         //Else, draw the current page
         } else {
 
             this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + "." + currentEntry.subIdentifier + ".title"), x, guiTop + 12, TEXT_WRAP_WIDTH, 0);
-            buttons = new ArrayList<>();
+            this.buttons = new ArrayList<>();
             if (currentEntry.pages.size() > 1) {
                 if (currentPage.number < currentEntry.pages.size()) {
-                    PageButton btn = new PageButton(guiLeft + guiWidth - 25, guiTop + guiHeight - 20, PageButton.Direction.right, this, currentChapter, currentEntry, currentEntry.pages.get(currentPage.number));
-                    buttons.add(btn);
+                    PageButton btn = new PageButton(guiLeft + guiWidth - 25, guiTop + guiHeight - 20, PageButton.Direction.right, this, new BookMark(currentChapter, currentEntry, currentEntry.pages.get(currentPage.number)));
+                    this.buttons.add(btn);
                 }
                 if (currentPage.number > 1) {
-                    PageButton btn = new PageButton(guiLeft + 10, guiTop + guiHeight - 20, PageButton.Direction.left, this, currentChapter, currentEntry, currentEntry.pages.get(currentPage.number - 2));
-                    buttons.add(btn);
+                    PageButton btn = new PageButton(guiLeft + 10, guiTop + guiHeight - 20, PageButton.Direction.left, this, new BookMark(currentChapter, currentEntry, currentEntry.pages.get(currentPage.number - 2)));
+                    this.buttons.add(btn);
                 }
             }
 
-            btnBack = new PageButton(guiLeft + guiWidth / 2 - 10, guiTop + guiHeight - 20, PageButton.Direction.back, this, currentChapter, null, null);
-            buttons.add(btnBack);
+            btnBack = new PageButton(guiLeft + guiWidth / 2 - 10, guiTop + guiHeight - 20, PageButton.Direction.back, this, new BookMark(currentChapter));
+            this.buttons.add(btnBack);
 
             currentPage.render(this, x, y);
         }
@@ -143,12 +158,24 @@ public class GuiScroll extends GuiScreen {
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         super.mouseClicked(mouseX, mouseY, mouseButton);
-        if (buttons != null) {
-            for (GuiButton btn : buttons) {
+        if (this.buttons != null) {
+            for (GuiButton btn : this.buttons) {
                 if (btn != null)
                     btn.mousePressed(Minecraft.getMinecraft(), mouseX, mouseY);
             }
         }
+        if (this.bookMarkButtons != null) {
+            for (BookMarkButton btn : this.bookMarkButtons) {
+                if (btn != null)
+                    btn.mousePressed(Minecraft.getMinecraft(), mouseX, mouseY);
+            }
+        }
+    }
+
+    @Override
+    public void handleKeyboardInput() throws IOException {
+        super.handleKeyboardInput();
+        isPlayerShifting = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
     }
 
     @Override
@@ -157,6 +184,13 @@ public class GuiScroll extends GuiScreen {
         this.width = width;
         this.guiTop = (this.height-this.guiHeight)/2;
         this.guiLeft = (this.width-this.guiWidth)/2;
+
+        int i = 0;
+        for (BookMarkButton btn : this.bookMarkButtons) {
+            btn.xPos = this.guiLeft + 145;
+            btn.yPos = this.guiTop + (i * 27) + 7;
+            i++;
+        }
     }
 
     @Override
@@ -167,6 +201,7 @@ public class GuiScroll extends GuiScreen {
                 NBTTagCompound compound = stack.getTagCompound();
                 if (compound == null)
                     compound = new NBTTagCompound();
+
                 if (currentChapter != null) {
                     compound.setString(NBT_KEY_CHAPTER, this.currentChapter.identifier);
                     if (currentEntry != null) {
@@ -177,6 +212,16 @@ public class GuiScroll extends GuiScreen {
                         compound.setString(NBT_KEY_ENTRY, "");
                 } else
                     compound.setString(NBT_KEY_CHAPTER, "");
+
+                for (BookMarkButton btn : this.bookMarkButtons) {
+                    if (btn.bookMark != null)
+                        btn.bookMark.writeToNBT(compound);
+                    else {
+                        BookMark mark = new BookMark(btn.bookMarkID);
+                        mark.writeToNBT(compound);
+                    }
+                }
+
                 stack.setTagCompound(compound);
             }
         }

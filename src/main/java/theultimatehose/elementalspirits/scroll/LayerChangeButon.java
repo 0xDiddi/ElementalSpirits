@@ -39,25 +39,24 @@ public class LayerChangeButon extends GuiButton {
 
     @Override
     public void drawButtonForegroundLayer(int mouseX, int mouseY) {
-        super.drawButtonForegroundLayer(mouseX, mouseY);
         int textureX = 40, textureY = 0;
 
-        if (direction == Direction.up)
+        if (this.direction == Direction.up)
             textureY = 205;
-        else if (direction == Direction.down)
+        else if (this.direction == Direction.down)
             textureY = 221;
 
-        if (mouseX > xPos && mouseY > yPos && mouseX < xPos + getButtonWidth() && mouseY < yPos + this.height) {
+        if (mouseX > this.xPos && mouseY > this.yPos && mouseX < this.xPos + getButtonWidth() && mouseY < this.yPos + this.height) {
             textureX = 51;
         }
 
-        Minecraft.getMinecraft().getTextureManager().bindTexture(resLoc);
-        drawTexturedModalRect(xPos, yPos, textureX, textureY, width, height);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(this.resLoc);
+        drawTexturedModalRect(this.xPos, this.yPos, textureX, textureY, this.width, this.height);
     }
 
     @Override
     public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
-        if (mouseX > xPos && mouseY > yPos && mouseX < xPos + getButtonWidth() && mouseY < yPos + this.height) {
+        if (mouseX > this.xPos && mouseY > this.yPos && mouseX < this.xPos + getButtonWidth() && mouseY < this.yPos + this.height) {
             this.targetPage.currentLayer += this.direction.value;
             return true;
         } else {
