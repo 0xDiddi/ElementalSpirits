@@ -69,6 +69,12 @@ public class GuiScroll extends GuiScreen {
                         mark.readFromNBT(compound);
                         marks[i] = mark;
                     }
+                } else {
+                    currentChapter = Book.getChapterByIdentifier("gettingStarted");
+                    if (currentChapter != null) {
+                        currentEntry = currentChapter.getEntryByIdentifier("scroll");
+                        currentPage = currentEntry.getPageByNumber(1);
+                    }
                 }
             }
         }

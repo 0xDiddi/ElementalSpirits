@@ -57,7 +57,12 @@ scroll.elementalspirits.gettingStarted.title=<b><f>Getting started
 
 scroll.elementalspirits.gettingStarted.introduction.name=Introduction
 scroll.elementalspirits.gettingStarted.introduction.title=<g><f>Introduction
-scroll.elementalspirits.gettingStarted.introduction.1=<b><f>Welcome!<rs><br>As you probably already noticed, this mod is about magical creatures (Elementals) which can be tamed and used to perform different tasks.<br>More detailed information about Elementals and their abilities can be found in the "Elementals" section.<br><br>Elementals of all kinds can be found everywhere in the world, while some categories may be more or less common in different regions.
+scroll.elementalspirits.gettingStarted.introduction.1=As you probably already noticed, this mod is about magical creatures (Elementals) which can be tamed and used to perform different tasks.<br>More detailed information about Elementals and their abilities can be found in the "Elementals" section.<br><br>Elementals of all kinds can be found everywhere in the world, while some categories may be more or less common in different regions.
+
+scroll.elementalspirits.gettingStarted.scroll.name=This Scroll
+scroll.elementalspirits.gettingStarted.scroll.title=<g><f>This Scroll
+scroll.elementalspirits.gettingStarted.scroll.1=This scroll is the manual for the elemental spirits mod and guides you through it. The basic handling of this book is pretty simple, but there are some special things which will be explained here.<br><br><u>Bookmarks<rs><br>Bookmarks are the 7 things on the right side of the scroll. They can be set by simply clicking on them. When they are set, clicking on them jumps to the page. Shift-clicking on it resets the bookmark.
+scroll.elementalspirits.gettingStarted.scroll.2=<u>Multiblock structures<rs><br>These pages show a grid with the required blocks. Only one layer is displayed at a time, starting with the bottom one. You can change the layer with the arrow-buttons on the right-hand side. You can see which layer is currently displayed on the line below the grid.
 
 scroll.elementalspirits.gettingStarted.the_eiw.name=The EIW
 scroll.elementalspirits.gettingStarted.the_eiw.title=<g><f>The EIW

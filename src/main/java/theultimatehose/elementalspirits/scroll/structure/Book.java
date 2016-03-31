@@ -40,6 +40,11 @@ public class Book {
         introduction.addPage(new PageTextOnly(1));
         getting_started.addEntry(introduction);
 
+        Entry scroll = new Entry("scroll");
+        scroll.addPage(new PageTextOnly(1));
+        scroll.addPage(new PageTextOnly(2));
+        getting_started.addEntry(scroll);
+
         Entry the_eiw = new Entry("the_eiw");
         the_eiw.addPage(new PageTextOnly(1));
         getting_started.addEntry(the_eiw);
