@@ -4,13 +4,22 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.BlockModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.texture.ITextureObject;
+import net.minecraft.client.resources.model.IBakedModel;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.client.model.pipeline.ForgeBlockModelRenderer;
+import theultimatehose.elementalspirits.multiblock.MultiBlockStructure;
 import theultimatehose.elementalspirits.util.Util;
+import theultimatehose.elementalspirits.util.VanillaStuffUtil;
 
 import java.io.IOException;
 
@@ -116,13 +125,17 @@ public class GuiScroll extends GuiScreen {
                 this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + "." + currentEntry.subIdentifier + "." + currentPage.number), x, guiTop + guiHeight - 49, 130, 0);
             } else if (currentPage instanceof Structure.PageRecipeAndText) {
                 this.mc.getTextureManager().bindTexture(this.resLocCraftingOverlay);
-                drawScaledCustomSizeModalRect(this.guiLeft + 32, this.guiTop + 25, 0, 0, 85, 85, 85, 85, 85, 85);
+                GlStateManager.enableBlend();
+                drawScaledCustomSizeModalRect(this.guiLeft + 15, this.guiTop + 25, 0, 0, 140, 85, 140, 85, 140, 85);
                 this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + "." + currentEntry.subIdentifier + "." + currentPage.number), x, guiTop + guiHeight - 85, 130, 0);
                 Structure.PageRecipeAndText page = (Structure.PageRecipeAndText) currentPage;
                 int item_x = 0, item_y = 0;
                 for (ItemStack stack : page.input) {
-                    if (stack != null)
-                        Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(stack, this.guiLeft + item_x + 42, this.guiTop + item_y + 35);
+                    if (stack != null) {
+                        stack.setItemDamage(0);
+                        RenderHelper.enableGUIStandardItemLighting();
+                        Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(stack, this.guiLeft + item_x + 25, this.guiTop + item_y + 35);
+                    }
 
                     item_x += 25;
                     if (item_x > 50) {
@@ -130,6 +143,9 @@ public class GuiScroll extends GuiScreen {
                         item_y += 25;
                     }
                 }
+                Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(page.result, this.guiLeft + 120, this.guiTop + 60);
+            } else if (currentPage instanceof Structure.PageMultiBlockAndText) {
+                MultiBlockStructure struct = ((Structure.PageMultiBlockAndText)currentPage).structure;
             }
         }
 
@@ -148,15 +164,16 @@ public class GuiScroll extends GuiScreen {
     }
 
     @Override
-    public void onResize(Minecraft mcIn, int par1, int par2) {
-        super.onResize(mcIn, par1, par2);
+    public void onResize(Minecraft mcIn, int width, int height) {
+        this.height = height;
+        this.width = width;
         this.guiTop = (this.height-this.guiHeight)/2;
         this.guiLeft = (this.width-this.guiWidth)/2;
     }
 
     public String parseIdentifier(String identifier) {
         if (!identifier.endsWith(".contents.name"))
-            identifier = "scroll." + Util.MOD_ID_LOWER + ".chapter." + identifier;
+            identifier = "scroll." + Util.MOD_ID_LOWER + "." + identifier;
         String str = StatCollector.translateToLocal(identifier);
 
         str = str.replaceAll("<br>", "\n");

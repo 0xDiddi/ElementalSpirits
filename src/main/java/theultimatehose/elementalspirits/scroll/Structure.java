@@ -7,6 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import theultimatehose.elementalspirits.ElementalSpirits;
 import theultimatehose.elementalspirits.entity.ai.ElementalAIFollowMaster;
+import theultimatehose.elementalspirits.multiblock.MultiBlockStructure;
 import theultimatehose.elementalspirits.util.Util;
 
 import java.util.ArrayList;
@@ -35,6 +36,11 @@ public class Structure {
             earth_rod.addPage(new PageRecipeAndText(2, ElementalSpirits.instance.itemEarthRodRecipe));
             elementals_earth.addEntry(earth_rod);
 
+            Entry earth_actions = new Entry("actions");
+            earth_actions.addPage(new PageTextOnly(1));
+            earth_actions.addPage(new PageTextOnly(2));
+            elementals_earth.addEntry(earth_actions);
+
             Chapter getting_started = new Chapter("gettingStarted");
 
             Entry introduction = new Entry("introduction");
@@ -47,6 +53,14 @@ public class Structure {
 
             chapters.add(elementals_earth);
             chapters.add(getting_started);
+        }
+
+        public Chapter getChapterByIdentifier(String identifier) {
+            for (Chapter c : chapters) {
+                if (c.identifier.equals(identifier))
+                    return c;
+            }
+            return null;
         }
 
     }
@@ -63,6 +77,15 @@ public class Structure {
         public void addEntry(Entry entry) {
             this.entries.add(entry);
         }
+
+        public Entry getEntryByIdentifier(String id) {
+            for (Entry e : entries) {
+                if (e.subIdentifier.equals(id))
+                    return e;
+            }
+            return null;
+        }
+
     }
 
     public static class Entry {
@@ -76,6 +99,12 @@ public class Structure {
 
         public void addPage(Page page) {
             this.pages.add(page);
+        }
+
+        public Page getPageByNumber(int num) {
+            if (num < pages.size() && num > 0)
+                return pages.get(num - 1);
+            return null;
         }
     }
 
@@ -106,6 +135,7 @@ public class Structure {
     public static class PageRecipeAndText extends Page {
 
         public final ItemStack[] input;
+        public final ItemStack result;
 
         public PageRecipeAndText(int number, ShapedOreRecipe recipe) {
             super(number);
@@ -121,6 +151,19 @@ public class Structure {
                     this.input[i] = (ItemStack) ((Collection<ItemStack>)o).toArray()[0];
                 }
             }
+
+            this.result = recipe.getRecipeOutput();
+        }
+    }
+
+    public static class PageMultiBlockAndText extends Page {
+
+        public final MultiBlockStructure structure;
+        public int currentLayer = 0;
+
+        public PageMultiBlockAndText(int number, MultiBlockStructure structure) {
+            super(number);
+            this.structure = structure;
         }
     }
 

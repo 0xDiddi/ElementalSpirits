@@ -16,36 +16,48 @@ overlay.elementalspirits.earth.bc.name=Release
 overlay.elementalspirits.earth.br.name=
 
 #Scroll
+
+#Formatting:
+# <br> -> new line    | <rs> -> Reset
+# <f>  -> Bold        | <r>  -> Red
+# <i>  -> Italic      | <g>  -> Dark green
+# <u>  -> Underline   | <b>  -> Dark blue
+
 scroll.elementalspirits.contents.name=<r><f>Elemental Spirits
 
-scroll.elementalspirits.chapter.elemental.name=Elementals
-scroll.elementalspirits.chapter.elemental.title=<b><f>Elementals
+scroll.elementalspirits.elemental.name=Elementals
+scroll.elementalspirits.elemental.title=<b><f>Elementals
 
-scroll.elementalspirits.chapter.earth_elementals.name=Earth Elementals
-scroll.elementalspirits.chapter.earth_elementals.title=<g><f>Earth Elementals
-
-
-scroll.elementalspirits.chapter.earth_elementals.general.name=General Information
-scroll.elementalspirits.chapter.earth_elementals.general.title=<g><f>General Information
-scroll.elementalspirits.chapter.earth_elementals.general.1=Earth Elementals are the strongest of the four Elementals. When they have a connection to the ground, they have almost infinite power which they can also share with their masters.<br>They can be tamed by feeding them (vanilla) minerals. You will need less of the mineral if you use more rare minerals.
-scroll.elementalspirits.chapter.earth_elementals.general.2=That's how a (low level) earth elemental looks like.
-
-scroll.elementalspirits.chapter.earth_elementals.earth_rod.name=The Rod of Earth Mastery
-scroll.elementalspirits.chapter.earth_elementals.earth_rod.title=<g><f>The Rod of Earth Mastery
-scroll.elementalspirits.chapter.earth_elementals.earth_rod.1=The Rod of Earth Mastery is ...
-scroll.elementalspirits.chapter.earth_elementals.earth_rod.2=And that's how it's made...
+scroll.elementalspirits.earth_elementals.name=Earth Elementals
+scroll.elementalspirits.earth_elementals.title=<g><f>Earth Elementals
 
 
-scroll.elementalspirits.chapter.gettingStarted.name=Getting started
-scroll.elementalspirits.chapter.gettingStarted.title=<b><f>Getting started
+scroll.elementalspirits.earth_elementals.general.name=General Information
+scroll.elementalspirits.earth_elementals.general.title=<g><f>General Information
+scroll.elementalspirits.earth_elementals.general.1=Earth Elementals are the strongest of the four Elementals. When they have a connection to the ground, they have almost infinite power which they can also share with their masters.<br>They can be tamed by feeding them (vanilla) minerals. You will need less of the mineral if you use more rare minerals.
+scroll.elementalspirits.earth_elementals.general.2=That's how a (low level) earth elemental looks like.
 
-scroll.elementalspirits.chapter.gettingStarted.introduction.name=Introduction
-scroll.elementalspirits.chapter.gettingStarted.introduction.title=<g><f>Introduction
-scroll.elementalspirits.chapter.gettingStarted.introduction.1=<b><f>Welcome!<rs><br>As you probably already noticed, this mod is about magical creatures (Elementals) which can be tamed and used to perform different tasks.<br>More detailed information about Elementals and their abilities can be found in the "Elementals" section.<br><br>Elementals of all kinds can be found everywhere in the world, while some categories may be more or less common in different regions.
+scroll.elementalspirits.earth_elementals.earth_rod.name=The Rod of Earth Mastery
+scroll.elementalspirits.earth_elementals.earth_rod.title=<g><f>The Rod of Earth Mastery
+scroll.elementalspirits.earth_elementals.earth_rod.1=Although the EIW is used to initiate most of the actions, The Rod of Earth Mastery is used to actually perform those. It is used to start rituals and to ride the earth elemental.
+scroll.elementalspirits.earth_elementals.earth_rod.2=And that's how it's made...
 
-scroll.elementalspirits.chapter.gettingStarted.the_eiw.name=The EIW
-scroll.elementalspirits.chapter.gettingStarted.the_eiw.title=<g><f>The EIW
-scroll.elementalspirits.chapter.gettingStarted.the_eiw.1=EIW is an abbreviation which means <b><f>E<rs>lemental <b><f>I<rs>nteraction <b><f>W<rs>heel which is the thing which comes up when you look at a tamed elemental for some seconds. It is used to perform most actions. <br>The EIW uses the 8 outer numpad keys by default but they can be redefined in the "controls" tab in the settings. <br>Although some actions are equal, you can read more about all the actions in the chapter of that elemental.
+scroll.elementalspirits.earth_elementals.actions.name=EIW Actions
+scroll.elementalspirits.earth_elementals.actions.title=<g><f>EIW Actions
+scroll.elementalspirits.earth_elementals.actions.1=<u>Mount<rs><br>The "Mount" action does exactly what you expected: you'll mount the elemental, but to actually steer the elemental, you'll need an infused Rod of Earth Mastery.<br><br><u>Stats<rs><br>The "Stats" action opens a window which tells you some information about that elemental.<br><br><u>Infuse<rs><br>The "Infuse" action initiates an infusion ritual which can then be performed with the Rod of Earth Mastery.
+scroll.elementalspirits.earth_elementals.actions.2=<u>Apply Strength<rs><br>The "Apply Strength" actions applies strength to it's master. The level and duration of the strength are based on the level of the elemental.<br><br><u>Release<rs><br>The "Release" action is the one that you probably use least as it (obviously) releases the elemental. Depending on how strong the bond between the master and the elemental is, one of them (sometimes even both) may die upon release.
+
+
+scroll.elementalspirits.gettingStarted.name=Getting started
+scroll.elementalspirits.gettingStarted.title=<b><f>Getting started
+
+scroll.elementalspirits.gettingStarted.introduction.name=Introduction
+scroll.elementalspirits.gettingStarted.introduction.title=<g><f>Introduction
+scroll.elementalspirits.gettingStarted.introduction.1=<b><f>Welcome!<rs><br>As you probably already noticed, this mod is about magical creatures (Elementals) which can be tamed and used to perform different tasks.<br>More detailed information about Elementals and their abilities can be found in the "Elementals" section.<br><br>Elementals of all kinds can be found everywhere in the world, while some categories may be more or less common in different regions.
+
+scroll.elementalspirits.gettingStarted.the_eiw.name=The EIW
+scroll.elementalspirits.gettingStarted.the_eiw.title=<g><f>The EIW
+scroll.elementalspirits.gettingStarted.the_eiw.1=EIW is an abbreviation which means <b><f>E<rs>lemental <b><f>I<rs>nteraction <b><f>W<rs>heel which is the thing which comes up when you look at a tamed elemental for some seconds. It is used to perform most actions. <br>The EIW uses the 8 outer numpad keys by default but they can be redefined in the "controls" tab in the settings. <br>Although some actions are equal, you can read more about all the actions in the chapter of that elemental.
 
 #Keys
 
