@@ -24,7 +24,7 @@ public class GuiHandler implements IGuiHandler {
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         switch (ID) {
             case SCROLL_ID:
-                return new GuiScroll();
+                return new GuiScroll(player);
             default:
                 return null;
         }

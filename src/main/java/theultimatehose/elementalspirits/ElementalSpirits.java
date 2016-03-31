@@ -21,7 +21,7 @@ import theultimatehose.elementalspirits.items.ItemAncientScroll;
 import theultimatehose.elementalspirits.items.ItemEarthRod;
 import theultimatehose.elementalspirits.network.Syncer;
 import theultimatehose.elementalspirits.proxy.GeneralProxy;
-import theultimatehose.elementalspirits.scroll.Structure;
+import theultimatehose.elementalspirits.scroll.structure.Book;
 import theultimatehose.elementalspirits.util.Util;
 
 @Mod(modid = Util.MOD_ID, version = Util.VERSION)
@@ -57,7 +57,7 @@ public class ElementalSpirits {
         proxy.init(event);
         Syncer.init();
         KeyBindManager.INSTANCE.init();
-        Structure.Book.init();
+        Book.init();
         InfusionRitual.init();
 
         EntityRegistry.registerModEntity(EntityElementalBase.class, "BaseElemental", 65536, ElementalSpirits.instance, 65536, 1, true);

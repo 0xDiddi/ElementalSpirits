@@ -3,17 +3,20 @@ package theultimatehose.elementalspirits.scroll;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
+import theultimatehose.elementalspirits.scroll.structure.Chapter;
+import theultimatehose.elementalspirits.scroll.structure.Entry;
+import theultimatehose.elementalspirits.scroll.structure.Page;
 
 public class TextButton extends GuiButton {
 
     int xPos, yPos;
     String text;
     GuiScroll parent;
-    Structure.Chapter targetChapter;
-    Structure.Entry targetEntry;
-    Structure.Page targetPage;
+    Chapter targetChapter;
+    Entry targetEntry;
+    Page targetPage;
 
-    public TextButton(int buttonId, int x, int y, String buttonText, GuiScroll parent, Structure.Chapter targetChapter, Structure.Entry targetEntry, Structure.Page targetPage) {
+    public TextButton(int buttonId, int x, int y, String buttonText, GuiScroll parent, Chapter targetChapter, Entry targetEntry, Page targetPage) {
         super(buttonId, x, y, buttonText);
         xPos = x;
         yPos = y;

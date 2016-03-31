@@ -3,54 +3,54 @@ package theultimatehose.elementalspirits.scroll;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.ResourceLocation;
-import theultimatehose.elementalspirits.scroll.structure.Chapter;
-import theultimatehose.elementalspirits.scroll.structure.Entry;
-import theultimatehose.elementalspirits.scroll.structure.Page;
+import theultimatehose.elementalspirits.scroll.structure.pages.PageMultiBlockAndText;
 import theultimatehose.elementalspirits.util.Util;
 
-public class PageButton extends GuiButton {
+import java.security.DigestException;
+
+public class LayerChangeButon extends GuiButton {
 
     public ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/GuiAncientScroll.png");
 
     int xPos, yPos;
-    GuiScroll parent;
-    Chapter targetChapter;
-    Entry targetEntry;
-    Page targetPage;
     Direction direction;
+    PageMultiBlockAndText targetPage;
 
     public enum Direction {
-        back, left, right
+        up(1), down(-1);
+
+        public final int value;
+
+        Direction(int val) {
+            this.value = val;
+        }
+
     }
 
-    public PageButton(int x, int y, Direction direction, GuiScroll parent, Chapter targetChapter, Entry targetEntry, Page targetPage) {
-        super(0, x, y, "");
-        xPos = x;
-        yPos = y;
-        this.height = 10;
-        this.width = 20;
+    public LayerChangeButon(int buttonId, int x, int y, Direction direction, PageMultiBlockAndText targetPage) {
+        super(buttonId, x, y, null);
+        this.xPos = x;
+        this.yPos = y;
+        this.width = 11;
+        this.height = 16;
         this.direction = direction;
-        this.parent = parent;
-        this.targetChapter = targetChapter;
-        this.targetEntry = targetEntry;
         this.targetPage = targetPage;
     }
 
     @Override
     public void drawButtonForegroundLayer(int mouseX, int mouseY) {
         super.drawButtonForegroundLayer(mouseX, mouseY);
-        int textureX = 0, textureY = 0;
+        int textureX = 40, textureY = 0;
 
-        if (direction == Direction.right)
+        if (direction == Direction.up)
             textureY = 205;
-        else if (direction == Direction.left)
-            textureY = 215;
-        else if (direction == Direction.back)
-            textureY = 225;
+        else if (direction == Direction.down)
+            textureY = 221;
 
         if (mouseX > xPos && mouseY > yPos && mouseX < xPos + getButtonWidth() && mouseY < yPos + this.height) {
-            textureX = 20;
+            textureX = 51;
         }
+
         Minecraft.getMinecraft().getTextureManager().bindTexture(resLoc);
         drawTexturedModalRect(xPos, yPos, textureX, textureY, width, height);
     }
@@ -58,9 +58,7 @@ public class PageButton extends GuiButton {
     @Override
     public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
         if (mouseX > xPos && mouseY > yPos && mouseX < xPos + getButtonWidth() && mouseY < yPos + this.height) {
-            this.parent.currentChapter = targetChapter;
-            this.parent.currentEntry = targetEntry;
-            this.parent.currentPage = targetPage;
+            this.targetPage.currentLayer += this.direction.value;
             return true;
         } else {
             return false;

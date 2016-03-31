@@ -1,43 +1,49 @@
 package theultimatehose.elementalspirits.scroll;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.BlockModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.texture.ITextureObject;
-import net.minecraft.client.resources.model.IBakedModel;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
-import net.minecraftforge.client.model.pipeline.ForgeBlockModelRenderer;
 import theultimatehose.elementalspirits.multiblock.MultiBlockStructure;
+import theultimatehose.elementalspirits.scroll.structure.Book;
+import theultimatehose.elementalspirits.scroll.structure.Chapter;
+import theultimatehose.elementalspirits.scroll.structure.Entry;
+import theultimatehose.elementalspirits.scroll.structure.Page;
 import theultimatehose.elementalspirits.util.Util;
-import theultimatehose.elementalspirits.util.VanillaStuffUtil;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GuiScroll extends GuiScreen {
 
-    public Structure.Chapter currentChapter;
-    public Structure.Entry currentEntry;
-    public Structure.Page currentPage;
+    public static final int TEXT_WRAP_WIDTH = 130;
+    public static final String NBT_KEY_CHAPTER = "opened_chapter";
+    public static final String NBT_KEY_ENTRY = "opened_entry";
+    public static final String NBT_KEY_PAGE = "opened_page";
+
+    public Chapter currentChapter;
+    public Entry currentEntry;
+    public Page currentPage;
+    public EntityPlayer player;
 
     ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/GuiAncientScroll.png");
-    ResourceLocation resLocCraftingOverlay = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/GuiAncientScrollCraftingOverlay.png");
+    public ResourceLocation resLocCraftingOverlay = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/GuiAncientScrollCraftingOverlay.png");
 
     public int guiTop, guiLeft, guiWidth = 160, guiHeight = 205;
 
-    public GuiButton[] buttons;
+    public ArrayList<GuiButton> buttons;
 
-    public GuiScroll() {
+    public GuiScroll(EntityPlayer player) {
         super();
+        this.player = player;
     }
 
     @Override
@@ -45,9 +51,22 @@ public class GuiScroll extends GuiScreen {
         super.initGui();
         this.guiTop = (this.height-this.guiHeight)/2;
         this.guiLeft = (this.width-this.guiWidth)/2;
-        this.currentChapter = null;
-        this.currentEntry = null;
-        this.currentPage = null;
+
+        boolean chapter_read = false, entry_read= false, page_read= false;
+        if (this.player != null) {
+            ItemStack stack = player.getCurrentEquippedItem();
+            if (stack != null) {
+                NBTTagCompound compound = stack.getTagCompound();
+                if (compound != null) {
+                    this.currentChapter = Book.getChapterByIdentifier(compound.getString(NBT_KEY_CHAPTER));
+                    if (this.currentChapter != null) {
+                        this.currentEntry = this.currentChapter.getEntryByIdentifier(compound.getString(NBT_KEY_ENTRY));
+                        if (this.currentEntry != null)
+                            this.currentPage = this.currentEntry.getPageByNumber(compound.getInteger(NBT_KEY_PAGE));
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -68,12 +87,11 @@ public class GuiScroll extends GuiScreen {
         //If chapter is null, draw the chapter overview
         if (this.currentChapter == null) {
 
-            this.fontRendererObj.drawSplitString(parseIdentifier("scroll." + Util.MOD_ID_LOWER + ".contents.name"), x, guiTop + 12, 130, 0);
-            buttons = new TextButton[Structure.Book.chapters.size()];
-            for (Structure.Chapter chap : Structure.Book.chapters) {
+            this.fontRendererObj.drawSplitString(parseIdentifier("contents.name"), x, guiTop + 12, TEXT_WRAP_WIDTH, 0);
+            buttons = new ArrayList<>();
+            for (Chapter chap : Book.chapters) {
                 TextButton btn = new TextButton(y, x, y, parseIdentifier(chap.identifier + ".name"), this, chap, null, null);
-                btn.drawButtonForegroundLayer(mouseX, mouseY);
-                buttons[index] = btn;
+                buttons.add(btn);
                 index++;
                 y += 10;
             }
@@ -81,72 +99,42 @@ public class GuiScroll extends GuiScreen {
         //If entry is null, draw the entry overview
         } else if (this.currentEntry == null) {
 
-            this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + ".title"), x, guiTop + 12, 130, 0);
-            buttons = new GuiButton[100];
-            for (Structure.Entry entry : currentChapter.entries) {
+            this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + ".title"), x, guiTop + 12, TEXT_WRAP_WIDTH, 0);
+            buttons = new ArrayList<>();
+            for (Entry entry : currentChapter.entries) {
                 TextButton btn = new TextButton(y, x, y, parseIdentifier(currentChapter.identifier + "." + entry.subIdentifier + ".name"), this, currentChapter, entry, entry.pages.get(0));
-                btn.drawButtonForegroundLayer(mouseX, mouseY);
-                buttons[index] = btn;
+                buttons.add(btn);
                 index++;
                 y += 10;
             }
 
             btnBack = new PageButton(guiLeft + guiWidth / 2 - 10, guiTop + guiHeight - 20, PageButton.Direction.back, this, null, null, null);
-            btnBack.drawButtonForegroundLayer(mouseX, mouseY);
-            buttons[index] = btnBack;
+            buttons.add(btnBack);
 
         //Else, draw the current page
         } else {
 
-            this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + "." + currentEntry.subIdentifier + ".title"), x, guiTop + 12, 130, 0);
-            buttons = new PageButton[3];
+            this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + "." + currentEntry.subIdentifier + ".title"), x, guiTop + 12, TEXT_WRAP_WIDTH, 0);
+            buttons = new ArrayList<>();
             if (currentEntry.pages.size() > 1) {
                 if (currentPage.number < currentEntry.pages.size()) {
                     PageButton btn = new PageButton(guiLeft + guiWidth - 25, guiTop + guiHeight - 20, PageButton.Direction.right, this, currentChapter, currentEntry, currentEntry.pages.get(currentPage.number));
-                    btn.drawButtonForegroundLayer(mouseX, mouseY);
-                    buttons[1] = btn;
+                    buttons.add(btn);
                 }
                 if (currentPage.number > 1) {
                     PageButton btn = new PageButton(guiLeft + 10, guiTop + guiHeight - 20, PageButton.Direction.left, this, currentChapter, currentEntry, currentEntry.pages.get(currentPage.number - 2));
-                    btn.drawButtonForegroundLayer(mouseX, mouseY);
-                    buttons[0] = btn;
+                    buttons.add(btn);
                 }
             }
 
             btnBack = new PageButton(guiLeft + guiWidth / 2 - 10, guiTop + guiHeight - 20, PageButton.Direction.back, this, currentChapter, null, null);
-            btnBack.drawButtonForegroundLayer(mouseX, mouseY);
-            buttons[2] = btnBack;
+            buttons.add(btnBack);
 
-            if (currentPage instanceof Structure.PageTextOnly)
-                this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + "." + currentEntry.subIdentifier + "." + currentPage.number), x, y, 135, 0);
-            else if (currentPage instanceof Structure.PageImageAndText) {
-                this.mc.getTextureManager().bindTexture(((Structure.PageImageAndText)currentPage).resLoc);
-                drawScaledCustomSizeModalRect(this.guiLeft + 24, this.guiTop + 24, 0, 0, 280, 320, 113, 130, 280, 320);
-                this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + "." + currentEntry.subIdentifier + "." + currentPage.number), x, guiTop + guiHeight - 49, 130, 0);
-            } else if (currentPage instanceof Structure.PageRecipeAndText) {
-                this.mc.getTextureManager().bindTexture(this.resLocCraftingOverlay);
-                GlStateManager.enableBlend();
-                drawScaledCustomSizeModalRect(this.guiLeft + 15, this.guiTop + 25, 0, 0, 140, 85, 140, 85, 140, 85);
-                this.fontRendererObj.drawSplitString(parseIdentifier(currentChapter.identifier + "." + currentEntry.subIdentifier + "." + currentPage.number), x, guiTop + guiHeight - 85, 130, 0);
-                Structure.PageRecipeAndText page = (Structure.PageRecipeAndText) currentPage;
-                int item_x = 0, item_y = 0;
-                for (ItemStack stack : page.input) {
-                    if (stack != null) {
-                        stack.setItemDamage(0);
-                        RenderHelper.enableGUIStandardItemLighting();
-                        Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(stack, this.guiLeft + item_x + 25, this.guiTop + item_y + 35);
-                    }
+            currentPage.render(this, x, y);
+        }
 
-                    item_x += 25;
-                    if (item_x > 50) {
-                        item_x = 0;
-                        item_y += 25;
-                    }
-                }
-                Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(page.result, this.guiLeft + 120, this.guiTop + 60);
-            } else if (currentPage instanceof Structure.PageMultiBlockAndText) {
-                MultiBlockStructure struct = ((Structure.PageMultiBlockAndText)currentPage).structure;
-            }
+        for (GuiButton btn : this.buttons) {
+            btn.drawButtonForegroundLayer(mouseX, mouseY);
         }
 
         this.fontRendererObj.setUnicodeFlag(unicode);
@@ -171,9 +159,31 @@ public class GuiScroll extends GuiScreen {
         this.guiLeft = (this.width-this.guiWidth)/2;
     }
 
+    @Override
+    public void onGuiClosed() {
+        if (this.player != null) {
+            ItemStack stack = player.getCurrentEquippedItem();
+            if (stack != null) {
+                NBTTagCompound compound = stack.getTagCompound();
+                if (compound == null)
+                    compound = new NBTTagCompound();
+                if (currentChapter != null) {
+                    compound.setString(NBT_KEY_CHAPTER, this.currentChapter.identifier);
+                    if (currentEntry != null) {
+                        compound.setString(NBT_KEY_ENTRY, this.currentEntry.subIdentifier);
+                        if (currentPage != null)
+                            compound.setInteger(NBT_KEY_PAGE, this.currentPage.number);
+                    } else
+                        compound.setString(NBT_KEY_ENTRY, "");
+                } else
+                    compound.setString(NBT_KEY_CHAPTER, "");
+                stack.setTagCompound(compound);
+            }
+        }
+    }
+
     public String parseIdentifier(String identifier) {
-        if (!identifier.endsWith(".contents.name"))
-            identifier = "scroll." + Util.MOD_ID_LOWER + "." + identifier;
+        identifier = "scroll." + Util.MOD_ID_LOWER + "." + identifier;
         String str = StatCollector.translateToLocal(identifier);
 
         str = str.replaceAll("<br>", "\n");
@@ -189,6 +199,10 @@ public class GuiScroll extends GuiScreen {
         str = str.replaceAll("<rs>", EnumChatFormatting.BLACK+"");
 
         return str + EnumChatFormatting.WHITE;
+    }
+
+    public FontRenderer getFontRendererObj() {
+        return this.fontRendererObj;
     }
 
 }

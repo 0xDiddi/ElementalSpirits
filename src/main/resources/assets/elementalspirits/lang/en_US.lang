@@ -23,6 +23,9 @@ overlay.elementalspirits.earth.br.name=
 # <i>  -> Italic      | <g>  -> Dark green
 # <u>  -> Underline   | <b>  -> Dark blue
 
+#Used on the multiblock-page
+scroll.elementalspirits.layer=<u>Layer
+
 scroll.elementalspirits.contents.name=<r><f>Elemental Spirits
 
 scroll.elementalspirits.elemental.name=Elementals
@@ -41,6 +44,7 @@ scroll.elementalspirits.earth_elementals.earth_rod.name=The Rod of Earth Mastery
 scroll.elementalspirits.earth_elementals.earth_rod.title=<g><f>The Rod of Earth Mastery
 scroll.elementalspirits.earth_elementals.earth_rod.1=Although the EIW is used to initiate most of the actions, The Rod of Earth Mastery is used to actually perform those. It is used to start rituals and to ride the earth elemental.
 scroll.elementalspirits.earth_elementals.earth_rod.2=And that's how it's made...
+scroll.elementalspirits.earth_elementals.earth_rod.3=This is the infusion ritual needed to infuse the Rod of Earth Mastery. To complete the infusion, right-click the diamond block on the top. For obvious reasons this only works with a non-infused rod.
 
 scroll.elementalspirits.earth_elementals.actions.name=EIW Actions
 scroll.elementalspirits.earth_elementals.actions.title=<g><f>EIW Actions
