@@ -16,10 +16,11 @@ public class ParticleSystem {
     }
 
     public void spawnSingle(World world, BlockPos pos) {
-        for (Particle p : this.particles) {
-            Vec3 actualPos = p.offset.addVector(pos.getX(), pos.getY(), pos.getZ());
-            world.spawnParticle(p.type, actualPos.xCoord, actualPos.yCoord, actualPos.zCoord, p.motion.xCoord, p.motion.yCoord, p.motion.zCoord);
-        }
+        if (world.isRemote)
+            for (Particle p : this.particles) {
+                Vec3 actualPos = p.offset.addVector(pos.getX(), pos.getY(), pos.getZ());
+                world.spawnParticle(p.type, actualPos.xCoord, actualPos.yCoord, actualPos.zCoord, p.motion.xCoord, p.motion.yCoord, p.motion.zCoord);
+            }
     }
 
     public void addParticle(EnumParticleTypes type, Vec3 offset, Vec3 motion) {

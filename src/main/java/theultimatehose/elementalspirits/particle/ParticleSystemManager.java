@@ -15,7 +15,7 @@ public class ParticleSystemManager {
 
     private ArrayList<TimedSpawn> spawns;
 
-    public ParticleSystemManager() {
+    private ParticleSystemManager() {
         this.spawns = new ArrayList<>();
     }
 
@@ -24,12 +24,17 @@ public class ParticleSystemManager {
     public void tick(TickEvent event) {
         for (int i = 0; i < spawns.size(); i++) {
             TimedSpawn spawn = spawns.get(i);
-            spawn.system.spawnSingle(spawn.world, spawn.pos);
+            if (spawn.currentDelay == 0)
+                spawn.system.spawnSingle(spawn.world, spawn.pos);
             spawn.ticks--;
             if (spawn.ticks <= 0)
                 spawns.remove(i);
-            else
+            else {
+                spawn.currentDelay ++;
+                if (spawn.currentDelay >= spawn.delay)
+                    spawn.currentDelay = 0;
                 spawns.set(i, spawn);
+            }
         }
     }
 
@@ -38,17 +43,29 @@ public class ParticleSystemManager {
         this.spawns.add(spawn);
     }
 
+    public void addSpawnForTimeWithDelay(ParticleSystem system, int ticks, World world, BlockPos pos, int delay) {
+        TimedSpawn spawn = new TimedSpawn(system, ticks, world, pos, delay);
+        this.spawns.add(spawn);
+    }
+
     private class TimedSpawn {
         ParticleSystem system;
         int ticks;
         World world;
         BlockPos pos;
+        int delay, currentDelay;
 
         TimedSpawn(ParticleSystem system, int ticks, World world, BlockPos pos) {
+            this(system, ticks, world, pos, 0);
+        }
+
+        TimedSpawn(ParticleSystem system, int ticks, World world, BlockPos pos, int delay) {
             this.system = system;
             this.ticks = ticks;
             this.world = world;
             this.pos = pos;
+            this.delay = delay;
+            this.currentDelay = 0;
         }
     }
 

@@ -3,6 +3,7 @@ package theultimatehose.elementalspirits;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -23,13 +24,14 @@ import theultimatehose.elementalspirits.items.ItemEarthRod;
 import theultimatehose.elementalspirits.network.Syncer;
 import theultimatehose.elementalspirits.proxy.GeneralProxy;
 import theultimatehose.elementalspirits.scroll.structure.Book;
+import theultimatehose.elementalspirits.util.DelayUtil;
 import theultimatehose.elementalspirits.util.Util;
 
 @Mod(modid = Util.MOD_ID, version = Util.VERSION)
 public class ElementalSpirits {
 
     @Mod.Instance(Util.MOD_ID)
-    public static ElementalSpirits instance;
+    public static ElementalSpirits INSTANCE;
 
     public ItemAncientScroll itemAncientScroll;
     public ItemEarthRod itemEarthRod;
@@ -65,8 +67,10 @@ public class ElementalSpirits {
         InfusionRitual.init();
         proxy.init(event);
 
-        EntityRegistry.registerModEntity(EntityElementalBase.class, "BaseElemental", 65536, ElementalSpirits.instance, 65536, 1, true);
-        EntityRegistry.registerModEntity(EntityElementalEarth.class, "EarthElemental", 65537, ElementalSpirits.instance, 65536, 1, true, 0x009900, 0xAAAAAA);
+        FMLCommonHandler.instance().bus().register(DelayUtil.INSTANCE);
+
+        EntityRegistry.registerModEntity(EntityElementalBase.class, "BaseElemental", 65536, ElementalSpirits.INSTANCE, 65536, 1, true);
+        EntityRegistry.registerModEntity(EntityElementalEarth.class, "EarthElemental", 65537, ElementalSpirits.INSTANCE, 65536, 1, true, 0x009900, 0xAAAAAA);
     }
 
     @EventHandler

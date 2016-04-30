@@ -16,7 +16,7 @@ public class RitualEarthRodInfusion extends InfusionRitual {
 
     @Override
     public boolean canExecuteRitual(EntityPlayer player, ItemStack stack, World world, BlockPos pos) {
-        if (stack.getItem() == ElementalSpirits.instance.itemEarthRod) {
+        if (stack.getItem() == ElementalSpirits.INSTANCE.itemEarthRod) {
             if (world.getChunkFromBlockCoords(pos).getBlock(pos) == Blocks.diamond_block) {
                 if (!ItemEarthRod.isRodInfused(stack)) {
                     EarthRodStructure struct = new EarthRodStructure();
@@ -35,7 +35,7 @@ public class RitualEarthRodInfusion extends InfusionRitual {
 
     @Override
     public void executeRitual(EntityPlayer player, ItemStack stack, World world, BlockPos pos) {
-        if (stack.getItem() == ElementalSpirits.instance.itemEarthRod) {
+        if (stack.getItem() == ElementalSpirits.INSTANCE.itemEarthRod) {
             if (world.getChunkFromBlockCoords(pos).getBlock(pos) == Blocks.diamond_block) {
                 if (!ItemEarthRod.isRodInfused(stack)) {
                     EarthRodStructure struct = new EarthRodStructure();

@@ -5,7 +5,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import theultimatehose.elementalspirits.ElementalSpirits;
 
@@ -27,7 +26,7 @@ public class EntityElementalBase extends EntityCreature {
         ItemStack stack = player.getCurrentEquippedItem();
         if (stack != null && stack.stackSize == 1 && stack.getItem() == Items.paper) {
             player.destroyCurrentEquippedItem();
-            player.setCurrentItemOrArmor(0, new ItemStack(ElementalSpirits.instance.itemAncientScroll));
+            player.setCurrentItemOrArmor(0, new ItemStack(ElementalSpirits.INSTANCE.itemAncientScroll));
         }
         return super.interact(player);
     }

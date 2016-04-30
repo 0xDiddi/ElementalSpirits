@@ -3,6 +3,7 @@ package theultimatehose.elementalspirits.multiblock.structures;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
+import theultimatehose.elementalspirits.ElementalSpirits;
 import theultimatehose.elementalspirits.multiblock.MultiBlockStructure;
 
 public class EarthStoneOuter extends MultiBlockStructure {
@@ -24,13 +25,13 @@ public class EarthStoneOuter extends MultiBlockStructure {
         this.placeMatrix = new Block[1][][];
 
         this.placeMatrix[0] = new Block[][]{
-                {null, null, null, Blocks.sponge, null, null, null},
-                {null, Blocks.sponge, null, null, null, Blocks.sponge, null},
+                {null, null, null, ElementalSpirits.INSTANCE.blockEarthInfused, null, null, null},
+                {null, ElementalSpirits.INSTANCE.blockEarthInfused, null, null, null, ElementalSpirits.INSTANCE.blockEarthInfused, null},
                 {null, null, null, null, null, null, null},
-                {Blocks.sponge, null, null, null, null, null, Blocks.sponge},
+                {ElementalSpirits.INSTANCE.blockEarthInfused, null, null, null, null, null, ElementalSpirits.INSTANCE.blockEarthInfused},
                 {null, null, null, null, null, null, null},
-                {null, Blocks.sponge, null, null, null, Blocks.sponge, null},
-                {null, null, null, Blocks.sponge, null, null, null}};
+                {null, ElementalSpirits.INSTANCE.blockEarthInfused, null, null, null, ElementalSpirits.INSTANCE.blockEarthInfused, null},
+                {null, null, null, ElementalSpirits.INSTANCE.blockEarthInfused, null, null, null}};
 
         this.startPosPlace = new BlockPos(3, 0, 3);
     }

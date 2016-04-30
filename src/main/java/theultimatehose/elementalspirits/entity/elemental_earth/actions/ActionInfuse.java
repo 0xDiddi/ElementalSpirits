@@ -7,7 +7,6 @@ import theultimatehose.elementalspirits.ElementalSpirits;
 import theultimatehose.elementalspirits.entity.elemental_earth.EntityElementalEarth;
 import theultimatehose.elementalspirits.items.ItemEarthRod;
 import theultimatehose.elementalspirits.overlay.WheelInteraction;
-import theultimatehose.elementalspirits.util.Util;
 
 public class ActionInfuse extends WheelInteraction.Action {
 
@@ -23,7 +22,7 @@ public class ActionInfuse extends WheelInteraction.Action {
     @Override
     public void perform() {
         ItemStack stack = player.getCurrentEquippedItem();
-        if (stack.getItem() == ElementalSpirits.instance.itemEarthRod) {
+        if (stack.getItem() == ElementalSpirits.INSTANCE.itemEarthRod) {
             NBTTagCompound compound = stack.getTagCompound();
             if (compound == null)
                 compound = new NBTTagCompound();

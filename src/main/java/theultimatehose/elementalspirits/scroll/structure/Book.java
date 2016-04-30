@@ -25,7 +25,7 @@ public class Book {
 
         Entry earth_rod = new Entry("earth_rod");
         earth_rod.addPage(new PageTextOnly(1));
-        earth_rod.addPage(new PageRecipeAndText(2, ElementalSpirits.instance.itemEarthRodRecipe));
+        earth_rod.addPage(new PageRecipeAndText(2, ElementalSpirits.INSTANCE.itemEarthRodRecipe));
         earth_rod.addPage(new PageMultiBlockAndText(3, new EarthRodStructure()));
         elementals_earth.addEntry(earth_rod);
 

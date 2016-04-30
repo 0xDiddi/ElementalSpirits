@@ -12,7 +12,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -93,7 +92,7 @@ public class EntityElementalEarth extends EntityElementalBase implements IIntege
                     }
                 }
             } else if (player.getGameProfile().getId().toString().equals(getMaster())) {
-                if (player.getCurrentEquippedItem().getItem() == ElementalSpirits.instance.itemEarthRod) {
+                if (player.getCurrentEquippedItem().getItem() == ElementalSpirits.INSTANCE.itemEarthRod) {
                     NBTTagCompound compound = player.getCurrentEquippedItem().getTagCompound();
                     if (compound == null)
                         compound = new NBTTagCompound();

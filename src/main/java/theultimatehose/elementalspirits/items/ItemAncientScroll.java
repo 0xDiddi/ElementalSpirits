@@ -1,6 +1,5 @@
 package theultimatehose.elementalspirits.items;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,7 +19,7 @@ public class ItemAncientScroll extends Item {
 
     @Override
     public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
-        playerIn.openGui(ElementalSpirits.instance, GuiHandler.SCROLL_ID, worldIn, (int) playerIn.posX, (int) playerIn.posY, (int) playerIn.posZ);
+        playerIn.openGui(ElementalSpirits.INSTANCE, GuiHandler.SCROLL_ID, worldIn, (int) playerIn.posX, (int) playerIn.posY, (int) playerIn.posZ);
         return super.onItemRightClick(itemStackIn, worldIn, playerIn);
     }
 

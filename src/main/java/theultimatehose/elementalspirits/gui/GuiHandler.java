@@ -12,7 +12,7 @@ public class GuiHandler implements IGuiHandler {
     public static final int SCROLL_ID = 0;
 
     public static void init() {
-        NetworkRegistry.INSTANCE.registerGuiHandler(ElementalSpirits.instance, new GuiHandler());
+        NetworkRegistry.INSTANCE.registerGuiHandler(ElementalSpirits.INSTANCE, new GuiHandler());
     }
 
     @Override
