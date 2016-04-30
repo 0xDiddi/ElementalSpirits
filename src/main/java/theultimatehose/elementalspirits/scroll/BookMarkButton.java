@@ -10,7 +10,7 @@ import theultimatehose.elementalspirits.util.Util;
 
 public class BookMarkButton extends GuiButton {
 
-    public ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/GuiAncientScroll.png");
+    private ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/GuiAncientScroll.png");
 
     int xPos, yPos;
     public BookMark bookMark;

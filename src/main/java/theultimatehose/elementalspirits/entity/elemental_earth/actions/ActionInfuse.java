@@ -7,13 +7,15 @@ import theultimatehose.elementalspirits.ElementalSpirits;
 import theultimatehose.elementalspirits.entity.elemental_earth.EntityElementalEarth;
 import theultimatehose.elementalspirits.items.ItemEarthRod;
 import theultimatehose.elementalspirits.overlay.WheelInteraction;
+import theultimatehose.elementalspirits.util.Util;
 
-public class ActionInfuse implements WheelInteraction.Action {
+public class ActionInfuse extends WheelInteraction.Action {
 
     public EntityElementalEarth elemental;
     public EntityPlayer player;
 
     public ActionInfuse(EntityElementalEarth elemental, EntityPlayer player) {
+        super("infuse");
         this.elemental = elemental;
         this.player = player;
     }

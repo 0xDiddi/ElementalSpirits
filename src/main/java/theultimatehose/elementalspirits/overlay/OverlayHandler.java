@@ -9,11 +9,11 @@ import theultimatehose.elementalspirits.entity.EntityElementalBase;
 
 public class OverlayHandler {
 
-    int pretimer;
-    float alpha;
+    private int pretimer;
+    private float alpha;
 
-    public Overlay currentOverlay;
-    public EntityElementalBase prevElemental;
+    private Overlay currentOverlay;
+    private EntityElementalBase prevElemental;
 
     @SubscribeEvent
     public void renderOverlay(RenderGameOverlayEvent.Post event) {

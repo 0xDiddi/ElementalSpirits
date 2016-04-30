@@ -14,12 +14,13 @@ public abstract class InfusionRitual {
     public static void init() {
         registeredRituals = new ArrayList<>();
         registeredRituals.add(new RitualEarthRodInfusion());
+        registeredRituals.add(new RitualEarthBlockInfusion());
     }
 
     /**
      * Checks if this ritual can be executed at the given position by the given player holding the given itemstack in the given world.<br>
      *
-     * If you want to avoid spam, please check {@code world.isRemote} before sending Chat messages
+     * If you want to avoid spam, please check {@link World#isRemote} before sending Chat messages
      * as this method is executed on client AND server because otherwise removing Blocks (especially MultiBlockStructures) causes sync-issues.
      * @param player The player
      * @param stack The ItemStack
@@ -32,9 +33,9 @@ public abstract class InfusionRitual {
     }
 
     /**
-     * Executes the ritual. The parameters should be the same as in the last call of {@code canExecuteRitual}
+     * Executes the ritual. The parameters should be the same as in the last call of {@link #canExecuteRitual(EntityPlayer, ItemStack, World, BlockPos)}
      *
-     * If you want to avoid spam, please check {@code world.isRemote} before sending Chat messages
+     * If you want to avoid spam, please check {@link World#isRemote} before sending Chat messages
      * as this method is executed on client AND server because otherwise removing Blocks (especially MultiBlockStructures) causes sync-issues.
      * @param player The player
      * @param stack The ItemStack

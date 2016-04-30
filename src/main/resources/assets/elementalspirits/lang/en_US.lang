@@ -2,18 +2,11 @@
 item.elementalspirits.itemScroll.name=Ancient Scroll
 item.elementalspirits.itemEarthRod.name=Rod of Earth Mastery
 
+#Blocks
+tile.elementalspirits.blockEarthInfused.name=Earth Infused Stone
+
 #Entities
 entity.ElementalSpirits.EarthElemental.name=Earth Elemental
-
-#Overlay
-overlay.elementalspirits.earth.tl.name=Stats
-overlay.elementalspirits.earth.tc.name=Mount
-overlay.elementalspirits.earth.tr.name=Infuse
-overlay.elementalspirits.earth.cl.name=Apply Strength
-overlay.elementalspirits.earth.cr.name=
-overlay.elementalspirits.earth.bl.name=
-overlay.elementalspirits.earth.bc.name=Release
-overlay.elementalspirits.earth.br.name=
 
 #Scroll
 
@@ -86,3 +79,10 @@ chat.elementalspirits.infuse_start.msg=Right click the origin block of the Struc
 chat.elementalspirits.infuse_success.msg=Infusion successful!
 chat.elementalspirits.infuse_failed.msg=Infusion failed. Make sure all requirements are met.
 chat.elementalspirits.infuse_denied.msg=This Rod is already infused!
+
+#Wheel actions
+wheel.elementalspirits.stats.name=Stats
+wheel.elementalspirits.mount.name=Mount
+wheel.elementalspirits.infuse.name=Infuse
+wheel.elementalspirits.apply_strength.name=Apply Strength
+wheel.elementalspirits.release.name=Release

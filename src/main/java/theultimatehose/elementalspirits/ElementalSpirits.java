@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import theultimatehose.elementalspirits.block.BlockEarthInfused;
 import theultimatehose.elementalspirits.entity.EntityElementalBase;
 import theultimatehose.elementalspirits.entity.elemental_earth.EntityElementalEarth;
 import theultimatehose.elementalspirits.gui.GuiHandler;
@@ -32,6 +33,7 @@ public class ElementalSpirits {
 
     public ItemAncientScroll itemAncientScroll;
     public ItemEarthRod itemEarthRod;
+    public BlockEarthInfused blockEarthInfused;
     public ShapedOreRecipe itemEarthRodRecipe;
 
     @SidedProxy(clientSide = "theultimatehose.elementalspirits.proxy.ClientProxy", serverSide = "theultimatehose.elementalspirits.proxy.ServerProxy")
@@ -43,8 +45,11 @@ public class ElementalSpirits {
         itemAncientScroll = (ItemAncientScroll) new ItemAncientScroll().setUnlocalizedName(Util.MOD_ID_LOWER + '.' + Names.ITEM_SCROLL).setRegistryName(Names.ITEM_SCROLL);
         itemEarthRod = (ItemEarthRod) new ItemEarthRod().setUnlocalizedName(Util.MOD_ID_LOWER + "." + Names.ITEM_EARTH_ROD).setRegistryName(Names.ITEM_EARTH_ROD);
 
+        blockEarthInfused = (BlockEarthInfused) new BlockEarthInfused().setUnlocalizedName(Util.MOD_ID_LOWER + '.' + Names.BLOCK_EARTH_INFUSED).setRegistryName(Names.BLOCK_EARTH_INFUSED);
+
         GameRegistry.registerItem(itemAncientScroll, Names.ITEM_SCROLL);
         GameRegistry.registerItem(itemEarthRod, Names.ITEM_EARTH_ROD);
+        GameRegistry.registerBlock(blockEarthInfused);
 
     }
 
@@ -54,11 +59,11 @@ public class ElementalSpirits {
         GameRegistry.addRecipe(itemEarthRodRecipe = new ShapedOreRecipe(itemEarthRod, "VVD", "IIE", "RVV", 'V', Blocks.vine, 'D', "gemDiamond", 'I', "ingotIron", 'E', "gemEmerald", 'R', "dustRedstone"));
 
         GuiHandler.init();
-        proxy.init(event);
         Syncer.init();
         KeyBindManager.INSTANCE.init();
         Book.init();
         InfusionRitual.init();
+        proxy.init(event);
 
         EntityRegistry.registerModEntity(EntityElementalBase.class, "BaseElemental", 65536, ElementalSpirits.instance, 65536, 1, true);
         EntityRegistry.registerModEntity(EntityElementalEarth.class, "EarthElemental", 65537, ElementalSpirits.instance, 65536, 1, true, 0x009900, 0xAAAAAA);

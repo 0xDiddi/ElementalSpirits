@@ -107,4 +107,15 @@ public class ItemEarthRod extends Item {
         }
         return false;
     }
+
+    public static boolean isRodInfused(ItemStack stack) {
+        if (stack.getItem() == ElementalSpirits.instance.itemEarthRod) {
+            NBTTagCompound compound = stack.getTagCompound();
+            if (compound != null) {
+                return compound.getBoolean(KEY_INFUSED);
+            }
+        }
+        return false;
+    }
+
 }

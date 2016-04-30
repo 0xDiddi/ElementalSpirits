@@ -1,7 +1,7 @@
 package theultimatehose.elementalspirits.scroll.structure;
 
 import theultimatehose.elementalspirits.ElementalSpirits;
-import theultimatehose.elementalspirits.multiblock.EarthRodStructure;
+import theultimatehose.elementalspirits.multiblock.structures.EarthRodStructure;
 import theultimatehose.elementalspirits.scroll.structure.pages.PageImageAndText;
 import theultimatehose.elementalspirits.scroll.structure.pages.PageMultiBlockAndText;
 import theultimatehose.elementalspirits.scroll.structure.pages.PageRecipeAndText;

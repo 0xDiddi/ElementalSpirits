@@ -23,9 +23,9 @@ public class PageMultiBlockAndText extends Page {
     public PageMultiBlockAndText(int number, MultiBlockStructure structure) {
         super(number);
         this.structure = structure;
-        this.maxLayer = structure.matrix.length - 1;
-        this.width = structure.matrix[0].length;
-        this.height = structure.matrix[0][0].length;
+        this.maxLayer = structure.checkMatrix.length - 1;
+        this.width = structure.checkMatrix[0].length;
+        this.height = structure.checkMatrix[0][0].length;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class PageMultiBlockAndText extends Page {
         if (currentLayer > 0)
             gui.buttons.add(new LayerChangeButon(0, gui.guiLeft + gui.guiWidth - 22, gui.guiTop + 50, LayerChangeButon.Direction.down, this));
 
-        Block[][] layer = structure.matrix[currentLayer];
+        Block[][] layer = structure.checkMatrix[currentLayer];
 
         int offsetX = 20, offsetY = 30;
 

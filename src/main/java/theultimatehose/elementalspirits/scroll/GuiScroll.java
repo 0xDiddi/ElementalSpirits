@@ -20,24 +20,24 @@ import java.util.ArrayList;
 public class GuiScroll extends GuiScreen {
 
     public static final int TEXT_WRAP_WIDTH = 130;
-    public static final String NBT_KEY_CHAPTER = "opened_chapter";
-    public static final String NBT_KEY_ENTRY = "opened_entry";
-    public static final String NBT_KEY_PAGE = "opened_page";
+    private static final String NBT_KEY_CHAPTER = "opened_chapter";
+    private static final String NBT_KEY_ENTRY = "opened_entry";
+    private static final String NBT_KEY_PAGE = "opened_page";
 
     public Chapter currentChapter;
     public Entry currentEntry;
     public Page currentPage;
     public EntityPlayer player;
 
-    public ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/GuiAncientScroll.png");
+    private ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/GuiAncientScroll.png");
     public ResourceLocation resLocCraftingOverlay = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/GuiAncientScrollCraftingOverlay.png");
 
     public int guiTop, guiLeft, guiWidth = 160, guiHeight = 205;
 
     public ArrayList<GuiButton> buttons;
-    public ArrayList<BookMarkButton> bookMarkButtons;
+    private ArrayList<BookMarkButton> bookMarkButtons;
 
-    public boolean isPlayerShifting;
+    boolean isPlayerShifting;
 
     public GuiScroll(EntityPlayer player) {
         super();

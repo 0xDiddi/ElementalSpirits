@@ -11,9 +11,9 @@ import theultimatehose.elementalspirits.ElementalSpirits;
 
 public class EntityElementalBase extends EntityCreature {
 
-    final int UUID_POS = 20;
-    final int TAMED_POS = 21;
-    final int FOLLOW_POS = 22;
+    private final int UUID_POS = 20;
+    private final int TAMED_POS = 21;
+    private final int FOLLOW_POS = 22;
 
     public EntityElementalBase(World worldIn) {
         super(worldIn);

@@ -19,18 +19,18 @@ import java.util.HashMap;
 
 public abstract class Overlay {
 
-    public FontRenderer fontRenderer = Minecraft.getMinecraft().getRenderManager().getFontRenderer();
-    public ResourceLocation defaultBackground = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/OverlayElemental.png");
+    FontRenderer fontRenderer = Minecraft.getMinecraft().getRenderManager().getFontRenderer();
+    private ResourceLocation defaultBackground = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/OverlayElemental.png");
     public EntityElementalBase elemental;
     public EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-    public HashMap<Position, WheelInteraction.Action> wheelActions;
-    public boolean hasWheelActions;
+    HashMap<Position, WheelInteraction.Action> wheelActions;
+    private boolean hasWheelActions;
 
     private boolean isKeyPressed;
 
-    public int width, height;
-    public int startLeft, startTop;
-    public int ticksSinceInput;
+    private int width, height;
+    int startLeft, startTop;
+    private int ticksSinceInput;
 
     public void init(int width, int height, int startLeft, int startTop, EntityElementalBase elemental) {
         this.width = width;
@@ -139,11 +139,6 @@ public abstract class Overlay {
             this.shortName = shortName;
             this.x = x;
             this.y = y;
-        }
-
-        String getLocalizedString(String type) {
-            String unlocalized = "overlay." + Util.MOD_ID_LOWER + "." + type + "." + this.shortName + ".name";
-            return StatCollector.translateToLocal(unlocalized);
         }
 
     }

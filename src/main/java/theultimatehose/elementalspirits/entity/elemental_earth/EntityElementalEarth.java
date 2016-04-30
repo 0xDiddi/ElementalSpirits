@@ -20,6 +20,7 @@ import theultimatehose.elementalspirits.ElementalSpirits;
 import theultimatehose.elementalspirits.entity.EntityElementalBase;
 import theultimatehose.elementalspirits.entity.ai.ElementalAIFollowMaster;
 import theultimatehose.elementalspirits.entity.ai.EntityAIRiddenByPlayer;
+import theultimatehose.elementalspirits.entity.elemental_earth.actions.ActionApplyStrength;
 import theultimatehose.elementalspirits.entity.elemental_earth.actions.ActionInfuse;
 import theultimatehose.elementalspirits.entity.elemental_earth.actions.ActionMount;
 import theultimatehose.elementalspirits.items.ItemEarthRod;
@@ -35,13 +36,8 @@ import java.util.UUID;
 
 public class EntityElementalEarth extends EntityElementalBase implements IIntegerSyncer, IOverlayProvider, WheelInteraction.IWheelInteractionProvider {
 
-    final int UPDATE_RIDER_POS = 23;
-
-    int riderID;
-    boolean shouldUpdateRider;
-
-    BlockPos infusePos;
-    boolean shouldPerformInfuse;
+    private int riderID;
+    private boolean shouldUpdateRider;
 
     public EntityAIRiddenByPlayer aiRiddenByPlayer;
 
@@ -54,8 +50,6 @@ public class EntityElementalEarth extends EntityElementalBase implements IIntege
         this.tasks.addTask(5, new EntityAITempt(this, 1, Items.emerald, false));
         this.tasks.addTask(7, new EntityAIWander(this, 1));
         this.tasks.addTask(10, new EntityAILookIdle(this));
-
-        this.dataWatcher.addObject(UPDATE_RIDER_POS, 0);
 
     }
 
@@ -173,6 +167,7 @@ public class EntityElementalEarth extends EntityElementalBase implements IIntege
         HashMap<Overlay.Position, WheelInteraction.Action> map = new HashMap<>(8);
         map.put(Overlay.Position.top_center, new ActionMount(this));
         map.put(Overlay.Position.top_right, new ActionInfuse(this, MinecraftServer.getServer().getConfigurationManager().getPlayerByUUID(UUID.fromString(this.getMaster()))));
+        map.put(Overlay.Position.center_left, new ActionApplyStrength(MinecraftServer.getServer().getConfigurationManager().getPlayerByUUID(UUID.fromString(this.getMaster()))));
         return map;
     }
 }
