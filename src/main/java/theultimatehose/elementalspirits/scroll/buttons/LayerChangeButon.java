@@ -1,4 +1,4 @@
-package theultimatehose.elementalspirits.scroll;
+package theultimatehose.elementalspirits.scroll.buttons;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -12,7 +12,6 @@ public class LayerChangeButon extends GuiButton {
 
     public ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/GuiAncientScroll.png");
 
-    int xPos, yPos;
     Direction direction;
     PageMultiBlockAndText targetPage;
 
@@ -29,8 +28,8 @@ public class LayerChangeButon extends GuiButton {
 
     public LayerChangeButon(int buttonId, int x, int y, Direction direction, PageMultiBlockAndText targetPage) {
         super(buttonId, x, y, null);
-        this.xPos = x;
-        this.yPos = y;
+        this.xPosition = x;
+        this.yPosition = y;
         this.width = 11;
         this.height = 16;
         this.direction = direction;
@@ -46,17 +45,17 @@ public class LayerChangeButon extends GuiButton {
         else if (this.direction == Direction.down)
             textureY = 221;
 
-        if (mouseX > this.xPos && mouseY > this.yPos && mouseX < this.xPos + getButtonWidth() && mouseY < this.yPos + this.height) {
+        if (mouseX > this.xPosition && mouseY > this.yPosition && mouseX < this.xPosition + getButtonWidth() && mouseY < this.yPosition + this.height) {
             textureX = 51;
         }
 
         Minecraft.getMinecraft().getTextureManager().bindTexture(this.resLoc);
-        drawTexturedModalRect(this.xPos, this.yPos, textureX, textureY, this.width, this.height);
+        drawTexturedModalRect(this.xPosition, this.yPosition, textureX, textureY, this.width, this.height);
     }
 
     @Override
     public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
-        if (mouseX > this.xPos && mouseY > this.yPos && mouseX < this.xPos + getButtonWidth() && mouseY < this.yPos + this.height) {
+        if (mouseX > this.xPosition && mouseY > this.yPosition && mouseX < this.xPosition + getButtonWidth() && mouseY < this.yPosition + this.height) {
             this.targetPage.currentLayer += this.direction.value;
             return true;
         } else {

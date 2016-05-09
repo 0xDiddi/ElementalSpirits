@@ -1,10 +1,11 @@
-package theultimatehose.elementalspirits.scroll;
+package theultimatehose.elementalspirits.scroll.buttons;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
+import theultimatehose.elementalspirits.scroll.GuiScroll;
 import theultimatehose.elementalspirits.scroll.structure.BookMark;
 import theultimatehose.elementalspirits.util.Util;
 
@@ -12,15 +13,14 @@ public class BookMarkButton extends GuiButton {
 
     private ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/GuiAncientScroll.png");
 
-    int xPos, yPos;
     public BookMark bookMark;
     public GuiScroll parent;
     public int bookMarkID;
 
     public BookMarkButton(int buttonId, int x, int y, GuiScroll parent, BookMark bookMark, int bookMarkID) {
         super(buttonId, x, y, "");
-        this.xPos = x;
-        this.yPos = y;
+        this.xPosition = x;
+        this.yPosition = y;
         this.width = 127;
         this.height = 25;
         this.parent = parent;
@@ -31,28 +31,28 @@ public class BookMarkButton extends GuiButton {
     @Override
     public void drawButtonForegroundLayer(int mouseX, int mouseY) {
         int textureX = 62, textureY = 205;
-        int renderX = this.xPos;
+        int renderX = this.xPosition;
 
         if (this.bookMark == null)
             renderX -= 100;
 
         if (mouseX > this.parent.guiLeft + this.parent.guiWidth) {
-            if (mouseX > renderX && mouseY > this.yPos && mouseX < renderX + getButtonWidth() && mouseY < this.yPos + this.height) {
+            if (mouseX > renderX && mouseY > this.yPosition && mouseX < renderX + getButtonWidth() && mouseY < this.yPosition + this.height) {
                 renderX += 10;
             }
         }
 
         Minecraft.getMinecraft().getTextureManager().bindTexture(resLoc);
-        drawTexturedModalRect(renderX, this.yPos, textureX, textureY, this.width, this.height);
+        drawTexturedModalRect(renderX, this.yPosition, textureX, textureY, this.width, this.height);
 
         FontRenderer fr = this.parent.getFontRendererObj();
         boolean unicode = fr.getUnicodeFlag();
         fr.setUnicodeFlag(true);
         if (this.bookMark != null) {
             if (this.bookMark.targetEntry == null)
-                fr.drawString(this.parent.parseIdentifier(this.bookMark.targetChapter.identifier + ".name"), renderX + 17, this.yPos + 7, 0, false);
+                fr.drawString(this.parent.parseIdentifier(this.bookMark.targetChapter.identifier + ".name"), renderX + 17, this.yPosition + 7, 0, false);
             else {
-                fr.drawString(this.parent.parseIdentifier(this.bookMark.targetChapter.identifier + "." + this.bookMark.targetEntry.subIdentifier + ".name") + EnumChatFormatting.BLACK + "/" + this.bookMark.targetPage.number + EnumChatFormatting.WHITE, renderX + 17, this.yPos + 7, 0, false);
+                fr.drawString(this.parent.parseIdentifier(this.bookMark.targetChapter.identifier + "." + this.bookMark.targetEntry.subIdentifier + ".name") + EnumChatFormatting.BLACK + "/" + this.bookMark.targetPage.number + EnumChatFormatting.WHITE, renderX + 17, this.yPosition + 7, 0, false);
             }
         }
         fr.setUnicodeFlag(unicode);
@@ -60,7 +60,7 @@ public class BookMarkButton extends GuiButton {
 
     @Override
     public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
-        if (mouseX > xPos && mouseY > yPos && mouseX < xPos + getButtonWidth() && mouseY < yPos + this.height) {
+        if (mouseX > xPosition && mouseY > yPosition && mouseX < xPosition + getButtonWidth() && mouseY < yPosition + this.height) {
             if (this.parent.isPlayerShifting)
                 this.bookMark = null;
             else {

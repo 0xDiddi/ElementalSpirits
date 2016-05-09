@@ -1,8 +1,9 @@
-package theultimatehose.elementalspirits.scroll;
+package theultimatehose.elementalspirits.scroll.buttons;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
+import theultimatehose.elementalspirits.scroll.GuiScroll;
 import theultimatehose.elementalspirits.scroll.structure.BookMark;
 import theultimatehose.elementalspirits.scroll.structure.Chapter;
 import theultimatehose.elementalspirits.scroll.structure.Entry;
@@ -10,15 +11,14 @@ import theultimatehose.elementalspirits.scroll.structure.Page;
 
 public class TextButton extends GuiButton {
 
-    int xPos, yPos;
     String text;
     GuiScroll parent;
     BookMark bookMark;
 
     public TextButton(int buttonId, int x, int y, String buttonText, GuiScroll parent, BookMark bookMark) {
         super(buttonId, x, y, buttonText);
-        this.xPos = x;
-        this.yPos = y;
+        this.xPosition = x;
+        this.yPosition = y;
         this.text = buttonText;
         this.height = 9;
         this.parent = parent;
@@ -28,9 +28,9 @@ public class TextButton extends GuiButton {
     @Override
     public void drawButtonForegroundLayer(int mouseX, int mouseY) {
         FontRenderer fontRenderer = Minecraft.getMinecraft().fontRendererObj;
-        fontRenderer.drawString(this.text, this.xPos, this.yPos, 0);
-        if (mouseX > this.xPos && mouseY > this.yPos && mouseX < this.xPos + getButtonWidth() && mouseY < this.yPos + this.height) {
-            drawGradientRect(this.xPos, yPos + 8, this.xPos + this.getButtonWidth(), this.yPos + 9, 0xFFCC0000, 0xFF000000);
+        fontRenderer.drawString(this.text, this.xPosition, this.yPosition, 0);
+        if (mouseX > this.xPosition && mouseY > this.yPosition && mouseX < this.xPosition + this.getButtonWidth() && mouseY < this.yPosition + this.height) {
+            this.drawGradientRect(this.xPosition, this.yPosition + 8, this.xPosition + this.getButtonWidth(), this.yPosition + 9, 0xFFCC0000, 0xFF000000);
         }
     }
 
@@ -41,7 +41,7 @@ public class TextButton extends GuiButton {
 
     @Override
     public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
-        if (mouseX > this.xPos && mouseY > this.yPos && mouseX < this.xPos + getButtonWidth() && mouseY < this.yPos + this.height) {
+        if (mouseX > this.xPosition && mouseY > this.yPosition && mouseX < this.xPosition + getButtonWidth() && mouseY < this.yPosition + this.height) {
             this.bookMark.jumpTo(this.parent);
             return true;
         } else {

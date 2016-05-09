@@ -4,13 +4,16 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import theultimatehose.elementalspirits.multiblock.MultiBlockStructure;
 import theultimatehose.elementalspirits.scroll.GuiScroll;
-import theultimatehose.elementalspirits.scroll.LayerChangeButon;
+import theultimatehose.elementalspirits.scroll.buttons.LayerChangeButon;
 import theultimatehose.elementalspirits.scroll.structure.Page;
+import theultimatehose.elementalspirits.util.RenderUtil;
 import theultimatehose.elementalspirits.util.Util;
 
 public class PageMultiBlockAndText extends Page {
@@ -37,15 +40,21 @@ public class PageMultiBlockAndText extends Page {
 
         Block[][] layer = structure.checkMatrix[currentLayer];
 
-        int offsetX = 20, offsetY = 30;
+        int offsetX = (gui.guiWidth - this.width * 20) / 2;
+        int offsetY = 30;
 
         int blockX = 0, blockY = 0;
         for (Block[] row : layer) {
             for (Block b : row) {
-                if (b != null) {
-                    ItemStack stack = new ItemStack(b);
+                if (b != null && b != Blocks.air) {
+                    ItemStack stack = RenderUtil.getRenderableItemstack(b);
                     RenderHelper.enableGUIStandardItemLighting();
                     Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(stack, gui.guiLeft + blockX + offsetX, gui.guiTop + blockY + offsetY);
+                    if (stack.stackSize == 2) {
+                        Minecraft.getMinecraft().getRenderItem().zLevel = 100;
+                        Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(stack, gui.guiLeft + blockX + offsetX, gui.guiTop + blockY + offsetY - 4);
+                        Minecraft.getMinecraft().getRenderItem().zLevel = 0;
+                    }
                 }
                 blockX += 20;
             }
@@ -64,9 +73,10 @@ public class PageMultiBlockAndText extends Page {
             Gui.drawScaledCustomSizeModalRect(gui.guiLeft + offsetX - 2, gui.guiTop + offsetY + (lineY * 20) - 2, 0, 0, 1, 1, (this.width * 20) + 1, 1, 1, 1);
         }
 
-        gui.getFontRendererObj().drawSplitString(gui.parseIdentifier("layer") + EnumChatFormatting.BLACK + ": " + this.currentLayer, x, gui.guiTop + offsetX + (this.height * 20) + 15, GuiScroll.TEXT_WRAP_WIDTH, 0);
+        if (this.maxLayer > 1)
+            gui.getFontRendererObj().drawSplitString(gui.parseIdentifier("layer") + EnumChatFormatting.BLACK + ": " + this.currentLayer, x, gui.guiTop + offsetY + (this.height * 20) + 5, GuiScroll.TEXT_WRAP_WIDTH, 0);
 
-        gui.getFontRendererObj().drawSplitString(gui.parseIdentifier(gui.currentChapter.identifier + "." + gui.currentEntry.subIdentifier + "." + gui.currentPage.number), x, gui.guiTop + offsetX + (this.height * 20) + 25, GuiScroll.TEXT_WRAP_WIDTH, 0);
+        gui.getFontRendererObj().drawSplitString(gui.parseIdentifier(gui.currentChapter.identifier + "." + gui.currentEntry.subIdentifier + "." + gui.currentPage.number), x, gui.guiTop + offsetY + (this.height * 20) + ((this.maxLayer > 1) ? 15 : 5), GuiScroll.TEXT_WRAP_WIDTH, 0);
 
     }
 

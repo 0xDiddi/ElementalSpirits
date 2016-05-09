@@ -21,29 +21,30 @@ scroll.elementalspirits.layer=<u>Layer
 
 scroll.elementalspirits.contents.name=<r><f>Elemental Spirits
 
-scroll.elementalspirits.elemental.name=Elementals
-scroll.elementalspirits.elemental.title=<b><f>Elementals
+scroll.elementalspirits.earth.name=Earth Related Stuff
+scroll.elementalspirits.earth.title=<g><f>Earth Related Stuff
 
-scroll.elementalspirits.earth_elementals.name=Earth Elementals
-scroll.elementalspirits.earth_elementals.title=<g><f>Earth Elementals
+scroll.elementalspirits.earth.general.name=Earth Elementals
+scroll.elementalspirits.earth.general.title=<g><f>Earth Elementals
+scroll.elementalspirits.earth.general.1=Earth Elementals are the strongest of the four Elementals. When they have a connection to the ground, they have almost infinite power which they can also share with their masters.<br>They can be tamed by feeding them (vanilla) minerals. You will need less of the mineral if you use more rare minerals.
+scroll.elementalspirits.earth.general.2=That's how a (low level) earth elemental looks like.
 
+scroll.elementalspirits.earth.earth_rod.name=The Rod of Earth Mastery
+scroll.elementalspirits.earth.earth_rod.title=<g><f>The Rod of Earth Mastery
+scroll.elementalspirits.earth.earth_rod.1=Although the EIW is used to initiate most of the actions, The Rod of Earth Mastery is used to actually perform those. It is used to start rituals and to ride the earth elemental.
+scroll.elementalspirits.earth.earth_rod.2=And that's how it's made...
+scroll.elementalspirits.earth.earth_rod.3=This is the infusion ritual needed to infuse the Rod of Earth Mastery. To complete the infusion, right-click the diamond block on the top. For obvious reasons this only works with a non-infused rod.
 
-scroll.elementalspirits.earth_elementals.general.name=General Information
-scroll.elementalspirits.earth_elementals.general.title=<g><f>General Information
-scroll.elementalspirits.earth_elementals.general.1=Earth Elementals are the strongest of the four Elementals. When they have a connection to the ground, they have almost infinite power which they can also share with their masters.<br>They can be tamed by feeding them (vanilla) minerals. You will need less of the mineral if you use more rare minerals.
-scroll.elementalspirits.earth_elementals.general.2=That's how a (low level) earth elemental looks like.
+scroll.elementalspirits.earth.actions.name=EIW Actions
+scroll.elementalspirits.earth.actions.title=<g><f>EIW Actions
+scroll.elementalspirits.earth.actions.1=<u>Mount<rs><br>The "Mount" action does exactly what you expected: you'll mount the elemental, but to actually steer the elemental, you'll need an infused Rod of Earth Mastery.<br><br><u>Stats<rs><br>The "Stats" action opens a window which tells you some information about that elemental.<br><br><u>Infuse<rs><br>The "Infuse" action initiates an infusion ritual which can then be performed with the Rod of Earth Mastery.
+scroll.elementalspirits.earth.actions.2=<u>Apply Strength<rs><br>The "Apply Strength" actions applies strength to it's master. The level and duration of the strength are based on the level of the elemental.<br><br><u>Release<rs><br>The "Release" action is the one that you probably use least as it (obviously) releases the elemental. Depending on how strong the bond between the master and the elemental is, one of them (sometimes even both) may die upon release.
 
-scroll.elementalspirits.earth_elementals.earth_rod.name=The Rod of Earth Mastery
-scroll.elementalspirits.earth_elementals.earth_rod.title=<g><f>The Rod of Earth Mastery
-scroll.elementalspirits.earth_elementals.earth_rod.1=Although the EIW is used to initiate most of the actions, The Rod of Earth Mastery is used to actually perform those. It is used to start rituals and to ride the earth elemental.
-scroll.elementalspirits.earth_elementals.earth_rod.2=And that's how it's made...
-scroll.elementalspirits.earth_elementals.earth_rod.3=This is the infusion ritual needed to infuse the Rod of Earth Mastery. To complete the infusion, right-click the diamond block on the top. For obvious reasons this only works with a non-infused rod.
-
-scroll.elementalspirits.earth_elementals.actions.name=EIW Actions
-scroll.elementalspirits.earth_elementals.actions.title=<g><f>EIW Actions
-scroll.elementalspirits.earth_elementals.actions.1=<u>Mount<rs><br>The "Mount" action does exactly what you expected: you'll mount the elemental, but to actually steer the elemental, you'll need an infused Rod of Earth Mastery.<br><br><u>Stats<rs><br>The "Stats" action opens a window which tells you some information about that elemental.<br><br><u>Infuse<rs><br>The "Infuse" action initiates an infusion ritual which can then be performed with the Rod of Earth Mastery.
-scroll.elementalspirits.earth_elementals.actions.2=<u>Apply Strength<rs><br>The "Apply Strength" actions applies strength to it's master. The level and duration of the strength are based on the level of the elemental.<br><br><u>Release<rs><br>The "Release" action is the one that you probably use least as it (obviously) releases the elemental. Depending on how strong the bond between the master and the elemental is, one of them (sometimes even both) may die upon release.
-
+scroll.elementalspirits.earth.infused_stone.name=Earth Infused Stone
+scroll.elementalspirits.earth.infused_stone.title=<g><f>Earth Infused Stone
+scroll.elementalspirits.earth.infused_stone.1=
+scroll.elementalspirits.earth.infused_stone.2=
+scroll.elementalspirits.earth.infused_stone.3=
 
 scroll.elementalspirits.gettingStarted.name=Getting started
 scroll.elementalspirits.gettingStarted.title=<b><f>Getting started

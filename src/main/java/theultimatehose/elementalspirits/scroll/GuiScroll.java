@@ -11,6 +11,10 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import org.lwjgl.input.Keyboard;
+import theultimatehose.elementalspirits.scroll.buttons.BookMarkButton;
+import theultimatehose.elementalspirits.scroll.buttons.PageButton;
+import theultimatehose.elementalspirits.scroll.buttons.TextButton;
+import theultimatehose.elementalspirits.scroll.buttons.UtilButtons;
 import theultimatehose.elementalspirits.scroll.structure.*;
 import theultimatehose.elementalspirits.util.Util;
 
@@ -37,7 +41,7 @@ public class GuiScroll extends GuiScreen {
     public ArrayList<GuiButton> buttons;
     private ArrayList<BookMarkButton> bookMarkButtons;
 
-    boolean isPlayerShifting;
+    public boolean isPlayerShifting;
 
     public GuiScroll(EntityPlayer player) {
         super();
@@ -49,6 +53,8 @@ public class GuiScroll extends GuiScreen {
         super.initGui();
         this.guiTop = (this.height-this.guiHeight)/2;
         this.guiLeft = (this.width-this.guiWidth)/2;
+
+        UtilButtons.init(this.guiLeft, this.guiTop);
 
         BookMark[] marks = new BookMark[7];
 
@@ -158,6 +164,8 @@ public class GuiScroll extends GuiScreen {
             btn.drawButtonForegroundLayer(mouseX, mouseY);
         }
 
+        UtilButtons.draw(mouseX, mouseY);
+
         this.fontRendererObj.setUnicodeFlag(unicode);
     }
 
@@ -176,6 +184,8 @@ public class GuiScroll extends GuiScreen {
                     btn.mousePressed(Minecraft.getMinecraft(), mouseX, mouseY);
             }
         }
+
+        UtilButtons.checkClick(mc, mouseX, mouseY);
     }
 
     @Override
@@ -191,10 +201,12 @@ public class GuiScroll extends GuiScreen {
         this.guiTop = (this.height-this.guiHeight)/2;
         this.guiLeft = (this.width-this.guiWidth)/2;
 
+        UtilButtons.init(this.guiLeft, this.guiTop);
+
         int i = 0;
         for (BookMarkButton btn : this.bookMarkButtons) {
-            btn.xPos = this.guiLeft + 145;
-            btn.yPos = this.guiTop + (i * 27) + 7;
+            btn.xPosition = this.guiLeft + 145;
+            btn.yPosition = this.guiTop + (i * 27) + 7;
             i++;
         }
     }

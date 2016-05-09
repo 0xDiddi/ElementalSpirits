@@ -41,7 +41,7 @@ public class RitualEarthBlockInfusion extends InfusionRitual {
             if (world.getChunkFromBlockCoords(pos).getBlock(pos) == Blocks.emerald_ore) {
                 if (ItemEarthRod.isRodInfused(stack)) {
                     final EarthStoneOuter outer = new EarthStoneOuter();
-                    EarthStoneInner inner = new EarthStoneInner();
+                    final EarthStoneInner inner = new EarthStoneInner();
 
                     ParticleSystem infuseSystem = createInfuseSystem();
                     final ParticleSystem finishSystem = createFinishSystem();
@@ -51,9 +51,10 @@ public class RitualEarthBlockInfusion extends InfusionRitual {
                         DelayUtil.INSTANCE.postDelayed(2000, new DelayUtil.DelayedAction() {
                             @Override
                             public void execute() {
-                                outer.checkMatrix(world, pos, true, true);
-                                outer.placeBlocks(world, pos, false, true);
-                                ParticleSystemManager.INSTANCE.addSpawnForTime(finishSystem, 100, world, pos);
+                                if (outer.checkMatrix(world, pos, true, true) && inner.checkMatrix(world, pos, false, true)) {
+                                    outer.placeBlocks(world, pos, false, true);
+                                    ParticleSystemManager.INSTANCE.addSpawnForTime(finishSystem, 50, world, pos);
+                                }
                             }
                         });
                     }

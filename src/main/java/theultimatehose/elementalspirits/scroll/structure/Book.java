@@ -2,6 +2,8 @@ package theultimatehose.elementalspirits.scroll.structure;
 
 import theultimatehose.elementalspirits.ElementalSpirits;
 import theultimatehose.elementalspirits.multiblock.structures.EarthRodStructure;
+import theultimatehose.elementalspirits.multiblock.structures.EarthStoneInner;
+import theultimatehose.elementalspirits.multiblock.structures.EarthStoneOuter;
 import theultimatehose.elementalspirits.scroll.structure.pages.PageImageAndText;
 import theultimatehose.elementalspirits.scroll.structure.pages.PageMultiBlockAndText;
 import theultimatehose.elementalspirits.scroll.structure.pages.PageRecipeAndText;
@@ -16,7 +18,7 @@ public class Book {
     public static void init() {
         chapters = new ArrayList<>();
 
-        Chapter elementals_earth = new Chapter("earth_elementals");
+        Chapter elementals_earth = new Chapter("earth");
 
         Entry earth_general = new Entry("general");
         earth_general.addPage(new PageTextOnly(1));
@@ -33,6 +35,12 @@ public class Book {
         earth_actions.addPage(new PageTextOnly(1));
         earth_actions.addPage(new PageTextOnly(2));
         elementals_earth.addEntry(earth_actions);
+
+        Entry earth_infused_stone = new Entry("infused_stone");
+        earth_infused_stone.addPage(new PageTextOnly(1));
+        earth_infused_stone.addPage(new PageMultiBlockAndText(2, new EarthStoneInner()));
+        earth_infused_stone.addPage(new PageMultiBlockAndText(3, new EarthStoneOuter()));
+        elementals_earth.addEntry(earth_infused_stone);
 
         Chapter getting_started = new Chapter("gettingStarted");
 
