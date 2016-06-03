@@ -1,0 +1,6 @@
+{
+  "parent": "elementalspirits:block/altar_ring_inv",
+  "textures": {
+    "texture": "elementalspirits:blocks/blockEarthInfused"
+  }
+}

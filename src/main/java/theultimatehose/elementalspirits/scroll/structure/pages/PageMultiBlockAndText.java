@@ -5,10 +5,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import theultimatehose.elementalspirits.multiblock.MultiBlockStructure;
 import theultimatehose.elementalspirits.scroll.GuiScroll;
 import theultimatehose.elementalspirits.scroll.buttons.LayerChangeButon;
@@ -46,7 +45,7 @@ public class PageMultiBlockAndText extends Page {
         int blockX = 0, blockY = 0;
         for (Block[] row : layer) {
             for (Block b : row) {
-                if (b != null && b != Blocks.air) {
+                if (b != null && b != Blocks.AIR) {
                     ItemStack stack = RenderUtil.getRenderableItemstack(b);
                     RenderHelper.enableGUIStandardItemLighting();
                     Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(stack, gui.guiLeft + blockX + offsetX, gui.guiTop + blockY + offsetY);
@@ -74,7 +73,7 @@ public class PageMultiBlockAndText extends Page {
         }
 
         if (this.maxLayer > 1)
-            gui.getFontRendererObj().drawSplitString(gui.parseIdentifier("layer") + EnumChatFormatting.BLACK + ": " + this.currentLayer, x, gui.guiTop + offsetY + (this.height * 20) + 5, GuiScroll.TEXT_WRAP_WIDTH, 0);
+            gui.getFontRendererObj().drawSplitString(gui.parseIdentifier("layer") + TextFormatting.BLACK + ": " + this.currentLayer, x, gui.guiTop + offsetY + (this.height * 20) + 5, GuiScroll.TEXT_WRAP_WIDTH, 0);
 
         gui.getFontRendererObj().drawSplitString(gui.parseIdentifier(gui.currentChapter.identifier + "." + gui.currentEntry.subIdentifier + "." + gui.currentPage.number), x, gui.guiTop + offsetY + (this.height * 20) + ((this.maxLayer > 1) ? 15 : 5), GuiScroll.TEXT_WRAP_WIDTH, 0);
 

@@ -4,6 +4,7 @@ item.elementalspirits.itemEarthRod.name=Rod of Earth Mastery
 
 #Blocks
 tile.elementalspirits.blockEarthInfused.name=Earth Infused Stone
+tile.elementalspirits.blockEarthAltarRing.name=Earth Altar Ring Element
 
 #Entities
 entity.ElementalSpirits.EarthElemental.name=Earth Elemental

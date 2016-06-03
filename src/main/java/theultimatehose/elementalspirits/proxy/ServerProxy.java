@@ -16,4 +16,5 @@ public class ServerProxy implements GeneralProxy {
     public void addSimpleRenderer(ItemStack stack, ResourceLocation resLoc) {
 
     }
+
 }

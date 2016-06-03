@@ -2,7 +2,6 @@ package theultimatehose.elementalspirits.network;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -66,10 +65,10 @@ public class Syncer {
     public static int[] getTargetPos(Object o) {
         if (o instanceof Entity) {
             Entity e = (Entity) o;
-            return new int[] {e.getEntityWorld().provider.getDimensionId(), e.getEntityId()};
+            return new int[] {e.getEntityWorld().provider.getDimension(), e.getEntityId()};
         } else if (o instanceof TileEntity) {
             TileEntity e = (TileEntity) o;
-            return new int[] {e.getWorld().provider.getDimensionId(), e.getPos().getX(), e.getPos().getY(), e.getPos().getZ()};
+            return new int[] {e.getWorld().provider.getDimension(), e.getPos().getX(), e.getPos().getY(), e.getPos().getZ()};
         }
         return null;
     }
@@ -77,10 +76,10 @@ public class Syncer {
     public static NetworkRegistry.TargetPoint getTargetPoint(Object o) {
         if (o instanceof Entity) {
             Entity e = (Entity) o;
-            return new NetworkRegistry.TargetPoint(e.getEntityWorld().provider.getDimensionId(), e.getPosition().getX(), e.getPosition().getY(), e.getPosition().getZ(), 128);
+            return new NetworkRegistry.TargetPoint(e.getEntityWorld().provider.getDimension(), e.getPosition().getX(), e.getPosition().getY(), e.getPosition().getZ(), 128);
         } else if (o instanceof TileEntity) {
             TileEntity e = (TileEntity) o;
-            return new NetworkRegistry.TargetPoint(e.getWorld().provider.getDimensionId(), e.getPos().getX(), e.getPos().getY(), e.getPos().getZ(), 128);
+            return new NetworkRegistry.TargetPoint(e.getWorld().provider.getDimension(), e.getPos().getX(), e.getPos().getY(), e.getPos().getZ(), 128);
         }
         return null;
     }

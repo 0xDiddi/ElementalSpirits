@@ -9,10 +9,10 @@ public class RenderUtil {
 
     public static ItemStack getRenderableItemstack(Block block) {
 
-        if (block == Blocks.redstone_wire)
-            return new ItemStack(Items.redstone);
-        if (block == Blocks.double_stone_slab)
-            return new ItemStack(Blocks.stone_slab, 2);
+        if (block == Blocks.REDSTONE_WIRE)
+            return new ItemStack(Items.REDSTONE);
+        if (block == Blocks.DOUBLE_STONE_SLAB)
+            return new ItemStack(Blocks.STONE_SLAB, 2);
 
         return new ItemStack(block);
     }

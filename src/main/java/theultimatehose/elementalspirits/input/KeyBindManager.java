@@ -1,7 +1,7 @@
 package theultimatehose.elementalspirits.input;
 
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -48,7 +48,7 @@ public class KeyBindManager {
 
     public static String parseKeyDescription(String s) {
 
-        return StatCollector.translateToLocal("keys." + Util.MOD_ID_LOWER + "." + s + ".description");
+        return I18n.translateToLocal("keys." + Util.MOD_ID_LOWER + "." + s + ".description");
     }
 
     public static class KeyBind {

@@ -1,12 +1,7 @@
 package theultimatehose.elementalspirits.entity.ai;
 
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import theultimatehose.elementalspirits.entity.EntityElementalBase;
 import theultimatehose.elementalspirits.util.VanillaStuffUtil;
 
@@ -29,7 +24,7 @@ public class EntityAIRiddenByPlayer extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        this.rider = (EntityPlayer) this.elemental.riddenByEntity;
+        this.rider = (EntityPlayer) this.elemental.getRidingEntity();
 
         return this.rider != null && this.boosted;
 
@@ -47,7 +42,7 @@ public class EntityAIRiddenByPlayer extends EntityAIBase {
 
     @Override
     public void updateTask() {
-        this.rider = (EntityPlayer) this.elemental.riddenByEntity;
+        this.rider = (EntityPlayer) this.elemental.getRidingEntity();
         if (this.rider == null) return;
 
         if (this.boosted) {

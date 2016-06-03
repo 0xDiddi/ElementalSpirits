@@ -2,7 +2,7 @@ package theultimatehose.elementalspirits.multiblock;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class MultiBlockStructure {
@@ -40,9 +40,9 @@ public class MultiBlockStructure {
                     BlockPos blockPos = new BlockPos(x, y, z);
                     BlockPos realPos = blockPos.add(offset_x, offset_y, offset_z);
 
-                    Block block = world.getChunkFromBlockCoords(realPos).getBlock(realPos);
+                    Block block = world.getBlockState(realPos).getBlock();;
                     if (block != checkMatrix[y][x][z]) {
-                        if (!(ignoreEmpty && checkMatrix[y][x][z] == Blocks.air)) {
+                        if (!(ignoreEmpty && checkMatrix[y][x][z] == Blocks.AIR)) {
                             flag = false;
                             break base;
                         }
@@ -57,7 +57,7 @@ public class MultiBlockStructure {
                     for (int z = 0; z < checkMatrix[y][x].length; z++) {
                         BlockPos blockPos = new BlockPos(x, y, z);
                         BlockPos realPos = blockPos.add(offset_x, offset_y, offset_z);
-                        if (checkMatrix[y][x][z] != Blocks.air)
+                        if (checkMatrix[y][x][z] != Blocks.AIR)
                             world.setBlockToAir(realPos);
                     }
                 }
@@ -68,14 +68,14 @@ public class MultiBlockStructure {
     }
 
     /**
-     * Replaces {@code null} blocks in the matrix with {@link Blocks#air}.
+     * Replaces {@code null} blocks in the matrix with {@link Blocks#AIR}.
      */
     private void prepareMatrix() {
         for (int y = 0; y < checkMatrix.length; y++) {
             for (int x = 0; x < checkMatrix[y].length; x++) {
                 for (int z = 0; z < checkMatrix[y][x].length; z++) {
                     if (checkMatrix[y][x][z] == null) {
-                        checkMatrix[y][x][z] = Blocks.air;
+                        checkMatrix[y][x][z] = Blocks.AIR;
                     }
                 }
             }
@@ -106,9 +106,9 @@ public class MultiBlockStructure {
                     Block block = placeMatrix[y][x][z];
 
                     if (ignoreNull || block != null) {
-                        if (!world.isAirBlock(realPos) && block != Blocks.air)
+                        if (!world.isAirBlock(realPos) && block != Blocks.AIR)
                             if (breakBlocking)
-                                world.getChunkFromBlockCoords(realPos).getBlock(realPos).dropBlockAsItem(world, realPos, world.getBlockState(realPos), 0);
+                                world.getBlockState(realPos).getBlock().dropBlockAsItem(world, realPos, world.getBlockState(realPos), 0);
                             else { flag = false; continue; }
 
                         if (block != null)

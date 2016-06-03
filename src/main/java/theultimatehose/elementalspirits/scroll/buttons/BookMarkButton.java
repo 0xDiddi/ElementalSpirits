@@ -3,8 +3,8 @@ package theultimatehose.elementalspirits.scroll.buttons;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import theultimatehose.elementalspirits.scroll.GuiScroll;
 import theultimatehose.elementalspirits.scroll.structure.BookMark;
 import theultimatehose.elementalspirits.util.Util;
@@ -52,7 +52,7 @@ public class BookMarkButton extends GuiButton {
             if (this.bookMark.targetEntry == null)
                 fr.drawString(this.parent.parseIdentifier(this.bookMark.targetChapter.identifier + ".name"), renderX + 17, this.yPosition + 7, 0, false);
             else {
-                fr.drawString(this.parent.parseIdentifier(this.bookMark.targetChapter.identifier + "." + this.bookMark.targetEntry.subIdentifier + ".name") + EnumChatFormatting.BLACK + "/" + this.bookMark.targetPage.number + EnumChatFormatting.WHITE, renderX + 17, this.yPosition + 7, 0, false);
+                fr.drawString(this.parent.parseIdentifier(this.bookMark.targetChapter.identifier + "." + this.bookMark.targetEntry.subIdentifier + ".name") + TextFormatting.BLACK + "/" + this.bookMark.targetPage.number + TextFormatting.WHITE, renderX + 17, this.yPosition + 7, 0, false);
             }
         }
         fr.setUnicodeFlag(unicode);

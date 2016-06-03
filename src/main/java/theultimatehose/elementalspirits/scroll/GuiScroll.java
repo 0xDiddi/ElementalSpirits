@@ -7,9 +7,9 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import org.lwjgl.input.Keyboard;
 import theultimatehose.elementalspirits.scroll.buttons.BookMarkButton;
 import theultimatehose.elementalspirits.scroll.buttons.PageButton;
@@ -59,7 +59,7 @@ public class GuiScroll extends GuiScreen {
         BookMark[] marks = new BookMark[7];
 
         if (this.player != null) {
-            ItemStack stack = player.getCurrentEquippedItem();
+            ItemStack stack = player.inventory.getCurrentItem();
             if (stack != null) {
                 NBTTagCompound compound = stack.getTagCompound();
                 if (compound != null) {
@@ -214,7 +214,7 @@ public class GuiScroll extends GuiScreen {
     @Override
     public void onGuiClosed() {
         if (this.player != null) {
-            ItemStack stack = player.getCurrentEquippedItem();
+            ItemStack stack = player.inventory.getCurrentItem();
             if (stack != null) {
                 NBTTagCompound compound = stack.getTagCompound();
                 if (compound == null)
@@ -247,21 +247,21 @@ public class GuiScroll extends GuiScreen {
 
     public String parseIdentifier(String identifier) {
         identifier = "scroll." + Util.MOD_ID_LOWER + "." + identifier;
-        String str = StatCollector.translateToLocal(identifier);
+        String str = I18n.translateToLocal(identifier);
 
         str = str.replaceAll("<br>", "\n");
 
-        str = str.replaceAll("<f>", EnumChatFormatting.BOLD+"");
-        str = str.replaceAll("<i>", EnumChatFormatting.ITALIC+"");
-        str = str.replaceAll("<u>", EnumChatFormatting.UNDERLINE+"");
+        str = str.replaceAll("<f>", TextFormatting.BOLD+"");
+        str = str.replaceAll("<i>", TextFormatting.ITALIC+"");
+        str = str.replaceAll("<u>", TextFormatting.UNDERLINE+"");
 
-        str = str.replaceAll("<r>", EnumChatFormatting.DARK_RED+"");
-        str = str.replaceAll("<g>", EnumChatFormatting.DARK_GREEN+"");
-        str = str.replaceAll("<b>", EnumChatFormatting.DARK_BLUE+"");
+        str = str.replaceAll("<r>", TextFormatting.DARK_RED+"");
+        str = str.replaceAll("<g>", TextFormatting.DARK_GREEN+"");
+        str = str.replaceAll("<b>", TextFormatting.DARK_BLUE+"");
 
-        str = str.replaceAll("<rs>", EnumChatFormatting.BLACK+"");
+        str = str.replaceAll("<rs>", TextFormatting.BLACK+"");
 
-        return str + EnumChatFormatting.WHITE;
+        return str + TextFormatting.WHITE;
     }
 
     public FontRenderer getFontRendererObj() {

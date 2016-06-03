@@ -1,23 +1,21 @@
-package theultimatehose.elementalspirits.items;
+package theultimatehose.elementalspirits.item;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import theultimatehose.elementalspirits.ElementalSpirits;
 import theultimatehose.elementalspirits.Names;
 import theultimatehose.elementalspirits.entity.elemental_earth.EntityElementalEarth;
 import theultimatehose.elementalspirits.infusion.InfusionRitual;
+import theultimatehose.elementalspirits.item.base.ItemESBase;
 import theultimatehose.elementalspirits.util.Util;
 
-public class ItemEarthRod extends Item {
+public class ItemEarthRod extends ItemESBase {
 
     public static final String KEY_INFUSED = "isInfused";
     public static final String KEY_GREATER = "isGreater";
@@ -26,8 +24,8 @@ public class ItemEarthRod extends Item {
     public static final String KEY_INFUSE_NOTIFY = "shouldNotifyPlayer";
 
     public ItemEarthRod() {
+        super(Names.ITEM_EARTH_ROD);
         this.setMaxStackSize(1);
-        ElementalSpirits.proxy.addSimpleRenderer(new ItemStack(this), new ResourceLocation(Util.MOD_ID_LOWER, Names.ITEM_EARTH_ROD));
     }
 
     @Override
@@ -37,7 +35,7 @@ public class ItemEarthRod extends Item {
             if (compound != null) {
                 if (isSelected) {
                     if (compound.getBoolean(KEY_INFUSE_NOTIFY)) {
-                        entityIn.addChatMessage(new ChatComponentTranslation("chat.elementalspirits.infuse_start.msg"));
+                        entityIn.addChatMessage(new TextComponentTranslation("chat.elementalspirits.infuse_start.msg"));
                         compound.setBoolean(KEY_INFUSE_NOTIFY, false);
                         stack.setTagCompound(compound);
                     }
@@ -57,23 +55,23 @@ public class ItemEarthRod extends Item {
     }
 
     @Override
-    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
         if (!world.isRemote) {
             NBTTagCompound compound = stack.getTagCompound();
             if (compound != null) {
                 if (compound.getBoolean(KEY_INFUSED)) {
-                    if (player.ridingEntity != null && player.ridingEntity instanceof EntityElementalEarth) {
-                        EntityElementalEarth elemental = (EntityElementalEarth) player.ridingEntity;
+                    if (player.getRidingEntity() != null && player.getRidingEntity() instanceof EntityElementalEarth) {
+                        EntityElementalEarth elemental = (EntityElementalEarth) player.getRidingEntity();
                         elemental.aiRiddenByPlayer.boost();
                     }
                 }
             }
         }
-        return super.onItemRightClick(stack, world, player);
+        return super.onItemRightClick(stack, world, player, hand);
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         NBTTagCompound compound = stack.getTagCompound();
         if (compound != null) {
             if (compound.getBoolean(KEY_PERFORM_INFUSE)) {
@@ -88,14 +86,14 @@ public class ItemEarthRod extends Item {
 
                 if (!anyExecuted) {
                     if (!world.isRemote)
-                        player.addChatMessage(new ChatComponentTranslation("chat." + Util.MOD_ID_LOWER + ".infuse_failed.msg"));
+                        player.addChatMessage(new TextComponentTranslation("chat." + Util.MOD_ID_LOWER + ".infuse_failed.msg"));
                 }
 
                 compound.setBoolean(KEY_PERFORM_INFUSE, false);
                 stack.setTagCompound(compound);
             }
         }
-        return false;
+        return super.onItemUse(stack, player, world, pos, hand, facing, hitX, hitY, hitZ);
     }
 
     @Override
@@ -109,7 +107,7 @@ public class ItemEarthRod extends Item {
     }
 
     public static boolean isRodInfused(ItemStack stack) {
-        if (stack.getItem() == ElementalSpirits.INSTANCE.itemEarthRod) {
+        if (stack.getItem() instanceof ItemEarthRod) {
             NBTTagCompound compound = stack.getTagCompound();
             if (compound != null) {
                 return compound.getBoolean(KEY_INFUSED);

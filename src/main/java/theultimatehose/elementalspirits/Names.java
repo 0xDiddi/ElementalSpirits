@@ -15,4 +15,5 @@ public class Names {
     public static final String KEYBIND_WHEEL_BR = "keybind_wheel_br";
 
     public static final String BLOCK_EARTH_INFUSED = "blockEarthInfused";
+    public static final String BLOCK_EARTH_ALTAR_RING = "blockEarthAltarRing";
 }

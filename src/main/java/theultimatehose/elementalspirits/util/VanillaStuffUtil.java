@@ -7,14 +7,14 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.pathfinder.WalkNodeProcessor;
+import net.minecraft.pathfinding.WalkNodeProcessor;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 
 public class VanillaStuffUtil {
 
     public static void doEntityJump(Entity entity, float currentSpeed) {
-        EntityPlayer entityplayer = (EntityPlayer) entity.riddenByEntity;
+        EntityPlayer entityplayer = (EntityPlayer) entity.getRidingEntity();
         EntityCreature entitycreature = (EntityCreature) entity;
 
         int i = MathHelper.floor_double(entity.posX);
@@ -67,11 +67,11 @@ public class VanillaStuffUtil {
 
         if (i != l || k != i1) {
             Block block = entity.worldObj.getBlockState(new BlockPos(i, j, k)).getBlock();
-            boolean flag = !isStairOrSlab(block) && (block.getMaterial() != Material.air || !isStairOrSlab(entity.worldObj.getBlockState(new BlockPos(i, j - 1, k)).getBlock()));
-
+            boolean flag = !isStairOrSlab(block) && (block.getMaterial(block.getDefaultState()) != Material.AIR || !isStairOrSlab(entity.worldObj.getBlockState(new BlockPos(i, j - 1, k)).getBlock()));
+/*TODO: Fix entity jumping
             if (flag && 0 == WalkNodeProcessor.func_176170_a(entity.worldObj, entity, l, j, i1, j1, k1, l1, false, false, true) && 1 == WalkNodeProcessor.func_176170_a(entity.worldObj, entity, i, j + 1, k, j1, k1, l1, false, false, true) && 1 == WalkNodeProcessor.func_176170_a(entity.worldObj, entity, l, j + 1, i1, j1, k1, l1, false, false, true)) {
                 entitycreature.getJumpHelper().setJumping();
-            }
+            }*/
         }
     }
 

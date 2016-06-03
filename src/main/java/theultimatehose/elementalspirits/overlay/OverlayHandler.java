@@ -20,7 +20,7 @@ public class OverlayHandler {
         Entity entityHit = Minecraft.getMinecraft().objectMouseOver.entityHit;
         EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 
-        int width = event.resolution.getScaledWidth(), height = event.resolution.getScaledHeight();
+        int width = event.getResolution().getScaledWidth(), height = event.getResolution().getScaledHeight();
 
         if (entityHit instanceof EntityElementalBase) {
             EntityElementalBase elemental = (EntityElementalBase) entityHit;
