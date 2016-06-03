@@ -12,8 +12,8 @@ import theultimatehose.elementalspirits.multiblock.MultiBlockStructure;
 import theultimatehose.elementalspirits.scroll.GuiScroll;
 import theultimatehose.elementalspirits.scroll.buttons.LayerChangeButon;
 import theultimatehose.elementalspirits.scroll.structure.Page;
+import theultimatehose.elementalspirits.util.ModUtil;
 import theultimatehose.elementalspirits.util.RenderUtil;
-import theultimatehose.elementalspirits.util.Util;
 
 public class PageMultiBlockAndText extends Page {
 
@@ -62,7 +62,7 @@ public class PageMultiBlockAndText extends Page {
         }
 
         //Using this dummy (a 1x1 black image), because Gui.drawRect(...) messes up everything
-        ResourceLocation dummyLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/dummy.png");
+        ResourceLocation dummyLoc = new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/dummy.png");
         Minecraft.getMinecraft().getTextureManager().bindTexture(dummyLoc);
 
         for (int lineX = 0; lineX <= this.width; lineX ++) {

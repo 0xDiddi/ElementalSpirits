@@ -12,14 +12,14 @@ import org.lwjgl.opengl.GL11;
 import theultimatehose.elementalspirits.Names;
 import theultimatehose.elementalspirits.entity.EntityElementalBase;
 import theultimatehose.elementalspirits.input.KeyBindManager;
-import theultimatehose.elementalspirits.util.Util;
+import theultimatehose.elementalspirits.util.ModUtil;
 
 import java.util.HashMap;
 
 public abstract class Overlay {
 
     FontRenderer fontRenderer = Minecraft.getMinecraft().getRenderManager().getFontRenderer();
-    private ResourceLocation defaultBackground = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/OverlayElemental.png");
+    private ResourceLocation defaultBackground = new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/gui/OverlayElemental.png");
     public EntityElementalBase elemental;
     public EntityPlayer player = Minecraft.getMinecraft().thePlayer;
     HashMap<Position, WheelInteraction.Action> wheelActions;

@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -29,6 +30,7 @@ import theultimatehose.elementalspirits.overlay.IOverlayProvider;
 import theultimatehose.elementalspirits.overlay.Overlay;
 import theultimatehose.elementalspirits.overlay.OverlayEarthElemental;
 import theultimatehose.elementalspirits.overlay.WheelInteraction;
+import theultimatehose.elementalspirits.util.StringUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -44,7 +46,7 @@ public class EntityElementalEarth extends EntityElementalBase implements IIntege
         super(worldIn);
         this.setSize(0.8f, 1);
         this.tasks.addTask(0, new EntityAISwimming(this));
-        this.tasks.addTask(1, this.aiRiddenByPlayer = new EntityAIRiddenByPlayer(this));
+        //this.tasks.addTask(1, this.aiRiddenByPlayer = new EntityAIRiddenByPlayer(this)); TODO: find out why task resets immediately
         this.tasks.addTask(3, new ElementalAIFollowMaster(this));
         this.tasks.addTask(5, new EntityAITempt(this, 1, Items.EMERALD, false));
         this.tasks.addTask(7, new EntityAIWander(this, 1));
@@ -54,7 +56,7 @@ public class EntityElementalEarth extends EntityElementalBase implements IIntege
 
     @Override
     protected boolean processInteract(EntityPlayer player, EnumHand hand, @Nullable ItemStack stack) {
-        if (!worldObj.isRemote) {
+        if (!worldObj.isRemote && hand == EnumHand.MAIN_HAND) {
             if (!isTamed()) {
                 ItemStack inUse = player.inventory.getCurrentItem();
                 int i = -1;
@@ -83,16 +85,17 @@ public class EntityElementalEarth extends EntityElementalBase implements IIntege
                         inUse.stackSize--;
                         if (inUse.stackSize <= 0)
                             inUse = null;
-                        player.inventory.setItemStack(inUse);
+                        player.inventory.setInventorySlotContents(player.inventory.currentItem, inUse);
                         if (i == 7) {
+                            player.addChatComponentMessage(new TextComponentTranslation(StringUtil.getUnlocalizedChat("tamed")));
                             setMaster(player.getUniqueID());
                             setIsTamed(true);
                             return true;
                         }
                     }
                 }
-            } else if (player.getGameProfile().getId().equals(getMaster())) {
-                if (player.inventory.getCurrentItem().getItem() instanceof ItemEarthRod) {
+            } else if (player.getUniqueID().equals(getMaster())) {
+                if (player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() instanceof ItemEarthRod) {
                     NBTTagCompound compound = player.inventory.getCurrentItem().getTagCompound();
                     if (compound == null)
                         compound = new NBTTagCompound();
@@ -102,7 +105,7 @@ public class EntityElementalEarth extends EntityElementalBase implements IIntege
                     return true;
                 } else {
                     setFollowMaster(!getFollowMaster());
-                    player.addChatMessage(new TextComponentString(getFollowMaster() ? "Now following you." : "No longer following you."));
+                    player.addChatMessage(new TextComponentTranslation(StringUtil.getUnlocalizedChat(getFollowMaster() ? "follow" : "unfollow")));
                     return true;
                 }
             }
@@ -127,9 +130,10 @@ public class EntityElementalEarth extends EntityElementalBase implements IIntege
         super.onEntityUpdate();
         if (!worldObj.isRemote) {
             if (shouldUpdateRider) {
-                if (worldObj.getEntityByID(riderID) instanceof EntityPlayer) {
-                    //TODO: Fix mounting entities
-                    //worldObj.getEntityByID(riderID).mountEntity(this);
+                if (worldObj.getEntityByID(riderID) != null && worldObj.getEntityByID(riderID) instanceof EntityPlayer) {
+                    worldObj.getEntityByID(riderID).rotationYaw = this.rotationYaw;
+                    worldObj.getEntityByID(riderID).rotationPitch = this.rotationPitch;
+                    worldObj.getEntityByID(riderID).startRiding(this);
                     shouldUpdateRider = false;
                 }
             }

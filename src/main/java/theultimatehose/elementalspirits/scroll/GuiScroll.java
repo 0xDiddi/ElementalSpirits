@@ -16,7 +16,7 @@ import theultimatehose.elementalspirits.scroll.buttons.PageButton;
 import theultimatehose.elementalspirits.scroll.buttons.TextButton;
 import theultimatehose.elementalspirits.scroll.buttons.UtilButtons;
 import theultimatehose.elementalspirits.scroll.structure.*;
-import theultimatehose.elementalspirits.util.Util;
+import theultimatehose.elementalspirits.util.ModUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,8 +33,8 @@ public class GuiScroll extends GuiScreen {
     public Page currentPage;
     public EntityPlayer player;
 
-    private ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/GuiAncientScroll.png");
-    public ResourceLocation resLocCraftingOverlay = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/GuiAncientScrollCraftingOverlay.png");
+    private ResourceLocation resLoc = new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/gui/GuiAncientScroll.png");
+    public ResourceLocation resLocCraftingOverlay = new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/gui/GuiAncientScrollCraftingOverlay.png");
 
     public int guiTop, guiLeft, guiWidth = 160, guiHeight = 205;
 
@@ -246,7 +246,7 @@ public class GuiScroll extends GuiScreen {
     }
 
     public String parseIdentifier(String identifier) {
-        identifier = "scroll." + Util.MOD_ID_LOWER + "." + identifier;
+        identifier = "scroll." + ModUtil.MOD_ID_LOWER + "." + identifier;
         String str = I18n.translateToLocal(identifier);
 
         str = str.replaceAll("<br>", "\n");

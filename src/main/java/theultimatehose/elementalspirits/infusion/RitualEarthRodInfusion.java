@@ -10,7 +10,8 @@ import net.minecraft.world.World;
 import theultimatehose.elementalspirits.item.ItemManager;
 import theultimatehose.elementalspirits.item.ItemEarthRod;
 import theultimatehose.elementalspirits.multiblock.structures.EarthRodStructure;
-import theultimatehose.elementalspirits.util.Util;
+import theultimatehose.elementalspirits.util.ModUtil;
+import theultimatehose.elementalspirits.util.StringUtil;
 
 public class RitualEarthRodInfusion extends InfusionRitual {
 
@@ -25,7 +26,7 @@ public class RitualEarthRodInfusion extends InfusionRitual {
                     }
                 } else {
                     if (!world.isRemote)
-                        player.addChatMessage(new TextComponentTranslation("chat." + Util.MOD_ID_LOWER + ".infuse_denied.msg"));
+                        player.addChatMessage(new TextComponentTranslation(StringUtil.getUnlocalizedChat("infuse_denied")));
                     return false;
                 }
             }
@@ -41,7 +42,7 @@ public class RitualEarthRodInfusion extends InfusionRitual {
                     EarthRodStructure struct = new EarthRodStructure();
                     if (struct.checkMatrix(world, pos, true, true)) {
                         if (!world.isRemote)
-                            player.addChatMessage(new TextComponentTranslation("chat." + Util.MOD_ID_LOWER + ".infuse_success.msg"));
+                            player.addChatMessage(new TextComponentTranslation(StringUtil.getUnlocalizedChat("infuse_success")));
                         NBTTagCompound compound = stack.getTagCompound();
                         compound.setBoolean(ItemEarthRod.KEY_INFUSED, true);
                         stack.setTagCompound(compound);

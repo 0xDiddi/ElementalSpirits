@@ -3,13 +3,13 @@ package theultimatehose.elementalspirits.scroll.buttons;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.ResourceLocation;
-import theultimatehose.elementalspirits.util.Util;
+import theultimatehose.elementalspirits.util.ModUtil;
 
 import java.awt.event.ActionListener;
 
 public class SmallButton extends GuiButton {
 
-    private ResourceLocation resLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/GuiAncientScroll.png");
+    private ResourceLocation resLoc = new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/gui/GuiAncientScroll.png");
 
     int textureX, textureY;
     ActionListener event;

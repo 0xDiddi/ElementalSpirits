@@ -24,7 +24,7 @@ public class OverlayHandler {
 
         if (entityHit instanceof EntityElementalBase) {
             EntityElementalBase elemental = (EntityElementalBase) entityHit;
-            if (elemental.getMaster().equals(player.getGameProfile().getId().toString())) {
+            if (elemental.getMaster() != null && elemental.getMaster().equals(player.getUniqueID())) {
                 if (alpha < 1 && pretimer > 150)
                     alpha += (alpha > .2 ? .01 : .001);
                 else

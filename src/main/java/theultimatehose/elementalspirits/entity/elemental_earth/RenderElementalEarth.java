@@ -3,7 +3,7 @@ package theultimatehose.elementalspirits.entity.elemental_earth;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.util.ResourceLocation;
-import theultimatehose.elementalspirits.util.Util;
+import theultimatehose.elementalspirits.util.ModUtil;
 
 public class RenderElementalEarth extends RenderLiving<EntityElementalEarth> {
 
@@ -18,7 +18,7 @@ public class RenderElementalEarth extends RenderLiving<EntityElementalEarth> {
 
     @Override
     protected ResourceLocation getEntityTexture(EntityElementalEarth entity) {
-        return new ResourceLocation(Util.MOD_ID_LOWER, "textures/entity/EarthElemental.png");
+        return new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/entity/EarthElemental.png");
     }
 
 }

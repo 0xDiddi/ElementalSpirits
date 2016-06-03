@@ -2,6 +2,9 @@ package theultimatehose.elementalspirits.entity.ai;
 
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.server.FMLServerHandler;
 import theultimatehose.elementalspirits.entity.EntityElementalBase;
 import theultimatehose.elementalspirits.util.VanillaStuffUtil;
 
@@ -19,13 +22,21 @@ public class EntityAIRiddenByPlayer extends EntityAIBase {
         this.master = null;
         this.boosted = false;
         this.boost_speed = 0;
-        this.setMutexBits(0b1111111);
+        //this.setMutexBits(0b1111011);
     }
 
     @Override
     public boolean shouldExecute() {
-        this.rider = (EntityPlayer) this.elemental.getRidingEntity();
+        if (elemental.getMaster() == null)
+            return false;
 
+        EntityPlayer plr = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(elemental.getMaster());
+        if (plr.getRidingEntity() == this.elemental)
+            this.rider = plr;
+        else
+            this.rider = null;
+        if (this.rider != null && this.boosted)
+            System.out.println("should");
         return this.rider != null && this.boosted;
 
     }
@@ -37,6 +48,7 @@ public class EntityAIRiddenByPlayer extends EntityAIBase {
 
     @Override
     public void resetTask() {
+        System.out.println("reset");
         this.boosted = false;
     }
 

@@ -4,7 +4,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -13,7 +12,6 @@ import theultimatehose.elementalspirits.entity.elemental_earth.RenderElementalEa
 import theultimatehose.elementalspirits.input.KeyBindManager;
 import theultimatehose.elementalspirits.overlay.OverlayHandler;
 import theultimatehose.elementalspirits.particle.ParticleSystemManager;
-import theultimatehose.elementalspirits.util.Util;
 
 import java.util.HashMap;
 import java.util.Map;

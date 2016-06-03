@@ -6,7 +6,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import theultimatehose.elementalspirits.ElementalSpirits;
 import theultimatehose.elementalspirits.block.base.BlockESBase;
 import theultimatehose.elementalspirits.block.base.ItemBlockESBase;
-import theultimatehose.elementalspirits.util.Util;
+import theultimatehose.elementalspirits.util.ModUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +29,8 @@ public class BlockManager {
     }
 
     private static void registerBlock(BlockESBase block, ItemBlockESBase itemBlock) {
-        block.setUnlocalizedName(Util.MOD_ID_LOWER + '.' + block.getName());
-        block.setRegistryName(Util.MOD_ID_LOWER, block.getName());
+        block.setUnlocalizedName(ModUtil.MOD_ID_LOWER + '.' + block.getName());
+        block.setRegistryName(ModUtil.MOD_ID_LOWER, block.getName());
         GameRegistry.register(block);
 
         itemBlock.setRegistryName(block.getRegistryName());
@@ -38,7 +38,7 @@ public class BlockManager {
     }
 
     private static void registerRendering(BlockESBase block) {
-        ElementalSpirits.proxy.addSimpleRenderer(new ItemStack(block), new ResourceLocation(Util.MOD_ID_LOWER, block.getName()));
+        ElementalSpirits.proxy.addSimpleRenderer(new ItemStack(block), new ResourceLocation(ModUtil.MOD_ID_LOWER, block.getName()));
     }
 
 }

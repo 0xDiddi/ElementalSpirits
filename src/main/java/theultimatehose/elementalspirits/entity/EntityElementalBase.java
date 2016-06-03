@@ -76,7 +76,7 @@ public class EntityElementalBase extends EntityCreature {
     @Override
     public void writeEntityToNBT(NBTTagCompound tagCompound) {
         super.writeEntityToNBT(tagCompound);
-        tagCompound.setString("master", getMaster().toString());
+        tagCompound.setString("master", (getMaster() != null ? getMaster().toString() : ""));
         tagCompound.setBoolean("tamed", isTamed());
         tagCompound.setBoolean("follow", getFollowMaster());
     }
@@ -84,7 +84,7 @@ public class EntityElementalBase extends EntityCreature {
     @Override
     public void readEntityFromNBT(NBTTagCompound tagCompund) {
         super.readEntityFromNBT(tagCompund);
-        setMaster(UUID.fromString(tagCompund.getString("master")));
+        setMaster((!tagCompund.getString("master").equals("") ? UUID.fromString(tagCompund.getString("master")) : null));
         setIsTamed(tagCompund.getBoolean("tamed"));
         setFollowMaster(tagCompund.getBoolean("follow"));
     }

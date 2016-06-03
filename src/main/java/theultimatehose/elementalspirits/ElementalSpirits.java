@@ -1,5 +1,6 @@
 package theultimatehose.elementalspirits;
 
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -22,12 +23,12 @@ import theultimatehose.elementalspirits.network.Syncer;
 import theultimatehose.elementalspirits.proxy.GeneralProxy;
 import theultimatehose.elementalspirits.scroll.structure.Book;
 import theultimatehose.elementalspirits.util.DelayUtil;
-import theultimatehose.elementalspirits.util.Util;
+import theultimatehose.elementalspirits.util.ModUtil;
 
-@Mod(modid = Util.MOD_ID, version = Util.VERSION)
+@Mod(modid = ModUtil.MOD_ID, version = ModUtil.VERSION)
 public class ElementalSpirits {
 
-    @Mod.Instance(Util.MOD_ID)
+    @Mod.Instance(ModUtil.MOD_ID)
     public static ElementalSpirits INSTANCE;
 
     public ShapedOreRecipe itemEarthRodRecipe;
@@ -63,7 +64,7 @@ public class ElementalSpirits {
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        //TODO: Fix spawn biomes
+        //TODO: Find where biome references can be found now
         //EntityRegistry.addSpawn(EntityElementalEarth.class, 1, 0, 1, EnumCreatureType.AMBIENT, BiomeGenBase.plains);
     }
 }

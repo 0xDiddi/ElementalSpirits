@@ -9,7 +9,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Keyboard;
 import theultimatehose.elementalspirits.Names;
-import theultimatehose.elementalspirits.util.Util;
+import theultimatehose.elementalspirits.util.ModUtil;
 
 import java.util.HashMap;
 
@@ -18,7 +18,7 @@ public class KeyBindManager {
     public static final KeyBindManager INSTANCE = new KeyBindManager();
 
     public HashMap<String, KeyBind> bindings;
-    private final String DEFAULT_CATEGORY = "keys." + Util.MOD_ID_LOWER + ".category.name";
+    private final String DEFAULT_CATEGORY = "keys." + ModUtil.MOD_ID_LOWER + ".category.name";
 
     public void init() {
 
@@ -48,7 +48,7 @@ public class KeyBindManager {
 
     public static String parseKeyDescription(String s) {
 
-        return I18n.translateToLocal("keys." + Util.MOD_ID_LOWER + "." + s + ".description");
+        return I18n.translateToLocal("keys." + ModUtil.MOD_ID_LOWER + "." + s + ".description");
     }
 
     public static class KeyBind {

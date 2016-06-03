@@ -11,14 +11,14 @@ import theultimatehose.elementalspirits.network.data.integer.IntPacket;
 import theultimatehose.elementalspirits.network.data.string.IStringSyncer;
 import theultimatehose.elementalspirits.network.data.string.StringHandler;
 import theultimatehose.elementalspirits.network.data.string.StringPacket;
-import theultimatehose.elementalspirits.util.Util;
+import theultimatehose.elementalspirits.util.ModUtil;
 
 public class Syncer {
 
     public static SimpleNetworkWrapper network;
 
     public static void init() {
-        network = NetworkRegistry.INSTANCE.newSimpleChannel(Util.MOD_ID_LOWER);
+        network = NetworkRegistry.INSTANCE.newSimpleChannel(ModUtil.MOD_ID_LOWER);
 
         network.registerMessage(new IntHandler.ClientHandler(), IntPacket.class, 0, Side.CLIENT);
         network.registerMessage(new IntHandler.ServerHandler(), IntPacket.class, 1, Side.SERVER);

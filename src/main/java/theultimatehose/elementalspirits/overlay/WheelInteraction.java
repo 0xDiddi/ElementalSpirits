@@ -1,6 +1,6 @@
 package theultimatehose.elementalspirits.overlay;
 
-import theultimatehose.elementalspirits.util.Util;
+import theultimatehose.elementalspirits.util.ModUtil;
 
 import java.util.HashMap;
 
@@ -15,7 +15,7 @@ public class WheelInteraction {
         String unlocalizedName;
 
         public Action(String unlocalizedName) {
-            this.unlocalizedName = "wheel." + Util.MOD_ID_LOWER + "." + unlocalizedName + ".name";
+            this.unlocalizedName = "wheel." + ModUtil.MOD_ID_LOWER + "." + unlocalizedName + ".name";
         }
 
         public abstract void perform();

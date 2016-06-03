@@ -68,7 +68,7 @@ public class VanillaStuffUtil {
         if (i != l || k != i1) {
             Block block = entity.worldObj.getBlockState(new BlockPos(i, j, k)).getBlock();
             boolean flag = !isStairOrSlab(block) && (block.getMaterial(block.getDefaultState()) != Material.AIR || !isStairOrSlab(entity.worldObj.getBlockState(new BlockPos(i, j - 1, k)).getBlock()));
-/*TODO: Fix entity jumping
+/*TODO: Fix entity jumping once the tasks works again
             if (flag && 0 == WalkNodeProcessor.func_176170_a(entity.worldObj, entity, l, j, i1, j1, k1, l1, false, false, true) && 1 == WalkNodeProcessor.func_176170_a(entity.worldObj, entity, i, j + 1, k, j1, k1, l1, false, false, true) && 1 == WalkNodeProcessor.func_176170_a(entity.worldObj, entity, l, j + 1, i1, j1, k1, l1, false, false, true)) {
                 entitycreature.getJumpHelper().setJumping();
             }*/

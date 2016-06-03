@@ -5,7 +5,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import theultimatehose.elementalspirits.ElementalSpirits;
 import theultimatehose.elementalspirits.item.base.ItemESBase;
-import theultimatehose.elementalspirits.util.Util;
+import theultimatehose.elementalspirits.util.ModUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +28,13 @@ public class ItemManager {
     }
 
     private static void registerItem(ItemESBase item) {
-        item.setUnlocalizedName(Util.MOD_ID_LOWER + '.' + item.getName());
-        item.setRegistryName(Util.MOD_ID_LOWER, item.getName());
+        item.setUnlocalizedName(ModUtil.MOD_ID_LOWER + '.' + item.getName());
+        item.setRegistryName(ModUtil.MOD_ID_LOWER, item.getName());
         GameRegistry.register(item);
     }
 
     private static void registerRendering(ItemESBase item) {
-        ElementalSpirits.proxy.addSimpleRenderer(new ItemStack(item), new ResourceLocation(Util.MOD_ID_LOWER, item.getName()));
+        ElementalSpirits.proxy.addSimpleRenderer(new ItemStack(item), new ResourceLocation(ModUtil.MOD_ID_LOWER, item.getName()));
     }
 
 }

@@ -13,7 +13,8 @@ import theultimatehose.elementalspirits.Names;
 import theultimatehose.elementalspirits.entity.elemental_earth.EntityElementalEarth;
 import theultimatehose.elementalspirits.infusion.InfusionRitual;
 import theultimatehose.elementalspirits.item.base.ItemESBase;
-import theultimatehose.elementalspirits.util.Util;
+import theultimatehose.elementalspirits.util.ModUtil;
+import theultimatehose.elementalspirits.util.StringUtil;
 
 public class ItemEarthRod extends ItemESBase {
 
@@ -35,7 +36,7 @@ public class ItemEarthRod extends ItemESBase {
             if (compound != null) {
                 if (isSelected) {
                     if (compound.getBoolean(KEY_INFUSE_NOTIFY)) {
-                        entityIn.addChatMessage(new TextComponentTranslation("chat.elementalspirits.infuse_start.msg"));
+                        entityIn.addChatMessage(new TextComponentTranslation(StringUtil.getUnlocalizedChat("infuse_start")));
                         compound.setBoolean(KEY_INFUSE_NOTIFY, false);
                         stack.setTagCompound(compound);
                     }
@@ -86,7 +87,7 @@ public class ItemEarthRod extends ItemESBase {
 
                 if (!anyExecuted) {
                     if (!world.isRemote)
-                        player.addChatMessage(new TextComponentTranslation("chat." + Util.MOD_ID_LOWER + ".infuse_failed.msg"));
+                        player.addChatMessage(new TextComponentTranslation("chat." + ModUtil.MOD_ID_LOWER + ".infuse_failed.msg"));
                 }
 
                 compound.setBoolean(KEY_PERFORM_INFUSE, false);

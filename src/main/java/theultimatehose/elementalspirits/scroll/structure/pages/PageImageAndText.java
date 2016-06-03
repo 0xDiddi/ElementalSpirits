@@ -4,7 +4,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.util.ResourceLocation;
 import theultimatehose.elementalspirits.scroll.GuiScroll;
 import theultimatehose.elementalspirits.scroll.structure.Page;
-import theultimatehose.elementalspirits.util.Util;
+import theultimatehose.elementalspirits.util.ModUtil;
 
 public class PageImageAndText extends Page {
 
@@ -12,7 +12,7 @@ public class PageImageAndText extends Page {
 
     public PageImageAndText(int number, String image) {
         super(number);
-        this.resLoc = new ResourceLocation(Util.MOD_ID_LOWER, "textures/gui/scroll_images/" + image + ".png");
+        this.resLoc = new ResourceLocation(ModUtil.MOD_ID_LOWER, "textures/gui/scroll_images/" + image + ".png");
     }
 
     @Override
