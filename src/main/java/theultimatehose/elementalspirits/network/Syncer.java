@@ -29,11 +29,11 @@ public class Syncer {
     }
 
     public static void syncInt(Object o, Side targetSide) {
-        if (!(o instanceof IIntegerSyncer))
+        if (!(o instanceof IIntegerSyncer) || getTargetType(o) == null)
             return;
 
         IntPacket packet = new IntPacket();
-        packet.targetType = TargetType.Entity;
+        packet.targetType = getTargetType(o);
         packet.targetPos = getTargetPos(o);
         packet.data = ((IIntegerSyncer) o).getIntData();
 
@@ -46,11 +46,11 @@ public class Syncer {
     }
 
     public static void syncString(Object o, Side targetSide) {
-        if (!(o instanceof IStringSyncer))
+        if (!(o instanceof IStringSyncer) || getTargetType(o) == null)
             return;
 
         StringPacket packet = new StringPacket();
-        packet.targetType = TargetType.Entity;
+        packet.targetType = getTargetType(o);
         packet.targetPos = getTargetPos(o);
         packet.data = ((IStringSyncer) o).getStringData();
 
@@ -62,7 +62,7 @@ public class Syncer {
 
     }
 
-    public static int[] getTargetPos(Object o) {
+    private static int[] getTargetPos(Object o) {
         if (o instanceof Entity) {
             Entity e = (Entity) o;
             return new int[] {e.getEntityWorld().provider.getDimension(), e.getEntityId()};
@@ -73,7 +73,16 @@ public class Syncer {
         return null;
     }
 
-    public static NetworkRegistry.TargetPoint getTargetPoint(Object o) {
+    private static TargetType getTargetType(Object o) {
+        if (o instanceof Entity)
+            return TargetType.Entity;
+        else if (o instanceof TileEntity)
+            return TargetType.TileEntity;
+
+        return null;
+    }
+
+    private static NetworkRegistry.TargetPoint getTargetPoint(Object o) {
         if (o instanceof Entity) {
             Entity e = (Entity) o;
             return new NetworkRegistry.TargetPoint(e.getEntityWorld().provider.getDimension(), e.getPosition().getX(), e.getPosition().getY(), e.getPosition().getZ(), 128);

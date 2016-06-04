@@ -1,5 +1,6 @@
 package theultimatehose.elementalspirits.network.data.integer;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -39,7 +40,9 @@ public class IntHandler {
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(IntPacket message, MessageContext ctx) {
-            World world = DimensionManager.getWorld(message.targetPos[0]);
+            World world = Minecraft.getMinecraft().theWorld;
+            if (world.provider.getDimension() != message.targetPos[0])
+                return null;
 
             if (message.targetType == Syncer.TargetType.Entity) {
                 Entity target = world.getEntityByID(message.targetPos[1]);
